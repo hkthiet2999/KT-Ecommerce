@@ -6,6 +6,8 @@
 ### In process
 
 Xây dựng REST API dùng để quản lý thông tin tài khoản, quản lý thông tin sản phẩm và các đơn hàng. Thông tin chi tiết như sau:
+
+
 	- Tài khoản: Người dùng có các thông tin: email, mật khẩu.
 	- Sản phẩm: Gồm các thông tin: mã sản phẩm, tên sản phẩm, giá, mô tả.
 	- Đơn hàng: Gồm các thông tin: mã đơn hàng, tổng giá bán, danh sách sản phẩm của các Sản phẩm trong đơn hàng.
