@@ -31,7 +31,7 @@ app.use(cors())
 //
 app.use("/", (req, res, next) => {
     try {
-      if (req.path == "/login" || req.path == "/register" || req.path == "/") {
+      if (req.path == "/accounts/login" || req.path == "/accounts/register" || req.path == "/") {
         next();
       } else {
         /* decode jwt token if authorized*/

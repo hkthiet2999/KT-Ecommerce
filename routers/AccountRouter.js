@@ -8,28 +8,16 @@ const registerValidator = require('./validator/registerValidator')
 const loginValidator = require('./validator/loginValidator')
 
 const { validationResult } = require('express-validator')
-// Router.get('/', (req, res) => {
-//     res.json({
-//         code: 0,
-//         message: 'Account Router'
-//     })
-// })
+Router.get('/login', (req, res) => {
+    res.json({
+        code: 0,
+        message: 'Đăng nhập bị lỗi gì rồi'
+    })
+})
 
 
 /* login
 */
-// Router.get('/login', (req, res) =>{
-
-//     if (req.session.user) {
-//         return res.redirect('/')
-//     }
-
-//     const error = req.flash('error') || ''
-//     const password = req.flash('name') || ''
-//     const email = req.flash('email') || ''
-
-//     res.render('login', {error, password, email})
-// })
 Router.post('/login', (req, res)=> {
     // res.json({
     //     code: 0,
@@ -43,10 +31,6 @@ Router.post('/login', (req, res)=> {
         Account.findOne({email: email})
         .then(acc => {
             if(!acc){
-                // throw new Error('Email không tồn tại')
-                // req.flash('error', 'Email không tồn tại')
-                // req.flash('password', password)
-                // req.flash('email', email)
                 return res.redirect('/accounts/login')
             }
             account = acc
@@ -54,11 +38,11 @@ Router.post('/login', (req, res)=> {
         })
         .then(passwordMatch => {
             if(!passwordMatch){
-                // return res.status(401).json({code: 3, message: 'Đăng nhập thất bại, mật khẩu không chính xác'})
-                req.flash('error', 'Đăng nhập thất bại, mật khẩu không chính xác')
-                req.flash('password', password)
-                req.flash('email', email)
-                return res.redirect('/accounts/login') 
+                return res.status(401).json({code: 3, message: 'Đăng nhập thất bại, mật khẩu không chính xác'})
+                // req.flash('error', 'Đăng nhập thất bại, mật khẩu không chính xác')
+                // req.flash('password', password)
+                // req.flash('email', email)
+                // return res.redirect('/accounts/login') 
             }
             const {JWT_SECRET} = process.env
             jwt.sign({
@@ -68,11 +52,11 @@ Router.post('/login', (req, res)=> {
                 expiresIn: '1h'
             }, (err, token) => {
                 if(err) throw err
-                // return res.json({
-                //     code: 0,
-                //     message: 'Đăng nhập thành công',
-                //     token: token
-                // })
+                return res.json({
+                    code: 0,
+                    message: 'Đăng nhập thành công',
+                    token: token
+                })
                 let user = results[0]
                     user.userRoot = `${req.vars.root}/users/${user.email}`
                     req.session.user = user
