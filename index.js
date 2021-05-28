@@ -14,6 +14,7 @@ const fs = require('fs')
 // const multer = require('multer')
 //
 app.use(bodyParser.urlencoded({extended: false}))
+app.use(bodyParser.json()); 
 app.use(cookieParser('hkthiet99'));
 app.use(session({ cookie: { maxAge: 600000 }}));
 app.use(flash());
@@ -28,10 +29,31 @@ app.use(express.urlencoded({extended: false}))
 app.use(express.json());
 app.use(cors())
 //
-app.use((req, res, next) => {
-    req.vars = {root: __dirname}
-    next()
-})
+app.use("/", (req, res, next) => {
+    try {
+      if (req.path == "/login" || req.path == "/register" || req.path == "/") {
+        next();
+      } else {
+        /* decode jwt token if authorized*/
+        jwt.verify(req.headers.token, 'hoangkienthiet1000097742827048624951702187', function (err, decoded) {
+          if (decoded && decoded.user) {
+            req.user = decoded;
+            next();
+          } else {
+            return res.status(401).json({
+              errorMessage: 'User unauthorized!',
+              status: false
+            });
+          }
+        })
+      }
+    } catch (e) {
+      res.status(400).json({
+        errorMessage: 'Something went wrong!',
+        status: false
+      });
+    }
+  })
 
 const getCurrentDir = (req, res, next) => {
     if (!req.session.user) {
@@ -60,16 +82,9 @@ app.get('/', getCurrentDir, (req, res) =>{
     if (!req.session.user) {
         return res.redirect('/accounts/login')
     }
+    const user = req.session.user
+    res.render('index', user)
 
-    let {userRoot, currentDir} = req.vars
-    // console.log('cần nạp thư mục: ' + currentDir);
-
-    FileReader.load(userRoot, currentDir)
-    .then(files => {
-        
-        const user = req.session.user
-        res.render('index', {user, files})
-    })
 
 })
 

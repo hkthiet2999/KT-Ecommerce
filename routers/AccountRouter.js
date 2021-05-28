@@ -14,18 +14,22 @@ const { validationResult } = require('express-validator')
 //         message: 'Account Router'
 //     })
 // })
-Router.get('/login', (req, res) =>{
 
-    if (req.session.user) {
-        return res.redirect('/')
-    }
 
-    const error = req.flash('error') || ''
-    const password = req.flash('name') || ''
-    const email = req.flash('email') || ''
+/* login
+*/
+// Router.get('/login', (req, res) =>{
 
-    res.render('login', {error, password, email})
-})
+//     if (req.session.user) {
+//         return res.redirect('/')
+//     }
+
+//     const error = req.flash('error') || ''
+//     const password = req.flash('name') || ''
+//     const email = req.flash('email') || ''
+
+//     res.render('login', {error, password, email})
+// })
 Router.post('/login', (req, res)=> {
     // res.json({
     //     code: 0,
@@ -40,9 +44,9 @@ Router.post('/login', (req, res)=> {
         .then(acc => {
             if(!acc){
                 // throw new Error('Email không tồn tại')
-                req.flash('error', 'Email không tồn tại')
-                req.flash('password', password)
-                req.flash('email', email)
+                // req.flash('error', 'Email không tồn tại')
+                // req.flash('password', password)
+                // req.flash('email', email)
                 return res.redirect('/accounts/login')
             }
             account = acc
@@ -99,6 +103,9 @@ Router.post('/login', (req, res)=> {
         res.redirect('/accounts/login')
     }
 })
+/* register
+
+*/
 Router.post('/register', registerValidator, (req, res)=> {
     let result = validationResult(req)
     if(result.errors.length === 0){
@@ -121,7 +128,6 @@ Router.post('/register', registerValidator, (req, res)=> {
             return user.save();
         })
         .then(() =>{
-            //Không cần trả về chi tiết tài khoản
             return res.json({code: 0, message: 'Đăng ký tài khoản thành công'})
         })
         .catch(e =>{
@@ -141,3 +147,20 @@ Router.post('/register', registerValidator, (req, res)=> {
     
 })
 module.exports = Router
+
+function checkUserAndGenerateToken(data, req, res) {
+    jwt.sign({ user: data.username, id: data._id }, 'hoangkienthiet1000097742827048624951702187', { expiresIn: '1d' }, (err, token) => {
+      if (err) {
+        res.status(400).json({
+          status: false,
+          errorMessage: err,
+        });
+      } else {
+        res.json({
+          message: 'Login Successfully.',
+          token: token,
+          status: true
+        });
+      }
+    });
+}
