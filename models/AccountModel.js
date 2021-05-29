@@ -6,9 +6,7 @@ const AccountShema = new Schema({
         type: String,
         unique: true
     },
-
     password: String,
-    fullname: String
 })
 
 module.exports = mongoose.model('Account', AccountShema)

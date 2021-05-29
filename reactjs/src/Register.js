@@ -44,7 +44,7 @@ export default class Register extends React.Component {
 
   register = () => {
 
-    axios.post('http://localhost:3000/register', {
+    axios.post('http://localhost:8080/accounts/register', {
       fullname: this.state.fullname,
       email: this.state.email,
       password: this.state.password,
@@ -54,7 +54,7 @@ export default class Register extends React.Component {
         icon: "success",
         type: "success"
       });
-      this.props.history.push('/login');
+      this.props.history.push('/accounts/login');
     }).catch((err) => {
       swal({
         text: err.response.data.errorMessage,
@@ -145,7 +145,7 @@ export default class Register extends React.Component {
               Đăng ký
             </Button> 
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <Link href="/">
+            <Link href="/accounts/login">
               Đăng nhập
             </Link>
 

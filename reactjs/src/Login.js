@@ -22,7 +22,7 @@ export default class Login extends React.Component {
 
     // const pwd = bcrypt.hashSync(this.state.password, salt);
 
-    axios.post('http://localhost:3000/', {
+    axios.post('http://localhost:8080/accounts/login', {
       email: this.state.email,
       password: this.state.password,
     }).then((res) => {
@@ -91,7 +91,7 @@ export default class Login extends React.Component {
           >
             Login
           </Button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <Link href="/register">
+          <Link href="/accounts/register">
             Register
           </Link>
         </div>

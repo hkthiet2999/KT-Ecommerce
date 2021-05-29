@@ -41,7 +41,7 @@ app.use("/", (req, res, next) => {
             next();
           } else {
             return res.status(401).json({
-              errorMessage: 'User unauthorized!',
+              message: 'User unauthorized!',
               status: false
             });
           }
@@ -53,44 +53,18 @@ app.use("/", (req, res, next) => {
         status: false
       });
     }
-  })
-
-const getCurrentDir = (req, res, next) => {
-    if (!req.session.user) {
-        // chưa đăng nhập
-        return next();
-    }
-
-    const {userRoot} = req.session.user
-    let {dir} = req.query
-    if (dir === undefined) {
-        dir = ''
-    }
-
-    let currentDir =`${userRoot}/${dir}`
-    if (!fs.existsSync(currentDir)) {
-
-        currentDir = userRoot
-    }
-
-    req.vars.currentDir = currentDir
-    req.vars.userRoot = userRoot 
-    next();  
-}
-
-app.get('/', getCurrentDir, (req, res) =>{
-    if (!req.session.user) {
-        return res.redirect('/accounts/login')
-    }
-    const user = req.session.user
-    res.render('index', user)
-
-
 })
 
+app.get("/", (req, res) => {
+  res.status(200).json({
+    status: true,
+    title: '-OK-'
+  });
+});
+
 app.use('/accounts', AccountRouter)
-app.use('/products', ProductRouter)
-app.use('/orders', OrderRouter)
+// app.use('/products', ProductRouter)
+// app.use('/orders', OrderRouter)
 
 // DB
 const port = process.env.PORT || 8080
