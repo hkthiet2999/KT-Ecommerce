@@ -19,8 +19,11 @@ Xây dựng REST API dùng để quản lý thông tin tài khoản, quản lý 
 - Sử dụng bcrypt để hash mật khẩu, sử dụng JWT để xác thực người dùng
 - Cors cho phpes mọi web client tương tác được với website, rate limit chống DDOS
 
-#### Mục tiêu phát triển
-- Xây dựng front-end sử dụng ReactJS
-- Trang web sẽ gồm các trang Login, Register, Home Page, các trang tương ứng với các chức năng CRUD.
-- Xử lý form, các request ( express-form)
-- Xây dựng cơ chế thông báo lỗi, render từ json ra view
+#### Demo UI
+Login page
+
+![](img_git/login.png)
+
+Register page
+
+![](img_git/register.png)
