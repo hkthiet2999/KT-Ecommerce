@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import swal from 'sweetalert';
-import { Button, TextField, Link } from '@material-ui/core';
+import { Button, TextField, Link, Grid, Card } from '@material-ui/core';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+import LockIcon from '@material-ui/icons/Lock';
 const axios = require('axios');
 const bcrypt = require('bcryptjs');
 var salt = bcrypt.genSaltSync(10);
@@ -26,7 +28,7 @@ export default class Login extends React.Component {
     }).then((res) => {
       // localStorage.setItem('token', res.data.token);
       // localStorage.setItem('user_id', res.data.id);
-      this.props.history.push('/dashboard');
+      this.props.history.push('/home');
     }).catch((err) => {
       if (err.response && err.response.data && err.response.data.errorMessage) {
         swal({
@@ -40,35 +42,45 @@ export default class Login extends React.Component {
 
   render() {
     return (
-      <div style={{ marginTop: '200px' }}>
+      <Grid container justify = "center">
+      <Card variant="outlined" style={{ backgroundColor: '#dacfed' ,marginTop: '50px', justifyContent:'center', width: '40%' }}>
+        <div style={{ marginTop: '50px', marginBottom: '50px' }}>
+        
+      
         <div>
-          <h2>Login</h2>
+          <h2>Đăng nhập</h2>
         </div>
 
         <div>
-          <br /><br />
+          <AccountCircle />
+          <br />
           <TextField
-            id="standard-basic"
+            id="input-with-icon-grid"
+            label="Email" 
             type="text"
             autoComplete="off"
             name="email"
             value={this.state.username}
             onChange={this.onChange}
-            placeholder="email"
+  
             required
           />
           <br /><br />
+          <LockIcon></LockIcon>
+          <br />
           <TextField
-            id="standard-basic"
+            id="input-with-icon-grid"
+            label="Mật khẩu"
             type="password"
             autoComplete="off"
             name="password"
             value={this.state.password}
             onChange={this.onChange}
-            placeholder="Password"
+            
             required
           />
           <br /><br />
+          <br />
           <Button
             className="button_style"
             variant="contained"
@@ -84,6 +96,10 @@ export default class Login extends React.Component {
           </Link>
         </div>
       </div>
+
+
+      </Card>
+    </Grid> 
     );
   }
 }
