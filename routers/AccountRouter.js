@@ -4,9 +4,12 @@ const Account = require('../models/AccountModel')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const fs = require('fs')
+//
+const product = require("../models/ProductModel.js");
+const user = require("../models/AccountModel.js");
+//
 const registerValidator = require('./validator/registerValidator')
 const loginValidator = require('./validator/loginValidator')
-
 const { validationResult } = require('express-validator')
 // Router.get('/login', (req, res) => {
 //     res.json({
@@ -17,8 +20,8 @@ const { validationResult } = require('express-validator')
 /* login api */
 Router.post("/login", (req, res) => {
     try {
-      if (req.body && req.body.username && req.body.password) {
-        user.find({ username: req.body.username }, (err, data) => {
+      if (req.body && req.body.email && req.body.password && req.body.fullname ) {
+        user.find({ email: req.body.email }, (err, data) => {
           if (data.length > 0) {
   
             if (bcrypt.compareSync(data[0].password, req.body.password)) {
@@ -53,47 +56,46 @@ Router.post("/login", (req, res) => {
   
 });
   
-  /* register api */
+/* register api */
 Router.post("/register", (req, res) => {
+    console.log(req.body)
     try {
-        if (req.body && req.body.username && req.body.password) {
-
-        user.find({ username: req.body.username }, (err, data) => {
-
-            if (data.length == 0) {
-
-            let User = new user({
-                username: req.body.username,
-                password: req.body.password
-            });
-            User.save((err, data) => {
-                if (err) {
-                res.status(400).json({
-                    errorMessage: err,
-                    status: false
-                });
+        if (req.body.email && req.body.password && req.body.fullname) {
+            console.log('Do day')
+            user.find({ email: req.body.email }, (err, data) => {
+                console.log('Do day 2')
+                if (data.length == 0) {
+                    console.log('Do day 3')
+                    let User = new user({
+                        fullname: req.body.fullname,
+                        email: req.body.email,
+                        password: req.body.password
+                    });
+                    User.save((err, data) => {
+                        if (err) {
+                            res.status(400).json({
+                                errorMessage: err,
+                                status: false
+                            });
+                        } else {
+                            res.status(200).json({
+                                status: true,
+                                title: 'Registered Successfully.'
+                            });
+                        }
+                    });
                 } else {
-                res.status(200).json({
-                    status: true,
-                    title: 'Registered Successfully.'
-                });
+                    res.status(400).json({
+                        errorMessage: `User ${req.body.fullname} with email: ${req.body.email} Already Exist!`,
+                        status: false
+                    });
                 }
             });
-
-            } else {
+        } else {
             res.status(400).json({
-                errorMessage: `UserName ${req.body.username} Already Exist!`,
+                errorMessage: 'Add proper parameter first!',
                 status: false
             });
-            }
-
-        });
-
-        } else {
-        res.status(400).json({
-            errorMessage: 'Add proper parameter first!',
-            status: false
-        });
         }
     } catch (e) {
         res.status(400).json({
@@ -102,9 +104,16 @@ Router.post("/register", (req, res) => {
         });
     }
 });
-
+// register sucscess
+Router.get("/login", (req, res) => {
+    res.status(200).json({
+      status: true,
+      title: '-OK-'
+    });
+  });
+//
 function checkUserAndGenerateToken(data, req, res) {
-    jwt.sign({ user: data.username, id: data._id }, JWT_SECRET, { expiresIn: '1d' }, (err, token) => {
+    jwt.sign({ user: data.email, id: data._id }, JWT_SECRET, { expiresIn: '1d' }, (err, token) => {
         if (err) {
             res.status(400).json({
                 status: false,

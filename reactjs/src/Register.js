@@ -51,6 +51,7 @@ export default class Register extends React.Component {
     }).then((res) => {
       swal({
         text: res.data.title,
+        // text: 'Success',
         icon: "success",
         type: "success"
       });
@@ -58,6 +59,7 @@ export default class Register extends React.Component {
     }).catch((err) => {
       swal({
         text: err.response.data.errorMessage,
+        // text: "Fail",
         icon: "error",
         type: "error"
       });
