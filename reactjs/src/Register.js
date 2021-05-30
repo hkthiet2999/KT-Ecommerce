@@ -10,21 +10,6 @@ import { borders } from '@material-ui/system';
 const axios = require('axios');
 // 
 
-// import { makeStyles } from '@material-ui/core/styles';
-// // import Input from '@material-ui/core/Input';
-// // import InputLabel from '@material-ui/core/InputLabel';
-// // import InputAdornment from '@material-ui/core/InputAdornment';
-// // import FormControl from '@material-ui/core/FormControl';
-// // import TextField from '@material-ui/core/TextField';
-// // import Grid from '@material-ui/core/Grid';
-// import AccountCircle from '@material-ui/icons/AccountCircle';
-//
-// const useStyles = makeStyles((theme) => ({
-//   margin: {
-//     margin: theme.spacing(1),
-//   },
-// }));
-
 
 export default class Register extends React.Component {
   constructor(props) {
@@ -48,6 +33,7 @@ export default class Register extends React.Component {
       fullname: this.state.fullname,
       email: this.state.email,
       password: this.state.password,
+      confirm_password: this.state.confirm_password
     }).then((res) => {
       swal({
         text: res.data.title,
@@ -140,7 +126,7 @@ export default class Register extends React.Component {
               variant="contained"
               color="primary"
               size="small"
-              disabled={this.state.username == '' && this.state.password == ''}
+              disabled={this.state.email == '' && this.state.password == '' && this.state.confirm_password == '' &&  this.state.fullname == ''}
               onClick={this.register}
             >
             
