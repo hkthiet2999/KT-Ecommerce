@@ -19,41 +19,46 @@ const { validationResult } = require('express-validator')
 // })
 /* login api */
 Router.post("/login", (req, res) => {
+    console.log(req.body)
     try {
-      if (req.body && req.body.email && req.body.password && req.body.fullname ) {
-        user.find({ email: req.body.email }, (err, data) => {
-          if (data.length > 0) {
-  
-            if (bcrypt.compareSync(data[0].password, req.body.password)) {
-              checkUserAndGenerateToken(data[0], req, res);
-            } else {
-  
-              res.status(400).json({
-                errorMessage: 'Username or password is incorrect!',
-                status: false
-              });
-            }
-  
-          } else {
+        if (req.body && req.body.email && req.body.password ) {
+            console.log('Dô đây 1')
+            user.find({ email: req.body.email }, (err, data) => {
+                console.log('Dô đây 2')
+                if (data.length > 0) {
+                    console.log('Dô đây 3')
+                    console.log(data[0].password)
+                    console.log(bcrypt.compareSync(data[0].password, req.body.password))
+                    // console.log(bcrypt.compare(data[0].password, req.body.password))
+                    if (bcrypt.compareSync(data[0].password, req.body.password)) {
+                        checkUserAndGenerateToken(data[0], req, res);
+                    } else {
+                        console.log('Dô đây lỗi 1')
+                        res.status(400).json({
+                            errorMessage: 'Username or password is incorrect!',
+                            status: false
+                        });
+                    }
+
+                } else {
+                    res.status(400).json({
+                    errorMessage: 'Username or password is incorrect!',
+                    status: false
+                    });
+                }
+            })
+        } else {
             res.status(400).json({
-              errorMessage: 'Username or password is incorrect!',
-              status: false
+            errorMessage: 'Add proper parameter first!',
+            status: false
             });
-          }
-        })
-      } else {
-        res.status(400).json({
-          errorMessage: 'Add proper parameter first!',
-          status: false
-        });
-      }
+        }
     } catch (e) {
-      res.status(400).json({
-        errorMessage: 'Something went wrong!',
-        status: false
-      });
+        res.status(400).json({
+            errorMessage: 'Something went wrong!',
+            status: false
+        });
     }
-  
 });
   
 /* register api */
@@ -108,10 +113,11 @@ Router.post("/register", (req, res) => {
 Router.get("/login", (req, res) => {
     res.status(200).json({
       status: true,
-      title: '-OK-'
+      title: 'Ngon rồi'
     });
   });
 //
+const {JWT_SECRET} = process.env
 function checkUserAndGenerateToken(data, req, res) {
     jwt.sign({ user: data.email, id: data._id }, JWT_SECRET, { expiresIn: '1d' }, (err, token) => {
         if (err) {

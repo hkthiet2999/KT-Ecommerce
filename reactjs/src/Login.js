@@ -20,14 +20,14 @@ export default class Login extends React.Component {
 
   login = () => {
 
-    // const pwd = bcrypt.hashSync(this.state.password, salt);
+    const pwd = bcrypt.hashSync(this.state.password, salt);
 
     axios.post('http://localhost:8080/accounts/login', {
       email: this.state.email,
-      password: this.state.password,
+      password: pwd,
     }).then((res) => {
-      // localStorage.setItem('token', res.data.token);
-      // localStorage.setItem('user_id', res.data.id);
+      localStorage.setItem('token', res.data.token);
+      localStorage.setItem('user_id', res.data.id);
       this.props.history.push('/home');
     }).catch((err) => {
       if (err.response && err.response.data && err.response.data.errorMessage) {
@@ -76,7 +76,6 @@ export default class Login extends React.Component {
             name="password"
             value={this.state.password}
             onChange={this.onChange}
-            
             required
           />
           <br /><br />
