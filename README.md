@@ -20,6 +20,10 @@ Xây dựng REST API dùng để quản lý thông tin tài khoản, quản lý 
 - Cors cho phpes mọi web client tương tác được với website, rate limit chống DDOS
 
 #### Demo UI
+Welcome page
+
+![](img_git/welcome.png)
+
 Login page
 
 ![](img_git/login.png)
