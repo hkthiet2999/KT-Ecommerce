@@ -1,6 +1,9 @@
 body {
   text-align: center;
   font-family: 'Roboto', sans-serif;
+  background-image: url('https://source.unsplash.com/1600x900/?nature,water');
+  background-size: cover;
+  background-repeat: 'no-repeat';
 }
 
 .button_style {

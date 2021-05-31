@@ -48,7 +48,7 @@ export default class Login extends React.Component {
   render() {
     return (
       <Grid container justify = "center">
-      <Card variant="outlined" style={{ backgroundColor: '#dacfed' ,marginTop: '50px', justifyContent:'center', width: '40%' }}>
+      <Card variant="outlined" style={{ backgroundColor: 'ActiveBorder' ,marginTop: '50px', justifyContent:'center', width: '40%' }}>
         <div style={{ marginTop: '50px', marginBottom: '50px' }}>
         
       
