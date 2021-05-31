@@ -3,13 +3,20 @@ const express = require('express')
 const app = express()
 const mongoose = require('mongoose')
 const cors = require('cors')
+const jwt = require('jsonwebtoken');
 //
+const bcrypt = require('bcrypt')
+
+//
+const product = require("./models/ProductModel.js");
+const user = require("./models/AccountModel.js");
 
 const flash = require('express-flash')
 const session = require('express-session')
 const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser')
 const fs = require('fs')
+const multer = require('multer')
 // const FileReader = require('./fileReader')
 // const multer = require('multer')
 //
@@ -23,6 +30,7 @@ const ProductRouter = require('./routers/ProductRouter')
 const OrderRouter = require('./routers/OrderRouter')
 const AccountRouter = require('./routers/AccountRouter')
 //
+
 app.set('view engine', 'ejs')
 //
 app.use(express.urlencoded({extended: false}))
@@ -34,10 +42,15 @@ app.use("/", (req, res, next) => {
       if (req.path == "/accounts/login" || req.path == "/accounts/register" || req.path == "/") {
         next();
       } else {
+        console.log('Do day 0000')
+        console.log('token:', req.headers.token)
         /* decode jwt token if authorized*/
-        jwt.verify(req.headers.token, 'hoangkienthiet1000097742827048624951702187', function (err, decoded) {
+        jwt.verify(req.headers.token, 'shhhhh11111', function (err, decoded) {
+          // console.log('Do day 111111')
+          console.log(decoded.foo)
           if (decoded && decoded.user) {
             req.user = decoded;
+            console.log('Do day 111111')
             next();
           } else {
             return res.status(401).json({
@@ -48,15 +61,16 @@ app.use("/", (req, res, next) => {
         })
       }
     } catch (e) {
+
       res.status(400).json({
-        errorMessage: 'Something went wrong!',
+        errorMessage: '?????',
         status: false
       });
     }
 })
 
 app.use('/accounts', AccountRouter)
-// app.use('/products', ProductRouter)
+app.use('/products', ProductRouter)
 // app.use('/orders', OrderRouter)
 
 // DB

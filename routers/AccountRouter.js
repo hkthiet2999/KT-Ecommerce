@@ -145,7 +145,7 @@ Router.get("/login", (req, res) => {
 //
 const {JWT_SECRET} = process.env
 function checkUserAndGenerateToken(data, req, res) {
-    jwt.sign({ user: data.email, id: data._id }, JWT_SECRET, { expiresIn: '1d' }, (err, token) => {
+    jwt.sign({ user: data.email, id: data._id }, 'shhhhh11111', { expiresIn: '1d' }, (err, token) => {
         if (err) {
             res.status(400).json({
                 status: false,
@@ -155,7 +155,7 @@ function checkUserAndGenerateToken(data, req, res) {
             res.status(200).json({
                 status: true,
                 token: token,
-                title: 'Đăng nhập thành công!! Chào mừng bạn đến với ABCXYZ'
+                title: 'Đăng nhập thành công!! Chào mừng bạn đến với KT E-commerce'
             });
             // res.json({
             //     message: 'Đăng nhập thành công',

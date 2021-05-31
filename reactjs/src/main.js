@@ -18,15 +18,15 @@ function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{' '}
       {new Date().getFullYear()}
+      {' - '}
+      <Link color="inherit" href="https://github.com/smoothkt4951/">
+        Bản quyền của Công Ty Cổ Phần smoothkt4951.vn
+      </Link>
       {'.'}
     </Typography>
   );
 }
-
 const useStyles = makeStyles((theme) => ({
   icon: {
     marginRight: theme.spacing(2),

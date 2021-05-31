@@ -17,3 +17,10 @@
 "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhrdGhrdEBnbWFpbC5jb20iLCJmdWxsbmFtZSI6IkhvYW5nIEtpZW4gVGhpZXQgIiwiaWF0IjoxNjIxOTA5NTM5LCJleHAiOjE2MjE5MTMxMzl9.nqUvJfKB5RanuE4IJKPLlCgpVHt0saUfUq2Lkz_WvNE"
 }
 ################
+
+{
+    "fullname": "Thiet Hoang Kienn",
+    "email": "adminX@gmail.com",
+    "password": "admin123456",
+    "confirm_password":"admin123456"
+}
