@@ -77,7 +77,7 @@ export default function Album() {
         <Toolbar>
           <CameraIcon className={classes.icon} />
           <Typography variant="h6" color="inherit" noWrap>
-            KT E-commerce - Kênh người bán
+            KT E-commerce - Kênh của người bán hàng
           </Typography>
         </Toolbar>
       </AppBar>
@@ -110,8 +110,8 @@ export default function Album() {
         <Container className={classes.cardGrid} maxWidth="md">
           {/* End hero unit */}
           <Grid container spacing={4}>
-            {cards.map((card) => (
-              <Grid item key={card} xs={12} sm={6} md={4}>
+            {/* CARD 1*/}
+              <Grid item xs={12} sm={6} md={4}>
                 <Card className={classes.card}>
                   <CardMedia
                     className={classes.cardMedia}
@@ -120,23 +120,141 @@ export default function Album() {
                   />
                   <CardContent className={classes.cardContent}>
                     <Typography gutterBottom variant="h5" component="h2">
-                      Heading
+                      Nhà bán trong nước
                     </Typography>
                     <Typography>
-                      This is a media card. You can use this section to describe the content.
+                      Dành cho doanh nghiệp / Hộ kinh doanh tại Việt Nam
                     </Typography>
                   </CardContent>
                   <CardActions>
                     <Button size="small" color="primary">
-                      View
-                    </Button>
-                    <Button size="small" color="primary">
-                      Edit
+                      Xem thêm &gt;&gt;&gt;
                     </Button>
                   </CardActions>
                 </Card>
               </Grid>
-            ))}
+            {/* CARD 2*/}
+            <Grid item xs={12} sm={6} md={4}>
+                <Card className={classes.card}>
+                  <CardMedia
+                    className={classes.cardMedia}
+                    image="https://source.unsplash.com/random"
+                    title="Image title"
+                  />
+                  <CardContent className={classes.cardContent}>
+                    <Typography gutterBottom variant="h5" component="h2">
+                      Gian hàng chính hãng
+                    </Typography>
+                    <Typography>
+                      Dành cho chủ sỡ hữu thương hiệu, Nhà Sản Xuất hoặc Nhà phân phối được ủy quyền
+                    </Typography>
+                  </CardContent>
+                  <CardActions>
+                    <Button size="small" color="primary" href="/more">
+                      Xem thêm &gt;&gt;&gt;
+                    </Button>
+              
+                  </CardActions>
+                </Card>
+              </Grid>
+              {/* card 3*/}
+
+              <Grid item xs={12} sm={6} md={4}>
+                <Card className={classes.card}>
+                  <CardMedia
+                    className={classes.cardMedia}
+                    image="https://source.unsplash.com/random"
+                    title="Image title"
+                  />
+                  <CardContent className={classes.cardContent}>
+                    <Typography gutterBottom variant="h5" component="h2">
+                      Nhà bán quốc tế
+                    </Typography>
+                    <Typography>
+                      Dành cho Nhà Bán có kho hàng tại Nước Ngoài
+                    </Typography>
+                  </CardContent>
+                  <CardActions>
+                    <Button size="small" color="primary" href="/more">
+                      Xem thêm &gt;&gt;&gt;
+                    </Button>
+                  </CardActions>
+                </Card>
+              </Grid>
+              {/* card 4*/}
+              <Grid item xs={12} sm={6} md={4}>
+                <Card className={classes.card}>
+                  <CardMedia
+                    className={classes.cardMedia}
+                    image="https://source.unsplash.com/random"
+                    title="Image title"
+                  />
+                  <CardContent className={classes.cardContent}>
+                    <Typography gutterBottom variant="h5" component="h2">
+                      Học viện KT E-commerce
+                    </Typography>
+                    <Typography>
+                      Tài liệu và Video thiết thực đồng hành cùng bạn từ những bước đầu bán hàng
+                    </Typography>
+                  </CardContent>
+                  <CardActions>
+                    <Button size="small" color="primary" href="/more">
+                      Xem thêm &gt;&gt;&gt;
+                    </Button>
+      
+                  </CardActions>
+                </Card>
+              </Grid>
+              
+              {/* card 5*/}
+              <Grid item xs={12} sm={6} md={4}>
+                <Card className={classes.card}>
+                  <CardMedia
+                    className={classes.cardMedia}
+                    image="https://source.unsplash.com/random"
+                    title="Image title"
+                  />
+                  <CardContent className={classes.cardContent}>
+                    <Typography gutterBottom variant="h5" component="h2">
+                      Trung tâm hỗ trợ nhà bán hàng
+                    </Typography>
+                    <Typography>
+                      Đội ngũ hỗ trợ nhiệt tình và chu đáo sẵn sàng hỗ trợ bạn
+                    </Typography>
+                  </CardContent>
+                  <CardActions>
+                  <Button size="small" color="primary" href="/more">
+                      Xem thêm &gt;&gt;&gt;
+                    </Button>
+      
+                  </CardActions>
+                </Card>
+              </Grid>
+
+              {/* card 6*/}
+              <Grid item xs={12} sm={6} md={4}>
+                <Card className={classes.card}>
+                  <CardMedia
+                    className={classes.cardMedia}
+                    image="https://source.unsplash.com/random"
+                    title="Image title"
+                  />
+                  <CardContent className={classes.cardContent}>
+                    <Typography gutterBottom variant="h5" component="h2">
+                      Cộng đồng nhà bán hàng KT E-commerce
+                    </Typography>
+                    <Typography>
+                    Nơi hội tụ những Nhà bán hàng tại KT E-commerce với những chia sẻ và hoạt động hữu ích
+                    </Typography>
+                  </CardContent>
+                  <CardActions>
+                  <Button size="small" color="primary" href="/more">
+                      Xem thêm &gt;&gt;&gt;
+                    </Button>
+      
+                  </CardActions>
+                </Card>
+              </Grid>
           </Grid>
         </Container>
       </main>
