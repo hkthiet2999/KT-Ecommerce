@@ -155,7 +155,7 @@ function checkUserAndGenerateToken(data, req, res) {
             res.status(200).json({
                 status: true,
                 token: token,
-                title: 'Đăng nhập thành công!! Chào mừng bạn đến với KT E-commerce'
+                title: 'Đăng nhập thành công!! Chào mừng bạn đến với KT.vn Website E-commerce hàng đầu tại VN :v'
             });
             // res.json({
             //     message: 'Đăng nhập thành công',

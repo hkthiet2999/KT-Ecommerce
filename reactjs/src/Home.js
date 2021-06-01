@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import {
-  Button, TextField, Dialog, DialogActions, LinearProgress,
-  DialogTitle, DialogContent, TableBody, Table,
-  TableContainer, TableHead, TableRow, TableCell,Grid, Card, AppBar,
+  Button, TextField, Dialog, DialogActions,
+  DialogTitle, DialogContent, InputLabel, OutlinedInput, InputAdornment,Grid, Card, AppBar,
   CardActions, CardContent, CardMedia, CssBaseline,
-  Toolbar, Typography, Container, Link, Box,
+  Toolbar, Typography, Container, Link, Box, FormControl, Input
 } from '@material-ui/core';
-import CameraIcon from '@material-ui/icons/PhotoCamera';
-import FindInPageOutlinedIcon from '@material-ui/icons/FindInPageOutlined';
+
+import StorefrontTwoToneIcon from '@material-ui/icons/StorefrontTwoTone';
+
 import { Pagination } from '@material-ui/lab';
 import { withStyles } from "@material-ui/core/styles";
 import swal from 'sweetalert';
@@ -28,6 +28,20 @@ function Copyright() {
 }
 
 const useStyles = theme => ({
+  dialog: {
+    display: 'flex',
+    flexDirection: 'column',
+    margin: 'auto',
+    width: 'fit-content',
+
+    height: '100%',
+    flexGrow: 2,
+
+
+  },
+  margin: {
+    margin: theme.spacing(1),
+  },
   box: {
     height: 100,
     display: "flex",
@@ -84,7 +98,7 @@ const useStyles = theme => ({
   },
 });
 // const classes = useStyles();
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -311,7 +325,9 @@ class Home extends Component {
         <Toolbar>
           <Box display='flex' flexGrow={1}>
               {/* whatever is on the left side */}
-              <CameraIcon className={classes.icon} />
+              
+              <StorefrontTwoToneIcon className={classes.icon}></StorefrontTwoToneIcon>
+
               <Typography variant="h6" color="inherit" noWrap>
                 KT E-commerce - Kênh của người bán hàng
               </Typography>
@@ -384,9 +400,8 @@ class Home extends Component {
           aria-describedby="alert-dialog-description"
         >
           <DialogTitle id="alert-dialog-title">Thông tin về sản phẩm mới</DialogTitle>
-          <DialogContent>
+          <DialogContent className={classes.dialog}>
             <TextField
-              id="standard-basic"
               type="text"
               autoComplete="off"
               name="name"
@@ -394,8 +409,23 @@ class Home extends Component {
               onChange={this.onChange}
               label="Tên sản phẩm"
               required
-            /><br />
+              id="outlined-basic" 
+              variant="outlined"
+            /><br /><br /><br />
             <TextField
+              id="outlined-multiline-static"
+              label="Mô tả sản phẩm"
+              multiline
+              rows={4}
+              variant="outlined"
+              type="text"
+              autoComplete="off"
+              name="desc"
+              value={this.state.desc}
+              onChange={this.onChange}
+              required
+            /><br /><br /><br />
+            {/* <TextField
               id="standard-basic"
               type="text"
               autoComplete="off"
@@ -403,18 +433,29 @@ class Home extends Component {
               value={this.state.desc}
               onChange={this.onChange}
               label="Mô tả sản phẩm"
-              required
-            /><br />
-            <TextField
-              id="standard-basic"
-              type="number"
-              autoComplete="off"
-              name="price"
-              value={this.state.price}
-              onChange={this.onChange}
-              label="Giá"
-              required
-            /><br />
+              required */}
+
+            {/* /> */}
+            
+
+            <FormControl fullWidth className={classes.margin} variant="outlined">
+              <InputLabel htmlFor="outlined-adornment-amount">Giá</InputLabel>
+              <OutlinedInput
+                  type="number"
+                  required
+                  autoComplete="off"
+                  name="price"
+
+                  id="outlined-adornment-amount"
+                  value={this.state.price}
+                  onChange={this.onChange}
+                  startAdornment={<InputAdornment position="start">VND</InputAdornment>}
+                  labelWidth={60}
+              />
+            </FormControl>
+
+            {/* /> */}
+            <br /><br /><br />
             <TextField
               id="standard-basic"
               type="number"
@@ -422,9 +463,9 @@ class Home extends Component {
               name="discount"
               value={this.state.discount}
               onChange={this.onChange}
-              label="Khuyến mãi"
+              label="Khuyến mãi (%)"
               required
-            /><br /><br />
+            /><br /><br /><br />
             <Button
               variant="contained"
               component="label"
@@ -470,8 +511,8 @@ class Home extends Component {
           aria-describedby="alert-dialog-description"
         >
           <DialogTitle id="alert-dialog-title">Cập nhật</DialogTitle>
-          <DialogContent>
-            <TextField
+
+            {/* <TextField
               id="standard-basic"
               type="text"
               autoComplete="off"
@@ -527,8 +568,96 @@ class Home extends Component {
                 hidden
               />
             </Button>&nbsp;
+            {this.state.fileName} */}
+            <DialogContent className={classes.dialog}>
+            <TextField
+              type="text"
+              autoComplete="off"
+              name="name"
+              value={this.state.name}
+              onChange={this.onChange}
+              label="Tên sản phẩm"
+              required
+              id="outlined-basic" 
+              variant="outlined"
+            /><br /><br /><br />
+            <TextField
+              id="outlined-multiline-static"
+              label="Mô tả sản phẩm"
+              multiline
+              rows={4}
+              variant="outlined"
+              type="text"
+              autoComplete="off"
+              name="desc"
+              value={this.state.desc}
+              onChange={this.onChange}
+              required
+            /><br /><br /><br />
+            {/* <TextField
+              id="standard-basic"
+              type="text"
+              autoComplete="off"
+              name="desc"
+              value={this.state.desc}
+              onChange={this.onChange}
+              label="Mô tả sản phẩm"
+              required */}
+
+            {/* /> */}
+            
+
+            <FormControl fullWidth className={classes.margin} variant="outlined">
+              <InputLabel htmlFor="outlined-adornment-amount">Giá</InputLabel>
+              <OutlinedInput
+                  type="number"
+                  required
+                  autoComplete="off"
+                  name="price"
+
+                  id="outlined-adornment-amount"
+                  value={this.state.price}
+                  onChange={this.onChange}
+                  startAdornment={<InputAdornment position="start">VND</InputAdornment>}
+                  labelWidth={60}
+              />
+            </FormControl>
+
+            {/* /> */}
+            <br /><br /><br />
+            <TextField
+              id="standard-basic"
+              type="number"
+              autoComplete="off"
+              name="discount"
+              value={this.state.discount}
+              onChange={this.onChange}
+              label="Khuyến mãi (%)"
+              required
+            /><br /><br /><br />
+            <Button
+              variant="contained"
+              component="label"
+            > Tải lên ảnh của sản phẩm
+            <input
+                id="standard-basic"
+                type="file"
+                accept="image/*"
+                // inputProps={{
+                //   accept: "image/*"
+                // }}
+                name="file"
+                value={this.state.file}
+                onChange={this.onChange}
+                id="fileInput"
+                label="File"
+                hidden
+                required
+              />
+            </Button>&nbsp;
             {this.state.fileName}
           </DialogContent>
+
 
           <DialogActions>
             <Button onClick={this.handleUpdateProduct_closeDialog} color="primary">
@@ -565,8 +694,9 @@ class Home extends Component {
                       <Box display='flex' flexGrow={1}>
                         {/* whatever is on the left side */}
                         <Typography gutterBottom variant="h4">
-                          {card.price}
-                          {'₫'}
+                        {'₫'}
+                        {card.price}
+                          
                         </Typography>
                       </Box>
                       <Typography align='right' variant="caption" display="block" gutterBottom color="error" marginLeft="auto">
