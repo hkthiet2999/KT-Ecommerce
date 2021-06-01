@@ -6,7 +6,7 @@ const cors = require('cors')
 const jwt = require('jsonwebtoken');
 //
 const bcrypt = require('bcrypt')
-
+const path = require("path")
 //
 const product = require("./models/ProductModel.js");
 const user = require("./models/AccountModel.js");
@@ -30,7 +30,12 @@ const ProductRouter = require('./routers/ProductRouter')
 const OrderRouter = require('./routers/OrderRouter')
 const AccountRouter = require('./routers/AccountRouter')
 //
-
+app.use(express.static(path.join(__dirname, "reactjs", "build")))
+//
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "reactjs", "build", "index.html"));
+});
+//
 app.set('view engine', 'ejs')
 //
 app.use(express.urlencoded({extended: false}))
