@@ -1,10 +1,10 @@
 {
-  "name": "_SalesWebsite_",
+  "name": "reactjs",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "index.js",
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -29,7 +29,8 @@
     "multer": "^1.4.2",
     "path": "^0.12.7"
   },
-  "devDependencies": {
-    "nodemon": "^2.0.7"
+
+  "engines": {
+    "node":"14.x"
   }
 }
