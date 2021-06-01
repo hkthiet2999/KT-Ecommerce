@@ -4,9 +4,10 @@ import {
   DialogTitle, DialogContent, TableBody, Table,
   TableContainer, TableHead, TableRow, TableCell,Grid, Card, AppBar,
   CardActions, CardContent, CardMedia, CssBaseline,
-  Toolbar, Typography, Container, Link,
+  Toolbar, Typography, Container, Link, Box,
 } from '@material-ui/core';
 import CameraIcon from '@material-ui/icons/PhotoCamera';
+import FindInPageOutlinedIcon from '@material-ui/icons/FindInPageOutlined';
 import { Pagination } from '@material-ui/lab';
 import { withStyles } from "@material-ui/core/styles";
 import swal from 'sweetalert';
@@ -27,6 +28,22 @@ function Copyright() {
 }
 
 const useStyles = theme => ({
+  box: {
+    height: 100,
+    display: "flex",
+    border: "1px solid black",
+    padding: 8
+  },
+  spreadBox: {
+    justifyContent: "space-around",
+    alignItems: "center"
+  },
+  input: {
+    height: 40
+  },
+  button: {
+    height: 40
+  },
   icon: {
     marginRight: theme.spacing(2),
   },
@@ -45,9 +62,15 @@ const useStyles = theme => ({
     height: '100%',
     display: 'flex',
     flexDirection: 'column',
+    marginLeft: "auto"
   },
   cardMedia: {
+    
     paddingTop: '56.25%', // 16:9
+  },
+  title: {
+    fontSize: 30,
+
   },
   cardContent: {
     flexGrow: 1,
@@ -55,6 +78,9 @@ const useStyles = theme => ({
   footer: {
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(6),
+  },
+  pos: {
+    marginBottom: 12,
   },
 });
 // const classes = useStyles();
@@ -193,6 +219,87 @@ class Home extends Component {
       this.setState({ loading: false, products: [], pages: 0 },()=>{});
     });
   }
+  // update
+  updateProduct = () => {
+    const fileInput = document.querySelector("#fileInput");
+    const file = new FormData();
+    file.append('id', this.state.id);
+    file.append('file', fileInput.files[0]);
+    file.append('name', this.state.name);
+    file.append('desc', this.state.desc);
+    file.append('discount', this.state.discount);
+    file.append('price', this.state.price);
+
+    axios.post('http://localhost:8080/products/update-product', file, {
+      headers: {
+        'content-type': 'multipart/form-data',
+        'token': this.state.token
+      }
+    }).then((res) => {
+
+      swal({
+        text: res.data.title,
+        icon: "success",
+        type: "success"
+      });
+
+      this.handleUpdateProduct_closeDialog();
+      this.setState({ name: '', desc: '', discount: '', price: '', file: null }, () => {
+        this.getProduct();
+      });
+    }).catch((err) => {
+      swal({
+        text: err.response.data.errorMessage,
+        icon: "error",
+        type: "error"
+      });
+      this.handleUpdateProduct_closeDialog();
+    });
+
+  }
+  handleUpdateProduct_openDialog = (data) => {
+    this.setState({
+      openProductEditModal: true,
+      id: data._id,
+      name: data.name,
+      desc: data.desc,
+      price: data.price,
+      discount: data.discount,
+      fileName: data.image
+    });
+  };
+
+  handleUpdateProduct_closeDialog = () => {
+    this.setState({ openProductEditModal: false });
+  };
+  // delete
+  deleteProduct = (id) => {
+    axios.post('http://localhost:8080/products/delete-product', {
+      id: id
+    }, {
+      headers: {
+        'Content-Type': 'application/json',
+        'token': this.state.token
+      }
+    }).then((res) => {
+
+      swal({
+        text: res.data.title,
+        icon: "success",
+        type: "success"
+      });
+
+      this.setState({ page: 1 }, () => {
+        this.pageChange(null, 1);
+      });
+    }).catch((err) => {
+      swal({
+        text: err.response.data.errorMessage,
+        icon: "error",
+        type: "error"
+      });
+    });
+  }
   // ````` render
   render() {
     const { classes } = this.props;
@@ -200,20 +307,26 @@ class Home extends Component {
       <React.Fragment>
       <CssBaseline />
       <AppBar position="relative">
+        
         <Toolbar>
-          <CameraIcon className={classes.icon} />
-          <Typography variant="h6" color="inherit" noWrap>
-            KT E-commerce - Kênh của người bán hàng
-          </Typography>
-          <Button
-            position = "right"
-            className="button_style"
-            variant="contained"
-            size="small"
-            onClick={this.logOut}
-          >
-            Log Out
-          </Button>
+          <Box display='flex' flexGrow={1}>
+              {/* whatever is on the left side */}
+              <CameraIcon className={classes.icon} />
+              <Typography variant="h6" color="inherit" noWrap>
+                KT E-commerce - Kênh của người bán hàng
+              </Typography>
+          </Box>
+            
+            <Button
+              style={{ height: 40 }}
+              className="button_style"
+              variant="contained"
+              size="small"
+              onClick={this.logOut}
+            >
+              Đăng xuất
+            </Button>
+
         </Toolbar>
       </AppBar>
       <main>
@@ -227,14 +340,38 @@ class Home extends Component {
               Quản lý shop của bạn một cách hiệu quả với Kênh người bán của chúng tôi
             </Typography>
             <div className={classes.heroButtons}>
-              <Grid container spacing={2} justify="center">
+              <Grid container spacing={4} justify="center">
                 <Grid item>
-                  <Button variant="contained" color="primary" onClick={this.handleAddProduct_openDialog}>
-                    Thêm sản phẩm mới
-                  </Button>
+                  <TextField
+                    
+                    variant="outlined"
+                    id="outlined-basic"
+                    type="search"
+                    autoComplete="off"
+                    name="search"
+                    value={this.state.search}
+                    onChange={this.onChange}
+                    label="Tìm sản phẩm"
+                    InputProps={{
+                      className: classes.input
+                    }}
+                    InputLabelProps={{
+                      shrink: true
+                    }}
+                  ></TextField>
+
+                  
                 </Grid>
                 <Grid item>
-                  
+                  <Button 
+                      className={classes.button}
+                      size="large" 
+                      variant="contained" 
+                      color="primary" 
+                      onClick={this.handleAddProduct_openDialog}
+                      >
+                      Thêm sản phẩm mới
+                    </Button>
                 </Grid>
               </Grid>
             </div>
@@ -255,7 +392,7 @@ class Home extends Component {
               name="name"
               value={this.state.name}
               onChange={this.onChange}
-              placeholder="Tên sản phẩm"
+              label="Tên sản phẩm"
               required
             /><br />
             <TextField
@@ -265,7 +402,7 @@ class Home extends Component {
               name="desc"
               value={this.state.desc}
               onChange={this.onChange}
-              placeholder="Mô tả sản phẩm"
+              label="Mô tả sản phẩm"
               required
             /><br />
             <TextField
@@ -275,7 +412,7 @@ class Home extends Component {
               name="price"
               value={this.state.price}
               onChange={this.onChange}
-              placeholder="Giá"
+              label="Giá"
               required
             /><br />
             <TextField
@@ -285,7 +422,7 @@ class Home extends Component {
               name="discount"
               value={this.state.discount}
               onChange={this.onChange}
-              placeholder="Khuyến mãi"
+              label="Khuyến mãi"
               required
             /><br /><br />
             <Button
@@ -303,7 +440,7 @@ class Home extends Component {
                 value={this.state.file}
                 onChange={this.onChange}
                 id="fileInput"
-                placeholder="File"
+                label="File"
                 hidden
                 required
               />
@@ -323,40 +460,160 @@ class Home extends Component {
           </DialogActions>
         </Dialog>
         {/* End Add Product */}
+        
+        
+        {/* Edit Product */}
+          <Dialog
+          open={this.state.openProductEditModal}
+          onClose={this.handleUpdateProduct_closeDialog}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">Cập nhật</DialogTitle>
+          <DialogContent>
+            <TextField
+              id="standard-basic"
+              type="text"
+              autoComplete="off"
+              name="name"
+              value={this.state.name}
+              onChange={this.onChange}
+              label="Tên sản phẩm"
+              required
+            /><br />
+            <TextField
+              id="standard-basic"
+              type="text"
+              autoComplete="off"
+              name="desc"
+              value={this.state.desc}
+              onChange={this.onChange}
+              label="Mô tả"
+              required
+            /><br />
+            <TextField
+              id="standard-basic"
+              type="number"
+              autoComplete="off"
+              name="price"
+              value={this.state.price}
+              onChange={this.onChange}
+              label="Giá"
+              required
+            /><br />
+            <TextField
+              id="standard-basic"
+              type="number"
+              autoComplete="off"
+              name="discount"
+              value={this.state.discount}
+              onChange={this.onChange}
+              label="Khuyến mãi"
+              required
+            /><br /><br />
+            <Button
+              variant="contained"
+              component="label"
+            > Tải ảnh lên
+            <input
+                id="standard-basic"
+                type="file"
+                accept="image/*"
+                name="file"
+                value={this.state.file}
+                onChange={this.onChange}
+                id="fileInput"
+                label="Tải ảnh lên"
+                hidden
+              />
+            </Button>&nbsp;
+            {this.state.fileName}
+          </DialogContent>
+
+          <DialogActions>
+            <Button onClick={this.handleUpdateProduct_closeDialog} color="primary">
+              Hủy
+            </Button>
+            <Button
+              disabled={this.state.name == '' || this.state.desc == '' || this.state.discount == '' || this.state.price == ''}
+              onClick={(e) => this.updateProduct()} color="primary" autoFocus>
+              Cập nhật
+            </Button>
+          </DialogActions>
+        </Dialog>
+        {/* End Update Dialog */}
+
         </div>
          {/* End hero unit */}
         <Container className={classes.cardGrid} maxWidth="md">
          
           <Grid container spacing={4}>
-            {cards.map((card) => (
+          
+            {this.state.products.map((card) => (
               <Grid item key={card} xs={12} sm={6} md={4}>
                 <Card className={classes.card}>
                   <CardMedia
                     className={classes.cardMedia}
-                    image="https://source.unsplash.com/random"
-                    title="Image title"
+                    // image="https://source.unsplash.com/random"
+                    // image="`https://localhost:3000/${card.image}`"
+                    image= {require(`../uploads/${card.image}`)}
+                    title="Contemplative Reptile"
+                    
                   />
                   <CardContent className={classes.cardContent}>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      Heading
+                    <Grid container spacing={1}>
+                      <Box display='flex' flexGrow={1}>
+                        {/* whatever is on the left side */}
+                        <Typography gutterBottom variant="h4">
+                          {card.price}
+                          {'₫'}
+                        </Typography>
+                      </Box>
+                      <Typography align='right' variant="caption" display="block" gutterBottom color="error" marginLeft="auto">
+                        {'Khuyến mãi: '}
+                        {card.discount}{'%'}
+                      </Typography>           
+                    </Grid>
+                             
+                    <Typography align='left' className={classes.title}>
+                      {card.name}
                     </Typography>
-                    <Typography>
-                      This is a media card. You can use this section to describe the content.
+                    <Typography align='left' className={classes.pos} color="textSecondary">
+                    {card.desc}
                     </Typography>
                   </CardContent>
                   <CardActions>
-                    <Button size="small" color="primary">
-                      View
+                    <Button className="button_style"
+                      variant="outlined"
+                      color="primary"
+                      size="small"
+                      onClick={(e) => this.handleUpdateProduct_openDialog(card)}
+                      >
+                      Cập nhật
                     </Button>
-                    <Button size="small" color="primary">
-                      Edit
+                    <Button className="button_style"
+                      variant="outlined"
+                      color="secondary"
+                      size="small"
+                      onClick={(e) => this.deleteProduct(card._id)}
+                      >
+                      Xóa
                     </Button>
                   </CardActions>
                 </Card>
               </Grid>
             ))}
           </Grid>
+
         </Container>
+
+        <div className={classes.heroContent}> 
+          <Container maxWidth="lg">
+            <Pagination  count={this.state.pages} page={this.state.page} onChange={this.pageChange} variant="outlined" shape="rounded" />
+          </Container>
+        </div>
+
+        
       </main>
       {/* Footer */}
       <footer className={classes.footer}>
