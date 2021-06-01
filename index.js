@@ -75,7 +75,10 @@ app.use('/products', ProductRouter)
 
 // DB
 const port = process.env.PORT || 8080
-mongoose.connect('mongodb://localhost/SalesWebsite',{
+
+// mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true });
+// mongoose.connect('mongodb://localhost/SalesWebsite',{
+mongoose.connect(process.env.MONGODB_URI,{
     useNewUrlParser: true,
     useFindAndModify: true,
     useUnifiedTopology: true
