@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "heroku-postbuild": "cd reactjs && npm install --only=dev && npm install && npm start"
+    "heroku-postbuild": "cd reactjs && npm install --only=dev && npm install && npm run build"
   },
   "keywords": [],
   "author": "hkthiet99",
