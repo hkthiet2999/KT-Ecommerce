@@ -30,10 +30,10 @@ const ProductRouter = require('./routers/ProductRouter')
 const OrderRouter = require('./routers/OrderRouter')
 const AccountRouter = require('./routers/AccountRouter')
 //
-app.use(express.static(path.join(__dirname, "reactjs", "build")))
+app.use(express.static(path.join(__dirname, "reactjs", "public")))
 //
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "reactjs", "build", "index.html"));
+  res.sendFile(path.join(__dirname, "reactjs", "public", "index.html"));
 });
 //
 app.set('view engine', 'ejs')
@@ -82,8 +82,9 @@ app.use('/products', ProductRouter)
 const port = process.env.PORT || 8080
 
 // mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true });
-// mongoose.connect('mongodb://localhost/SalesWebsite',{
-mongoose.connect(process.env.MONGODB_URI,{
+// mongoose.connect(process.env.MONGODB_URI,{
+mongoose.connect('mongodb://localhost/SalesWebsite',{
+
     useNewUrlParser: true,
     useFindAndModify: true,
     useUnifiedTopology: true
