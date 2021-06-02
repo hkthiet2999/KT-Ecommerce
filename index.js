@@ -30,11 +30,11 @@ const ProductRouter = require('./routers/ProductRouter')
 const OrderRouter = require('./routers/OrderRouter')
 const AccountRouter = require('./routers/AccountRouter')
 //
-app.use(express.static(path.resolve(__dirname, "./reactjs/build")))
-//
-app.get("*", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "./reactjs/public", "index.html"));
-});
+// app.use(express.static(path.resolve(__dirname, "./reactjs/build")))
+// //
+// app.get("*", (req, res) => {
+//   res.sendFile(path.resolve(__dirname, "./reactjs/public", "index.html"));
+// });
 //
 app.set('view engine', 'ejs')
 //
@@ -52,7 +52,6 @@ app.use("/", (req, res, next) => {
         /* decode jwt token if authorized*/
         jwt.verify(req.headers.token, 'shhhhh11111', function (err, decoded) {
           // console.log('Do day 111111')
-          console.log(decoded.foo)
           if (decoded && decoded.user) {
             req.user = decoded;
             console.log('Do day 111111')

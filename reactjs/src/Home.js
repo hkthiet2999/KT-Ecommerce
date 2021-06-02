@@ -98,7 +98,7 @@ const useStyles = theme => ({
   },
 });
 // const classes = useStyles();
-
+const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -737,11 +737,13 @@ class Home extends Component {
 
         </Container>
 
-        <div className={classes.heroContent}> 
-          <Container maxWidth="lg">
+        <div className={classes.heroContent}>
+        <Container maxWidth="lg">
             <Pagination  count={this.state.pages} page={this.state.page} onChange={this.pageChange} variant="outlined" shape="rounded" />
           </Container>
         </div>
+          
+
 
         
       </main>

@@ -118,6 +118,7 @@ Router.get("/get-product", (req, res) => {
                 current_page: page,
                 total: count,
                 pages: Math.ceil(count / perPage),
+                errorMessage: '',
               });
             } else {
               res.status(400).json({
@@ -130,7 +131,7 @@ Router.get("/get-product", (req, res) => {
 
       }).catch(err => {
         res.status(400).json({
-          errorMessage: err.message || err,
+          errorMessage: 'Bạn chưa có sản phẩm nào để bán',
           status: false
         });
       });
