@@ -25,15 +25,31 @@ Clone or download this repository
 4. `cd..` and `npm start`
 5. new terminal, `cd Management-of-Sales-Systems/reactjs` and `npm start`
 
-#### Some Screens
-Welcome page
+### Some Screens
+# Welcome 
 
 ![](img_git/welcome.png)
 
-Login page
+# Login
 
 ![](img_git/login.png)
 
-Register page
+# Register
 
 ![](img_git/register.png)
+
+# Home
+
+![](img_git/home.png)
+
+# Add and update 
+
+![](img_git/add.png) ![](img_git/update.png)
+
+# Search
+
+![](img_git/search.png)
+
+# Success and Error
+
+![](img_git/delete.png) ![](img_git/err1.png)
