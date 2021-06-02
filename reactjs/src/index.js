@@ -3,10 +3,10 @@ import ReactDOM from 'react-dom';
 import { Switch, Redirect, Route } from 'react-router';
 import { BrowserRouter, Link } from 'react-router-dom';
 
-import Login from '../Login';
-import Register from '../Register';
-import Home from '../Home';
-import main from '../main';
+import Login from './Login';
+import Register from './Register';
+import Home from './Home';
+import main from './main';
 
 
 import './style.css';
