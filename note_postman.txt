@@ -24,3 +24,8 @@
     "password": "admin123456",
     "confirm_password":"admin123456"
 }
+
+
+    // "heroku-postbuild": "cd reactjs && npm install --only=dev && npm install && npm run build",
+
+    // "start": "node index.js",

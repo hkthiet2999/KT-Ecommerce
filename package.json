@@ -4,9 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    
     "test": "echo \"Error: no test specified\" && exit 1",
-    "heroku-postbuild": "cd reactjs && npm install --only=dev && npm install && npm run build"
+
+    "build": "cd reactjs && npm run build",
+    "install-client": "cd reactjs && npm install",
+    "heroku-postbuild": "npm run install-client && npm run build",
+    "server": "node index.js",
+    "develop": "concurrently --kill-others-on-fail \"npm run server\" \"npm run start --prefix reactjs\"",
+    "start": "concurrently --kill-others-on-fail \"npm run server\" \"npm run start --prefix reactjs\""
   },
   "keywords": [],
   "author": "hkthiet99",
