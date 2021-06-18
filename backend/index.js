@@ -5,8 +5,8 @@ const mongoose = require('mongoose')
 const cors = require('cors')
 const jwt = require('jsonwebtoken');
 //
-// const bcrypt = require('bcrypt')
-// const path = require("path")
+const bcrypt = require('bcrypt')
+const path = require("path")
 // //
 const product = require("./models/ProductModel.js");
 const user = require("./models/AccountModel.js");
@@ -82,26 +82,28 @@ const port = process.env.PORT || 8080
 
 // mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true });
 // mongoose.connect(process.env.MONGODB_URI,{
-// mongoose.connect('mongodb://localhost/SalesWebsite',{
-//     useNewUrlParser: true,
-//     useFindAndModify: true,
-//     useUnifiedTopology: true
-// }).then(()=>{
-//     app.listen(port, () => {
-//         console.log(`Server started on port: http://localhost:` + port);
-//     });
-// })
-// .catch(e => console.log('Khong ket noi dc voi Database server: '+e.message))
-mongoose
-  .connect(
-    'mongodb://mongo:27017/SalesWebsite',
-    { 
-      useNewUrlParser: true,
-      useFindAndModify: true,
-      useUnifiedTopology: true}
-  )
-  .then(() => console.log('MongoDB Connected'))
-  .catch(e => console.log('Khong ket noi dc voi Database server: '+e.message));
 
+mongoose.connect('mongodb://localhost/SalesWebsite',{
+    useNewUrlParser: true,
+    useFindAndModify: true,
+    useUnifiedTopology: true
+}).then(()=>{
+    app.listen(port, () => {
+        console.log(`Server started on port: http://localhost:` + port);
+    });
+})
+.catch(e => console.log('Khong ket noi dc voi Database server: '+e.message))
 
-app.listen(port, () => console.log('Server running...'));
+//```````````````````````````````````````````
+
+// mongoose
+//   .connect(
+//     'mongodb://mongo:27017/SalesWebsite',
+//     { 
+//       useNewUrlParser: true,
+//       useFindAndModify: true,
+//       useUnifiedTopology: true}
+//   )
+//   .then(() => console.log('Ket noi MongoDB THANH CONG'))
+//   .catch(e => console.log('Khong ket noi dc voi Database server: '+e.message));
+// app.listen(port, () => console.log('Server running...'));

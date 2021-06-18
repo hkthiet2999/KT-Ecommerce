@@ -33,6 +33,7 @@ Router.post("/login", loginValidator, (req, res) => {
                         console.log(bcrypt.compareSync(data[0].password, req.body.password))
                         // console.log(bcrypt.compare(data[0].password, req.body.password))
                         if (bcrypt.compareSync(data[0].password, req.body.password)) {
+                            
                             checkUserAndGenerateToken(data[0], req, res);
                         } else {
                             console.log('Dô đây lỗi 1')
