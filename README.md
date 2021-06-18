@@ -19,11 +19,10 @@ Below noted things you need to install to run this project in your system
 
 ### To Setup
 Clone or download this repository
-1. `cd Management-of-Sales-Systems/ `
+1. `cd KT-Ecommerce/backend `
 2. `npm install`
-3. `cd Management-of-Sales-Systems/reactjs` and `npm install`
-4. `cd..` and `npm start`
-5. new terminal, `cd Management-of-Sales-Systems/reactjs` and `npm start`
+3. Then `npm start`
+4. new terminal, `cd KT-Ecommerce/frontend` and `npm install`, then `npm start` same above
 
 ### Some Screens
 # Welcome 
