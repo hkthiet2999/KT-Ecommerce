@@ -1,7 +1,7 @@
 const express = require('express')
 const Router = express.Router()
 const {validationResult} = require('express-validator')
-const CheckLogin = require('../authorize/checkLogin')
+
 
 const rateLimit = require("express-rate-limit")
 const multer = require('multer')
@@ -24,7 +24,7 @@ const user = require("../models/AccountModel.js");
 //     message: "Khong gui qua 2 request trong 10s khi doc chi tiet 1 san pham"
 // })
 const {JWT_SECRET} = process.env
-const dir = './reactjs/uploads';
+const dir = '../frontend/uploads';
 const upload = multer({
   storage: multer.diskStorage({
 
@@ -32,7 +32,7 @@ const upload = multer({
       if (!fs.existsSync(dir)) {
         fs.mkdirSync(dir);
       }
-      callback(null, './reactjs/uploads');
+      callback(null, '../frontend/uploads');
     },
     filename: function (req, file, callback) { callback(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname)); }
 
@@ -155,7 +155,7 @@ Router.post("/update-product", upload.any(), (req, res) => {
 
         // if file already exist than remove it
         if (req.files && req.files[0] && req.files[0].filename && new_product.image) {
-          const path = `.reactjs/uploads/${new_product.image}`;
+          const path = `..frontend/uploads/${new_product.image}`;
           fs.unlinkSync(path);
         }
 
