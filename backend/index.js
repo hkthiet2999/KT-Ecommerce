@@ -20,6 +20,14 @@ const swaggerOptions = {
     info: {
       title: 'API Documents',
       version: '1.0.0'
+    },
+    securityDefinitions: {
+      bearerAuth: {
+        type: 'apiKey',
+        name: 'token',
+        scheme: 'bearer',
+        in: 'header',
+      },
     }
   },
   apis: ['index.js'],
@@ -83,12 +91,12 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs))
  *                type: string
  *     responses:
  *        200:
- *          description: Đăng nhập thành công chuyển đến Home Page
+ *          description: Đăng nhập thành công sẽ chuyển đến Home Page
  *   get:
  *     description: Trả về thông báo đăng nhập thành công
  *     responses:
  *       200:
- *         description: Đăng nhập nếu thành công
+ *         description: Đã đăng nhập thành công
  * 
  * /accounts/register:
  *   post:
@@ -112,11 +120,13 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs))
  *                type: string
  *     responses:
  *        200:
- *          description: Đăng ký thành công chuyển đến Login Page
+ *          description: Đăng ký thành công sẽ chuyển đến Login Page
  *
  * /products/add-product:
  *   post:
  *     description: Gửi thông tin sản phẩm cần thêm
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *        - in: body
  *          name: product
@@ -132,7 +142,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs))
  *                type: number
  *              discount:
  *                type: number
- *              file:
+ *              files:
  *                type: string
  *     responses:
  *        200:
@@ -165,7 +175,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs))
  *                type: number
  *              discount:
  *                type: number
- *              file:
+ *              files:
  *                type: string
  *     responses:
  *        200:
@@ -189,8 +199,9 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs))
  *                type: number
  *              discount:
  *                type: number
- *              file:
+ *              files:
  *                type: string
+ *                  
  *     responses:
  *        200:
  *          description: Xóa sản phẩm thành công
@@ -212,7 +223,7 @@ app.use("/", (req, res, next) => {
             next();
           } else {
             return res.status(401).json({
-              message: 'User unauthorized!',
+              message: 'Người dùng chưa được xác thực!',
               status: false
             });
           }

@@ -20,11 +20,11 @@ export default class Login extends React.Component {
 
   login = () => {
 
-    const pwd = bcrypt.hashSync(this.state.password, salt);
+    // const pwd = bcrypt.hashSync(this.state.password, salt);
 
     axios.post('http://localhost:8080/accounts/login', {
       email: this.state.email,
-      password: pwd,
+      password: this.state.password,
     }).then((res) => {
       localStorage.setItem('token', res.data.token);
       localStorage.setItem('user_id', res.data.id);

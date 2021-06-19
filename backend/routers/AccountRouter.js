@@ -2,6 +2,7 @@ const express = require('express');
 const Router  = express.Router()
 const Account = require('../models/AccountModel')
 const bcrypt = require('bcrypt')
+const salt = bcrypt.genSaltSync(10);
 const jwt = require('jsonwebtoken')
 const fs = require('fs')
 //
@@ -30,9 +31,11 @@ Router.post("/login", loginValidator, (req, res) => {
                     if (data.length > 0) {
                         console.log('Dô đây 3')
                         console.log(data[0].password)
-                        console.log(bcrypt.compareSync(data[0].password, req.body.password))
+                        // console.log(bcrypt.compareSync(data[0].password, req.body.password))
                         // console.log(bcrypt.compare(data[0].password, req.body.password))
-                        if (bcrypt.compareSync(data[0].password, req.body.password)) {
+                        var hashed = bcrypt.hashSync(req.body.password, salt)
+                        console.log('hased pass:', hashed)
+                        if (bcrypt.compareSync(data[0].password, hashed)) {
                             
                             checkUserAndGenerateToken(data[0], req, res);
                         } else {
