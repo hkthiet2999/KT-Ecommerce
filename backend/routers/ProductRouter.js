@@ -23,7 +23,6 @@ const user = require("../models/AccountModel.js");
 //     max: 2, // start blocking after 2 requests
 //     message: "Khong gui qua 2 request trong 10s khi doc chi tiet 1 san pham"
 // })
-const {JWT_SECRET} = process.env
 const dir = '../frontend/uploads';
 const upload = multer({
   storage: multer.diskStorage({
@@ -113,7 +112,7 @@ Router.get("/get-product", (req, res) => {
             if (data && data.length > 0) {
               res.status(200).json({
                 status: true,
-                title: 'Nè',
+                title: 'Danh sách sản phẩm',
                 products: data,
                 current_page: page,
                 total: count,
