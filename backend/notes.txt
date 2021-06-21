@@ -1,0 +1,15 @@
+token: 
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AZ21haWwuY29tIiwiaWQiOiI2MGI0NTZjYWIyNzg1NzQ4ZjAzMDg2ZWYiLCJpYXQiOjE2MjQyNDE0MzIsImV4cCI6MTYyNDMyNzgzMn0.j5NgwrpkgMrxhLlNvXUOG2oG5I2K6qvpo_ApcnDGkf0
+
+files: [
+  {
+    fieldname: 'files',
+    originalname: 'git_profile.png',
+    encoding: '7bit',
+    mimetype: 'image/png',
+    destination: '../frontend/uploads',
+    filename: 'files-1624241459694.png',
+    path: '..\\frontend\\uploads\\files-1624241459694.png',
+    size: 33712
+  }
+]

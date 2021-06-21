@@ -92,6 +92,8 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs))
  *     responses:
  *        200:
  *          description: Đăng nhập thành công sẽ chuyển đến Home Page
+ *        400:
+ *          description: Trả về thông báo lỗi tương ứng
  *   get:
  *     description: Trả về thông báo đăng nhập thành công
  *     responses:
@@ -121,90 +123,115 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs))
  *     responses:
  *        200:
  *          description: Đăng ký thành công sẽ chuyển đến Login Page
+ *        400:
+ *          description: Trả về thông báo lỗi tương ứng
  *
  * /products/add-product:
  *   post:
  *     description: Gửi thông tin sản phẩm cần thêm
  *     security:
  *       - bearerAuth: []
+ *     consumes:
+ *       - multipart/form-data
  *     parameters:
- *        - in: body
- *          name: product
- *          description: Người dùng gửi thông tin sản phẩm cần thêm
- *          schema:
- *            type: object
- *            properties:
- *              name: 
- *                type: string
- *              desc:
- *                type: string
- *              price:
- *                type: number
- *              discount:
- *                type: number
- *              files:
- *                type: string
+ *        - name: name
+ *          in: formData
+ *          description: Tên sản phẩm
+ *          type: string
+ *        - name: desc
+ *          in: formData
+ *          description: Mô tả sản phẩm
+ *          type: string
+ *        - name: price
+ *          in: formData
+ *          description: Giá tiền
+ *          type: number
+ *        - name: discount
+ *          in: formData
+ *          description: Khuyến mãi
+ *          type: number
+ *        - name: files
+ *          in: formData
+ *          description: File ảnh của sản phẩm
+ *          type: file 
  *     responses:
  *        200:
  *          description: Thêm thông tin sản phẩm thành công
+ *        400:
+ *          description: Trả về thông báo lỗi tương ứng
  * 
  * /products/get-product:
  *   get:
- *     description: Trả về thông tin sản phẩm cần thêm
+ *     security:
+ *       - bearerAuth: []
+ *     consumes:
+ *       - application/json
+ *     description: Trả về thông tin Danh sách sản phẩm
  *     responses:
  *        200:
- *          description: Trả về thông tin sản phẩm
+ *          description: Trả về thông tin danh sách sản phẩm thành công
  *        400:
  *          description: Trả về thông báo chưa có sản phẩm nào để bán
  *
  * /products/update-product:
  *   post:
  *     description: Gửi thông tin sản phẩm cần cập nhật
+ *     security:
+ *       - bearerAuth: []
+ *     consumes:
+ *       - multipart/form-data
  *     parameters:
- *        - in: body
- *          name: product
- *          description: Người dùng gửi thông tin sản phẩm cần cập nhật
- *          schema:
- *            type: object
- *            properties:
- *              name: 
- *                type: string
- *              desc:
- *                type: string
- *              price:
- *                type: number
- *              discount:
- *                type: number
- *              files:
- *                type: string
+ *        - name: id
+ *          in: formData
+ *          description: ID sản phẩm
+ *          type: string
+ *        - name: name
+ *          in: formData
+ *          description: Tên sản phẩm
+ *          type: string
+ *        - name: desc
+ *          in: formData
+ *          description: Mô tả sản phẩm
+ *          type: string
+ *        - name: price
+ *          in: formData
+ *          description: Giá tiền
+ *          type: number
+ *        - name: discount
+ *          in: formData
+ *          description: Khuyến mãi
+ *          type: number
+ *        - name: files
+ *          in: formData
+ *          description: File ảnh của sản phẩm
+ *          type: file 
  *     responses:
  *        200:
  *          description: Cập nhật thông tin sản phẩm thành công
+ *        400:
+ *          description: Trả về thông báo lỗi tương ứng
  * 
  * /products/delete-product:
  *   post:
  *     description: Gửi thông tin sản phẩm cần xóa
+ *     security:
+ *       - bearerAuth: []
+ *     consumes:
+ *       - application/json
  *     parameters:
  *        - in: body
- *          name: product
+ *          name: id
  *          description: Người dùng gửi thông tin sản phẩm cần xóa
  *          schema:
  *            type: object
  *            properties:
- *              name:
+ *              id:
  *                type: string
- *              desc:
- *                type: string
- *              price:
- *                type: number
- *              discount:
- *                type: number
- *              files:
- *                type: string
- *                  
  *     responses:
  *        200:
  *          description: Xóa sản phẩm thành công
+ *        400:
+ *          description: Trả về thông báo lỗi tương ứng
  * */
 //
 app.use("/", (req, res, next) => {
