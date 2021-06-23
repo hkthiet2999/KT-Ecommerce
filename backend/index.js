@@ -86,20 +86,25 @@ app.use('/products', ProductRouter)
 
 // DB
 const port = process.env.PORT || 8080
+// SQL SERVER
+const sql = require('mssql');
+var sqlconfig = require('./mssql/dbconfig.js');
+var dboperations = require('./mssql/dboperations.js');
+
+sql.connect(sqlconfig).then(()=>{
+  app.listen(port, () => {
+    console.log('Connected to SQL Server');
+    console.log(`Server started on port: http://localhost:` + port);
+});
+})
+.catch(e => console.log(`Can't connect to SQL Server: `+e.message))
+
+// MONGO DB
 
 // mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true });
 // mongoose.connect(process.env.MONGODB_URI,{
 
-mongoose.connect('mongodb://localhost/SalesWebsite',{
-    useNewUrlParser: true,
-    useFindAndModify: true,
-    useUnifiedTopology: true
-}).then(()=>{
-    app.listen(port, () => {
-        console.log(`Server started on port: http://localhost:` + port);
-    });
-})
-.catch(e => console.log('Khong ket noi dc voi Database server: '+e.message))
+//  
 
 //```````````````````````````````````````````
 
