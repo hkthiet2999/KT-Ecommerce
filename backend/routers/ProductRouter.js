@@ -159,7 +159,7 @@ Router.post("/update-product", upload.any(), (req, res) => {
 
         // if file already exist than remove it
         if (req.files && req.files[0] && req.files[0].filename && new_product.image) {
-          const path = `..frontend/uploads/${new_product.image}`;
+          const path = `../frontend/uploads/${new_product.image}`;
           fs.unlinkSync(path);
         }
 

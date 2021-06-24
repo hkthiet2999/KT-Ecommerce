@@ -143,7 +143,7 @@ Router.post("/register", registerValidator, (req, res) => {
 Router.get("/login", (req, res) => {
     res.status(200).json({
       status: true,
-      title: 'Ngon rồi'
+      title: 'Đăng nhập thành công'
     });
   });
 // shhhhh11111

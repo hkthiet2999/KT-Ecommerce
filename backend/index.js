@@ -92,19 +92,21 @@ var sqlconfig = require('./mssql/dbconfig.js');
 var dboperations = require('./mssql/dboperations.js');
 
 sql.connect(sqlconfig).then(()=>{
-  app.listen(port, () => {
-    console.log('Connected to SQL Server');
-    console.log(`Server started on port: http://localhost:` + port);
-});
+  console.log('Connected to SQL Server');
 })
 .catch(e => console.log(`Can't connect to SQL Server: `+e.message))
 
 // MONGO DB
+// mongodb://localhost/SalesWebsite
+mongoose.connect('mongodb://localhost/SalesWebsite',
+{ 
+  useNewUrlParser: true,
+  useFindAndModify: true,
+  useUnifiedTopology: true
+})
+.then(() => console.log('Connected to MongoDB'))
+.catch(e => console.log(`Can't connect to MongoDB `+e.message));
 
-// mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true });
-// mongoose.connect(process.env.MONGODB_URI,{
-
-//  
 
 //```````````````````````````````````````````
 
@@ -118,4 +120,6 @@ sql.connect(sqlconfig).then(()=>{
 //   )
 //   .then(() => console.log('Ket noi MongoDB THANH CONG'))
 //   .catch(e => console.log('Khong ket noi dc voi Database server: '+e.message));
-// app.listen(port, () => console.log('Server running...'));
+
+
+app.listen(port, () => console.log(`Server started on port: http://localhost:` + port));
