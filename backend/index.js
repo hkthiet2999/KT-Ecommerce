@@ -51,7 +51,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 // root
 app.use("/", (req, res, next) => {
     try {
-      if (req.path == "/accounts/login" || req.path == "/accounts/register" || req.path == "/") {
+      if (req.path == "/accounts/login" || req.path == "/accounts/register" || req.path == "/api-docs" || req.path == "/") {
         next();
       } else {
         console.log('Do day 0000')
@@ -97,8 +97,11 @@ sql.connect(sqlconfig).then(()=>{
 .catch(e => console.log(`Can't connect to SQL Server: `+e.message))
 
 // MONGO DB
-// mongodb://localhost/SalesWebsite
-mongoose.connect('mongodb://localhost/SalesWebsite',
+// Chạy normal - URI: mongodb://localhost/SalesWebsite
+// Chạy Docker compose - URI : mongodb://mongo:27017/SalesWebsite
+//```````````````````````````````````````````
+var mongoURI = process.env.MONGODB_URI 
+mongoose.connect('mongodb://mongo:27017/SalesWebsite',
 { 
   useNewUrlParser: true,
   useFindAndModify: true,
@@ -107,19 +110,11 @@ mongoose.connect('mongodb://localhost/SalesWebsite',
 .then(() => console.log('Connected to MongoDB'))
 .catch(e => console.log(`Can't connect to MongoDB `+e.message));
 
-
 //```````````````````````````````````````````
 
-// mongoose
-//   .connect(
-//     'mongodb://mongo:27017/SalesWebsite',
-//     { 
-//       useNewUrlParser: true,
-//       useFindAndModify: true,
-//       useUnifiedTopology: true}
-//   )
-//   .then(() => console.log('Ket noi MongoDB THANH CONG'))
-//   .catch(e => console.log('Khong ket noi dc voi Database server: '+e.message));
+
+
+//```````````````````````````````````````````
 
 
 app.listen(port, () => console.log(`Server started on port: http://localhost:` + port));
