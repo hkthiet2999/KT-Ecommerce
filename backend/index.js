@@ -101,7 +101,7 @@ sql.connect(sqlconfig).then(()=>{
 // Chạy Docker compose - URI : mongodb://mongo:27017/SalesWebsite
 //```````````````````````````````````````````
 var mongoURI = process.env.MONGODB_URI 
-mongoose.connect('mongodb://mongo:27017/SalesWebsite',
+mongoose.connect(mongoURI,
 { 
   useNewUrlParser: true,
   useFindAndModify: true,
@@ -113,8 +113,9 @@ mongoose.connect('mongodb://mongo:27017/SalesWebsite',
 //```````````````````````````````````````````
 
 
-
 //```````````````````````````````````````````
 
 
 app.listen(port, () => console.log(`Server started on port: http://localhost:` + port));
+
+module.exports = app
