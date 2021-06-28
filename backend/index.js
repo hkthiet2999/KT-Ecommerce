@@ -1,4 +1,5 @@
-require('dotenv').config()
+// require('dotenv').config()
+require('dotenv-flow').config();
 const express = require('express')
 const app = express()
 const mongoose = require('mongoose')
@@ -85,7 +86,7 @@ app.use('/products', ProductRouter)
 // app.use('/orders', OrderRouter)
 
 // DB
-const port = process.env.PORT || 8080
+const port = process.env.PORT
 // SQL SERVER
 const sql = require('mssql');
 var sqlconfig = require('./mssql/dbconfig.js');
