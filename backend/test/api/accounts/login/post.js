@@ -33,7 +33,7 @@ describe('POST /accounts/login', () =>{
     })
 
     it(`Should login successful`, (done) =>{
-        account = {
+        var account = {
             email: "tester@gmail.com",
             password: "tester123456",
         }
@@ -44,6 +44,22 @@ describe('POST /accounts/login', () =>{
         .end((err,res) => {
             // Asserts                        
             expect(res.status).to.be.equal(200);                         
+        done()
+        })
+    })
+
+    it('Should login failed with incorect email', (done)=>{
+        // check by validator middleware
+        var account_invalid = {
+            email: "tester",
+            password: "tester123456",
+        }
+        chai.request(server)
+        .post('/accounts/login')
+        .send(account_invalid)
+        .end((err,res) => {
+            expect(res.status).to.be.equal(400);   
+            expect(res.body).to.be.a('object');
         done()
         })
     })

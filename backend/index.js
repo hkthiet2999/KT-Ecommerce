@@ -89,8 +89,7 @@ app.use('/products', ProductRouter)
 const port = process.env.PORT
 // SQL SERVER
 const sql = require('mssql');
-var sqlconfig = require('./mssql/dbconfig.js');
-var dboperations = require('./mssql/dboperations.js');
+const sqlconfig = require('./mssql/dbconfig.js');
 
 sql.connect(sqlconfig).then(()=>{
   console.log('Connected to SQL Server');
