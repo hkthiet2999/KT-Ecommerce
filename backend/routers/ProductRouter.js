@@ -86,7 +86,7 @@ Router.post("/add-product", upload.any(), (req, res) => {
       }
     } catch (e) {
       res.status(400).json({
-        errorMessage: 'Có gì đó sai sai ở đây',
+        errorMessage: 'Lỗi hệ thống',
         status: false
       });
     }

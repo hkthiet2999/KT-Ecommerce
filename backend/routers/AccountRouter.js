@@ -72,7 +72,7 @@ Router.post("/login", loginValidator, (req, res) => {
         //
     } catch (e) {
         res.status(400).json({
-            errorMessage: 'Có gì đó sai sai ở đây!',
+            errorMessage: 'Lỗi hệ thống!',
             status: false
         });
     }
@@ -134,7 +134,7 @@ Router.post("/register", registerValidator, (req, res) => {
         
     } catch (e) {
         res.status(400).json({
-        errorMessage: 'Có gì đó sai sai ở đây!',
+        errorMessage: 'Lỗi hệ thống!',
         status: false
         });
     }

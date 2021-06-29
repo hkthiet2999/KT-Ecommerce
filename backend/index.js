@@ -73,9 +73,8 @@ app.use("/", (req, res, next) => {
         })
       }
     } catch (e) {
-
       res.status(400).json({
-        errorMessage: '?????',
+        errorMessage: 'Lỗi hệ thống',
         status: false
       });
     }
@@ -95,7 +94,6 @@ sql.connect(sqlconfig).then(()=>{
   console.log('Connected to SQL Server');
 })
 .catch(e => console.log(`Can't connect to SQL Server: `+e.message))
-
 // MONGO DB
 // Chạy normal - URI: mongodb://localhost/SalesWebsite
 // Chạy Docker compose - URI : mongodb://mongo:27017/SalesWebsite

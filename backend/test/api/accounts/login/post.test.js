@@ -32,7 +32,7 @@ describe('POST /accounts/login', () =>{
         done();
     })
 
-    it(`Should login successful`, (done) =>{
+    it(`Should login successful then generate token`, (done) =>{
         var account = {
             email: "tester@gmail.com",
             password: "tester123456",
@@ -46,7 +46,7 @@ describe('POST /accounts/login', () =>{
             expect(res.status).to.be.equal(200);
             expect(res.body).to.be.a('object');
             res.body.should.have.property('token')
-            console.log(res.body)                   
+            console.log(res.body)              
         done()
         })
     })
@@ -56,6 +56,40 @@ describe('POST /accounts/login', () =>{
         var account_invalid = {
             email: "tester",
             password: "tester123456",
+        }
+        chai.request(server)
+        .post('/accounts/login')
+        .send(account_invalid)
+        .end((err,res) => {
+            expect(res.status).to.be.equal(400);   
+            expect(res.body).to.be.a('object');
+            console.log(res.body)
+        done()
+        })
+    })
+
+    it('Should login failed with incorect password', (done)=>{
+        // check by validator middleware
+        var account_invalid = {
+            email: "tester@gmail.com",
+            password: "tester",
+        }
+        chai.request(server)
+        .post('/accounts/login')
+        .send(account_invalid)
+        .end((err,res) => {
+            expect(res.status).to.be.equal(400);   
+            expect(res.body).to.be.a('object');
+            console.log(res.body)
+        done()
+        })
+    })
+
+    it('Should login failed with empty input', (done)=>{
+        // check by validator middleware
+        var account_invalid = {
+            email: "tester@gmail.com",
+            password: "",
         }
         chai.request(server)
         .post('/accounts/login')

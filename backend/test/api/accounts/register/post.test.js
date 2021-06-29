@@ -43,7 +43,64 @@ describe('POST /accounts/register', () =>{
         })
     })
 
-    it('Should register failed with ivalid input', (done)=>{
+    it('Should register failed with ivalid fullname', (done)=>{
+        // check by validator middleware
+        var account_invalid = {
+            fullname: "test",
+            email: "tester@gmail.com",
+            password: "aaa",
+            confirm_password: "aaa"
+        }
+        chai.request(server)
+        .post('/accounts/register')
+        .send(account_invalid)
+        .end((err,res) => {
+            expect(res.status).to.be.equal(400);   
+            expect(res.body).to.be.a('object');
+            console.log(res.body)
+        done()
+        })
+    })
+
+    it('Should register failed with empty email', (done)=>{
+        // check by validator middleware
+        var account_invalid = {
+            fullname: "tester",
+            email: "",
+            password: "aaabbb",
+            confirm_password: "aaabbb"
+        }
+        chai.request(server)
+        .post('/accounts/register')
+        .send(account_invalid)
+        .end((err,res) => {
+            expect(res.status).to.be.equal(400);   
+            expect(res.body).to.be.a('object');
+            console.log(res.body)
+        done()
+        })
+    })
+
+    it('Should register failed with ivalid password', (done)=>{
+        // check by validator middleware
+        var account_invalid = {
+            fullname: "tester",
+            email: "tester@gmail.com",
+            password: "aaa",
+            confirm_password: "aaa"
+        }
+        chai.request(server)
+        .post('/accounts/register')
+        .send(account_invalid)
+        .end((err,res) => {
+            expect(res.status).to.be.equal(400);   
+            expect(res.body).to.be.a('object');
+            console.log(res.body)
+        done()
+        })
+    })
+    
+    it('Should register failed with incorect confirm password', (done)=>{
         // check by validator middleware
         var account_invalid = {
             fullname: "tester",
