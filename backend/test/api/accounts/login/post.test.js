@@ -43,7 +43,10 @@ describe('POST /accounts/login', () =>{
         .send(account)
         .end((err,res) => {
             // Asserts                        
-            expect(res.status).to.be.equal(200);                         
+            expect(res.status).to.be.equal(200);
+            expect(res.body).to.be.a('object');
+            res.body.should.have.property('token')
+            console.log(res.body)                   
         done()
         })
     })
@@ -60,6 +63,7 @@ describe('POST /accounts/login', () =>{
         .end((err,res) => {
             expect(res.status).to.be.equal(400);   
             expect(res.body).to.be.a('object');
+            console.log(res.body)
         done()
         })
     })

@@ -49,7 +49,7 @@ describe('POST /accounts/register', () =>{
                                         
                 expect(res.status).to.be.equal(200);                         
             done()
-        })
+            })
         })
     })
 

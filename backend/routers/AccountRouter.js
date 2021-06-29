@@ -25,16 +25,16 @@ Router.post("/login", loginValidator, (req, res) => {
         let result = validationResult(req)
         if(result.errors.length === 0){
             if (req.body && req.body.email && req.body.password ) {
-                console.log('--- 1. Validation Login ---')
+                // console.log('--- 1. Validation Login ---')
                 user.find({ email: req.body.email }, (err, data) => {
-                    console.log('--- 2. Find email in DB---')
+                    // console.log('--- 2. Find email in DB---')
                     if (data.length > 0) {
-                        console.log('--- 3. Check password ---')
-                        console.log('original password:',data[0].password)
+                        // console.log('--- 3. Check password ---')
+                        // console.log('original password:',data[0].password)
                         // console.log(bcrypt.compareSync(data[0].password, req.body.password))
                         // console.log(bcrypt.compare(data[0].password, req.body.password))
                         var hashed = bcrypt.hashSync(req.body.password, salt)
-                        console.log('hased password:', hashed)
+                        // console.log('hased password:', hashed)
                         if (bcrypt.compareSync(data[0].password, hashed)) {
                             
                             checkUserAndGenerateToken(data[0], req, res);
@@ -85,11 +85,11 @@ Router.post("/register", registerValidator, (req, res) => {
         let result = validationResult(req)
         if(result.errors.length === 0){
             if (req.body.email && req.body.password && req.body.fullname) {
-                console.log('--- 1. Validation Register ---')
+                // console.log('--- 1. Validation Register ---')
                 user.find({ email: req.body.email }, (err, data) => {
-                    console.log('--- 2. Find email in DB ---')
+                    // console.log('--- 2. Find email in DB ---')
                     if (data.length == 0) {
-                        console.log('--- 3. Create new user ---')
+                        // console.log('--- 3. Create new user ---')
                         let User = new user({
                             fullname: req.body.fullname,
                             email: req.body.email,
@@ -146,7 +146,7 @@ Router.get("/login", (req, res) => {
       title: 'Đăng nhập thành công'
     });
   });
-// shhhhh11111
+
 const {JWT_SECRET} = process.env
 function checkUserAndGenerateToken(data, req, res) {
     jwt.sign({ user: data.email, id: data._id }, JWT_SECRET, { expiresIn: '1d' }, (err, token) => {
@@ -159,13 +159,8 @@ function checkUserAndGenerateToken(data, req, res) {
             res.status(200).json({
                 status: true,
                 token: token,
-                title: 'Đăng nhập thành công!! Chào mừng bạn đến với KT.vn Website E-commerce hàng đầu tại VN :v'
+                title: 'Đăng nhập thành công!! Chào mừng bạn đến với KT.vn'
             });
-            // res.json({
-            //     message: 'Đăng nhập thành công',
-            //     token: token,
-            //     status: true
-            // });
         }
     });
 }

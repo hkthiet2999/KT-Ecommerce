@@ -5,7 +5,7 @@ const chaiHttp = require("chai-http")
 
 // 
 const assert = require('assert');
-const { validationResult } = require("express-validator");
+// const { validationResult } = require("express-validator");
 chai.should();
 const expect = chai.expect;
 chai.use(chaiHttp)
@@ -38,6 +38,7 @@ describe('POST /accounts/register', () =>{
         .end((err,res) => {
             expect(res.status).to.be.equal(200);   
             expect(res.body).to.be.a('object');
+            console.log(res.body)
         done()
         })
     })
@@ -56,6 +57,7 @@ describe('POST /accounts/register', () =>{
         .end((err,res) => {
             expect(res.status).to.be.equal(400);   
             expect(res.body).to.be.a('object');
+            console.log(res.body)
         done()
         })
     })
