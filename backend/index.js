@@ -55,14 +55,14 @@ app.use("/", (req, res, next) => {
       if (req.path == "/accounts/login" || req.path == "/accounts/register" || req.path == "/api-docs" || req.path == "/") {
         next();
       } else {
-        console.log('Do day 0000')
+        console.log('verify')
         console.log('token:', req.headers.token)
         /* decode jwt token if authorized*/
         jwt.verify(req.headers.token, JWT_SECRET, function (err, decoded) {
           // console.log('Do day 111111')
           if (decoded && decoded.user) {
             req.user = decoded;
-            console.log('Do day 111111')
+            console.log('decoded')
             next();
           } else {
             return res.status(401).json({
