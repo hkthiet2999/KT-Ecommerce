@@ -141,7 +141,7 @@ Router.get("/get-product", (req, res) => {
       });
   } catch (e) {
     res.status(400).json({
-      errorMessage: 'Có gì đó sai saiiiiii',
+      errorMessage: 'Lỗi hệ thống!',
       status: false
     });
   }
