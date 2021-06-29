@@ -1,3 +1,6 @@
 node_modules/
-.env
+.env.test
 trash.txt
+.env
+.env.product
+.env.development
