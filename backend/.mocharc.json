@@ -1,7 +1,7 @@
 {
     "diff": true,
     "extension": ["js"],
-    "ignore": ["test/workflow/**", "test/connectDatabase/**"],
+    "ignore": ["test/workflow/**"],
     "package": "./package.json",
     "reporter": "spec",
     "slow": 75,

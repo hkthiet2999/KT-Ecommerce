@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">88.64% </span>
+                <span class="strong">90.8% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>78/88</span>
+                <span class='fraction'>79/87</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">80.95% </span>
+                <span class="strong">84.13% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>51/63</span>
+                <span class='fraction'>53/63</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">88.64% </span>
+                <span class="strong">90.8% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>78/88</span>
+                <span class='fraction'>79/87</span>
             </div>
         
             
@@ -294,14 +294,8 @@
 <a name='L235'></a><a href='#L235'>235</a>
 <a name='L236'></a><a href='#L236'>236</a>
 <a name='L237'></a><a href='#L237'>237</a>
-<a name='L238'></a><a href='#L238'>238</a>
-<a name='L239'></a><a href='#L239'>239</a>
-<a name='L240'></a><a href='#L240'>240</a>
-<a name='L241'></a><a href='#L241'>241</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L238'></a><a href='#L238'>238</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -337,9 +331,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">20x</span>
-<span class="cline-any cline-yes">20x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">21x</span>
+<span class="cline-any cline-yes">21x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">20x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -347,20 +341,20 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">19x</span>
+<span class="cline-any cline-yes">19x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">19x</span>
+<span class="cline-any cline-yes">19x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">18x</span>
 <span class="cline-any cline-yes">18x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">18x</span>
 <span class="cline-any cline-yes">18x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">17x</span>
-<span class="cline-any cline-yes">17x</span>
-<span class="cline-any cline-yes">17x</span>
-<span class="cline-any cline-yes">17x</span>
-<span class="cline-any cline-yes">17x</span>
+<span class="cline-any cline-yes">18x</span>
 <span class="cline-any cline-yes">17x</span>
 <span class="cline-any cline-yes">17x</span>
 <span class="cline-any cline-yes">17x</span>
@@ -384,7 +378,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -540,9 +534,6 @@
 <span class="cline-any cline-yes">1x</span></td><td class="text"><pre class="prettyprint lang-js">const express = require('express')
 const Router = express.Router()
 const {validationResult} = require('express-validator')
-&nbsp;
-&nbsp;
-const rateLimit = require("express-rate-limit")
 const multer = require('multer')
 const addProductValidator = require('./validator/addProductValidator')
 const { contextsKey } = require('express-validator/src/base')
@@ -578,8 +569,8 @@ const upload = multer({
 &nbsp;
   fileFilter: function (req, file, callback) {
     const ext = path.extname(file.originalname)
-    <span class="missing-if-branch" title="if path not taken" >I</span>if (ext !== '.png' &amp;&amp; ext !== '.jpg' &amp;&amp; <span class="branch-2 cbranch-no" title="branch not covered" >ext !== '.jpeg')</span> {
-<span class="cstat-no" title="statement not covered" >      return callback(/*res.end('Chỉ cho phép tải tập tin ảnh hehe')*/ null, false)</span>
+    if (ext !== '.png' &amp;&amp; ext !== '.jpg' &amp;&amp; ext !== '.jpeg') {
+      return callback(/*res.end('Chỉ cho phép tải tập tin ảnh như png, jpg và jpeg')*/ null, false)
     }
     callback(null, true)
   }
@@ -619,13 +610,13 @@ Router.post("/add-product", upload.any(), (req, res) =&gt; {
   
       } else {
         res.status(400).json({
-          errorMessage: 'Bạn phải nhập đủ thông tin',
+          errorMessage: 'Bạn phải nhập đủ thông tin!',
           status: false
         });
       }
     } catch (e) {
-<span class="cstat-no" title="statement not covered" >      res.status(400).json({</span>
-        errorMessage: 'Lỗi hệ thống',
+      res.status(400).json({
+        errorMessage: 'Lỗi hệ thống!',
         status: false
       });
     }
@@ -784,7 +775,7 @@ module.exports = Router</pre></td></tr></table></pre>
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Wed Jun 30 2021 10:59:18 GMT+0700 (Indochina Time)
+                at Wed Jun 30 2021 16:06:23 GMT+0700 (Indochina Time)
             </div>
         </div>
         <script src="../../prettify.js"></script>

@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for backend/routers/validator/addProductValidator.js</title>
+    <title>Code coverage report for backend/adapter/mssql-config/dbconfig.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../../prettify.css" />
     <link rel="stylesheet" href="../../../base.css" />
@@ -19,7 +19,7 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../../index.html">All files</a> / <a href="index.html">backend/routers/validator</a> addProductValidator.js</h1>
+        <h1><a href="../../../index.html">All files</a> / <a href="index.html">backend/adapter/mssql-config</a> dbconfig.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
@@ -74,7 +74,6 @@
 <a name='L15'></a><a href='#L15'>15</a>
 <a name='L16'></a><a href='#L16'>16</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -87,22 +86,23 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const {check} = require('express-validator')
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span></td><td class="text"><pre class="prettyprint lang-js">const config = {
+    user :'sa',
+    password :'123456aaa',
+    server:'HOANGKIENTHIET',
+    database:'SalesWebsite',
+    options:{
+        encrypt: true,
+        trustedconnection: true,
+        enableArithAbort : true, 
+        instancename :'SQLEXPRESS',
+        trustServerCertificate: true,
+    },
+    port : 1433
+}
 &nbsp;
-module.exports = [
-    check('name')
-    .exists().withMessage('Vui lòng cung cấp tên sản phẩm')
-    .notEmpty().withMessage('Tên sản phẩm không được để trống'),
-&nbsp;
-    check('price')
-    .exists().withMessage('Vui lòng cung cấp giá sản phẩm')
-    .notEmpty().withMessage('Giá sản phẩm không được để trống')
-    .isNumeric().withMessage('Giá phải là kiểu số'),
-&nbsp;
-    check('desc')
-    .exists().withMessage('Vui lòng cung cấp mô tả sản phẩm')
-    .notEmpty().withMessage('Không được để trống mô tả sản phẩm'),
-]</pre></td></tr></table></pre>
+module.exports = config; </pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
