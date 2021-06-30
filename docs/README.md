@@ -33,6 +33,9 @@ Người dùng đăng ký tài khoản rồi đăng nhập thành công vào h�
 
 Sử dụng: chỉnh mocha ignore: `"ignore": ["test/workflow/**","test/connectDatabase/**"],` từ file .mocharc.json, sau đó `npm test` hoặc `npm run coverage`
 
+Tổng cổng có 25 test case....
+
+![](/.images/0.png)
 ### Account Route
 #### API Login
 - GET accounts/login [get.test.js]()
