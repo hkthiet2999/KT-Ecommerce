@@ -93,7 +93,6 @@ Router.post("/add-product", upload.any(), (req, res) => {
   });
 /*Api to get and search product with pagination and search by name*/
 Router.get("/get-product", (req, res) => {
-  
   try {
     const query = {};
     query["$and"] = [];
