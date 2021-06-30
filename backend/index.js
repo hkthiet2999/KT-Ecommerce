@@ -75,35 +75,41 @@ app.use('/accounts', AccountRouter)
 app.use('/products', ProductRouter)
 
 // DB
-const port = process.env.PORT
 // SQL SERVER
-const sql = require('mssql');
-const sqlconfig = require('./mssql/dbconfig.js');
+// const sql = require('mssql');
+// const sqlconfig = require('./mssql/dbconfig.js');
 
-sql.connect(sqlconfig).then(()=>{
-  console.log('Connected to SQL Server');
-})
-.catch(e => console.log(`Can't connect to SQL Server: `+e.message))
+// sql.connect(sqlconfig).then(()=>{
+//   console.log('Connected to SQL Server');
+// })
+// .catch(e => console.log(`Can't connect to SQL Server: `+e.message))
 // MONGO DB
 // Chạy normal - URI: mongodb://localhost/SalesWebsite
 // Chạy Docker compose - URI : mongodb://mongo:27017/SalesWebsite
 //```````````````````````````````````````````
-var mongoURI = process.env.MONGODB_URI 
-mongoose.connect(mongoURI,
-{ 
-  useNewUrlParser: true,
-  useFindAndModify: true,
-  useUnifiedTopology: true
-})
-.then(() => console.log('Connected to MongoDB'))
-.catch(e => console.log(`Can't connect to MongoDB `+e.message));
+// var mongoURI = process.env.MONGODB_URI 
+// mongoose.connect(mongoURI,
+// { 
+//   useNewUrlParser: true,
+//   useFindAndModify: true,
+//   useUnifiedTopology: true
+// })
+// .then(() => console.log('Connected to MongoDB'))
+// .catch(e => console.log(`Can't connect to MongoDB `+e.message));
+const connect_to_mongo = require('./adapter/mongoose');
+const connect_to_mssql = require('./adapter/mssql')
+//```````````````````````````````````````````
+function connectDatabase(){
+  connect_to_mongo
+  connect_to_mssql
+}
 
 //```````````````````````````````````````````
 
-
-//```````````````````````````````````````````
-
-
-app.listen(port, () => console.log(`Server started on port: http://localhost:` + port));
+const port = process.env.PORT
+app.listen(port, () => {
+  console.log(`Server started on port: http://localhost:` + port)  
+  connectDatabase()
+});
 
 module.exports = app
