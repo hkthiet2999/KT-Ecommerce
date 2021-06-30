@@ -1,3 +1,5 @@
+<<<<<<< HEAD
+=======
 # Mô tả Unit test
 Gồm 3 phần:
 1. Unit test cho kết nối Database
@@ -189,3 +191,4 @@ Danh sách sản phẩm sau khi xóa sản phẩm Product 02
 
 
 
+>>>>>>> 0d812bc42bfbb4365b8cde6e4b2e616c3a7c21db
