@@ -51,6 +51,20 @@ describe('POST /products/delete-product', () =>{
     })
 
     //////////////////
+    it(`Should delete product fail with unauthorized user`, (done) =>{
+        // 2. without Login
+        // 3. Delete product
+        chai.request(server)
+        .post('/products/delete-product')
+        .set('token', 'fake_token')
+        .set('Content-Type','multipart/form-data')
+        .end((err,res) => {
+            expect(res.status).to.be.equal(401);   
+            expect(res.body).to.be.a('object');
+            console.log(res.body)
+        done()
+        })
+    })
 
     it(`Should delete Product 02 sucessful`, (done) =>{
         // 2. Login

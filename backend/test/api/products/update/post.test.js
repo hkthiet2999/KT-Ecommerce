@@ -51,6 +51,35 @@ describe('POST /products/update-product', () =>{
     })
 
     //////////////////
+    it(`Should update product fail with unauthorized user`, (done) =>{
+        // 2. without Login
+        // 3. update product
+        var _id = 'fake_id'
+        // console.log('id: ', _id)
+        var product_updated = {
+            name: "Product 03 - Updated",
+            desc: "Updated description",
+            price: "999999", // number
+            discount: "0",
+        }
+        chai.request(server)
+        .post('/products/update-product')
+        .set('token', 'fake_token')
+        .set('Content-Type','multipart/form-data')
+        .type('form')
+        .field("id", _id) // must
+        .field("name", product_updated.name)
+        .field("desc", product_updated.desc)
+        .field("price", product_updated.price)
+        .field("discount", product_updated.discount)
+        .attach('files', fs.readFileSync(`${__dirname}/test.jpg`), 'test.jpg')
+        .end((err,res) => {
+            expect(res.status).to.be.equal(401);   
+            expect(res.body).to.be.a('object');
+            console.log(res.body)
+        done()
+        })
+    })
 
     it(`Should update Product 03 sucessful`, (done) =>{
         // 2. Login
@@ -186,7 +215,7 @@ describe('POST /products/update-product', () =>{
     })
 
     // failed case
-
+    
     it(`Should update Product 03 failed with invalid input`, (done) =>{
         // 2. Login
         chai.request(server)

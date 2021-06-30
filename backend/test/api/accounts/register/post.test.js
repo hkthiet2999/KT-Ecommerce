@@ -48,8 +48,8 @@ describe('POST /accounts/register', () =>{
         var account_invalid = {
             fullname: "test",
             email: "tester@gmail.com",
-            password: "aaa",
-            confirm_password: "aaa"
+            password: "aaaaaaa",
+            confirm_password: "aaaaaaa"
         }
         chai.request(server)
         .post('/accounts/register')

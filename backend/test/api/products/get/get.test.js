@@ -51,7 +51,20 @@ describe('GET /products/get-product', () =>{
     })
 
     //////////////////
-
+    it(`Should get all products fail with unauthorized user`, (done) =>{
+        // 2. without Login
+        // 3. Get product
+        chai.request(server)
+        .get('/products/get-product')
+        .set('token', 'fake_token')
+        .set('Content-Type','multipart/form-data')
+        .end((err,res) => {
+            expect(res.status).to.be.equal(401);   
+            expect(res.body).to.be.a('object');
+            console.log(res.body)
+        done()
+        })
+    })
     it(`Should get no product for sale`, (done) =>{
         // 2. Login
         chai.request(server)
