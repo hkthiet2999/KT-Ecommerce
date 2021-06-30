@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-=======
+
 # Mô tả Unit test
 Gồm 3 phần:
 1. Unit test cho kết nối Database
