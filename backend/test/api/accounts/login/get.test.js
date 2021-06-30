@@ -1,4 +1,4 @@
-process.env.NODE_ENV='development' // using SalesWebsite
+process.env.NODE_ENV='test' 
 
 const server = require("../../../../index.js")
 const chai = require("chai")
