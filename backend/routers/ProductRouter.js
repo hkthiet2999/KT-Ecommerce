@@ -149,7 +149,7 @@ Router.get("/get-product", (req, res) => {
 
 /* Api to update Product */
 Router.post("/update-product", upload.any(), (req, res) => {
-  console.log('start update')
+  // console.log('start update')
   try {
     if (req.files && req.body && req.body.name && req.body.desc && req.body.price &&
       req.body.id && req.body.discount) {

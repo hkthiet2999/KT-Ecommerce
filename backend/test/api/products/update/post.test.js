@@ -185,5 +185,140 @@ describe('POST /products/update-product', () =>{
         })
     })
 
+    // failed case
+
+    it(`Should update Product 03 failed with invalid input`, (done) =>{
+        // 2. Login
+        chai.request(server)
+        .post('/accounts/login')
+        .send({email: "tester@gmail.com",password: "tester123456",})
+        .end((err,res) => {            
+            expect(res.status).to.be.equal(200);
+            expect(res.body).to.be.a('object');
+            res.body.should.have.property('token')
+            var token = res.body.token
+
+            // 3. Add 3 products
+
+            // 3.1 Product 1
+            var product01 = {
+                name: "Product 01",
+                desc: "No description",
+                price: "120000", // number
+                discount: "6",
+            }
+            chai.request(server)
+            .post('/products/add-product')
+            .set('token', token)
+            .set('Content-Type','multipart/form-data')
+            .type('form')
+            .field("name", product01.name)
+            .field("desc", product01.desc)
+            .field("price", product01.price)
+            .field("discount", product01.discount)
+            .attach('files', fs.readFileSync(`${__dirname}/test.jpg`), 'test.jpg')
+            .end((err,res) => {
+                expect(res.status).to.be.equal(200);   
+                expect(res.body).to.be.a('object');
+                // console.log(res.body)
+
+                // 3.2 Product 2
+                var product02 = {
+                    name: "Product 02",
+                    desc: "No description",
+                    price: "900000", // number
+                    discount: "9",
+                }
+                chai.request(server)
+                .post('/products/add-product')
+                .set('token', token)
+                .set('Content-Type','multipart/form-data')
+                .type('form')
+                .field("name", product02.name)
+                .field("desc", product02.desc)
+                .field("price", product02.price)
+                .field("discount", product02.discount)
+                .attach('files', fs.readFileSync(`${__dirname}/test.jpg`), 'test.jpg')
+                .end((err,res) => {
+                    expect(res.status).to.be.equal(200);   
+                    expect(res.body).to.be.a('object');
+                    // console.log(res.body)
+                    
+                    // 3.3 Product 3
+                    var product03 = {
+                        name: "Product 03",
+                        desc: "No description",
+                        price: "300000", // number
+                        discount: "0",
+                    }
+                    chai.request(server)
+                    .post('/products/add-product')
+                    .set('token', token)
+                    .set('Content-Type','multipart/form-data')
+                    .type('form')
+                    .field("name", product03.name)
+                    .field("desc", product03.desc)
+                    .field("price", product03.price)
+                    .field("discount", product03.discount)
+                    .attach('files', fs.readFileSync(`${__dirname}/test.jpg`), 'test.jpg')
+                    .end((err,res) => {
+                        expect(res.status).to.be.equal(200);   
+                        expect(res.body).to.be.a('object');
+                        // console.log(res.body)
+                        
+
+                        chai.request(server)
+                        .get('/products/get-product')
+                        .set('token', token)
+                        .set('Content-Type','multipart/form-data')
+                        .end((err,res) => {
+                            expect(res.status).to.be.equal(200);   
+                            expect(res.body).to.be.a('object');
+                            // console.log('--- When not updated ---\n',res.body)
+
+                            // 5. Update product 03
+                            var _id = res.body.products[2]._id
+                            // console.log('id: ', _id)
+                            var product_updated = {
+                                name: "",
+                                desc: "Updated description",
+                                price: "999999", // number
+                                discount: "0",
+                            }
+                            chai.request(server)
+                            .post('/products/update-product')
+                            .set('token', token)
+                            .set('Content-Type','multipart/form-data')
+                            .type('form')
+                            .field("id", _id) // must
+                            .field("name", product_updated.name)
+                            .field("desc", product_updated.desc)
+                            .field("price", product_updated.price)
+                            .field("discount", product_updated.discount)
+                            .attach('files', fs.readFileSync(`${__dirname}/test.jpg`), 'test.jpg')
+                            .end((err,res) => {
+                                expect(res.status).to.be.equal(400);   
+                                expect(res.body).to.be.a('object');
+                                console.log(res.body)
+                                // // check by get all products to see updated
+                                // chai.request(server)
+                                // .get('/products/get-product')
+                                // .set('token', token)
+                                // .set('Content-Type','multipart/form-data')
+                                // .end((err,res) => {
+                                //     expect(res.status).to.be.equal(200);   
+                                //     expect(res.body).to.be.a('object');
+                                //     console.log('--- When updated ---\n',res.body)
+                                //     done()
+                                // })
+                            done()
+                            })
+                        })
+                    })
+                    
+                })
+            })
+        })
+    })
 
 })
