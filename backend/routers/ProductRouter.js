@@ -149,7 +149,7 @@ Router.get("/get-product", (req, res) => {
 
 /* Api to update Product */
 Router.post("/update-product", upload.any(), (req, res) => {
-  console.log('Do day update')
+  console.log('start update')
   try {
     if (req.files && req.body && req.body.name && req.body.desc && req.body.price &&
       req.body.id && req.body.discount) {
@@ -196,13 +196,13 @@ Router.post("/update-product", upload.any(), (req, res) => {
 
     } else {
       res.status(400).json({
-        errorMessage: 'Bạn phải nhập đủ thông tin',
+        errorMessage: 'Bạn phải nhập đủ thông tin!',
         status: false
       });
     }
   } catch (e) {
     res.status(400).json({
-      errorMessage: 'Sai gì rồi fix bug thôi :)',
+      errorMessage: 'Lỗi hệ thống!',
       status: false
     });
   }

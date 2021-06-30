@@ -12,7 +12,7 @@ chai.use(chaiHttp)
 //
 
 //
-describe('GET /products/get-product', () =>{
+describe('POST /products/update-product', () =>{
     const Product = require('../../../../models/ProductModel')
     const Account = require('../../../../models/AccountModel')
 
@@ -52,33 +52,7 @@ describe('GET /products/get-product', () =>{
 
     //////////////////
 
-    it(`Should get no product for sale`, (done) =>{
-        // 2. Login
-        chai.request(server)
-        .post('/accounts/login')
-        .send({email: "tester@gmail.com",password: "tester123456",})
-        .end((err,res) => {            
-            expect(res.status).to.be.equal(200);
-            expect(res.body).to.be.a('object');
-            res.body.should.have.property('token')
-            var token = res.body.token
-            // 3. Get products
-            // 
-            chai.request(server)
-            .get('/products/get-product')
-            .set('token', token)
-            .set('Content-Type','multipart/form-data')
-            .end((err,res) => {
-                expect(res.status).to.be.equal(400);   
-                expect(res.body).to.be.a('object');
-                console.log(res.body)
-            done()
-            })
-        })
-    })
-
-
-    it(`Should get all product sucessful`, (done) =>{
+    it(`Should update Product 03 sucessful`, (done) =>{
         // 2. Login
         chai.request(server)
         .post('/accounts/login')
@@ -111,7 +85,7 @@ describe('GET /products/get-product', () =>{
             .end((err,res) => {
                 expect(res.status).to.be.equal(200);   
                 expect(res.body).to.be.a('object');
-                console.log(res.body)
+                // console.log(res.body)
 
                 // 3.2 Product 2
                 var product02 = {
@@ -133,7 +107,7 @@ describe('GET /products/get-product', () =>{
                 .end((err,res) => {
                     expect(res.status).to.be.equal(200);   
                     expect(res.body).to.be.a('object');
-                    console.log(res.body)
+                    // console.log(res.body)
                     
                     // 3.3 Product 3
                     var product03 = {
@@ -155,10 +129,9 @@ describe('GET /products/get-product', () =>{
                     .end((err,res) => {
                         expect(res.status).to.be.equal(200);   
                         expect(res.body).to.be.a('object');
-                        console.log(res.body)
+                        // console.log(res.body)
+                        
 
-                        // 4. Get products
-                        // 
                         chai.request(server)
                         .get('/products/get-product')
                         .set('token', token)
@@ -166,8 +139,44 @@ describe('GET /products/get-product', () =>{
                         .end((err,res) => {
                             expect(res.status).to.be.equal(200);   
                             expect(res.body).to.be.a('object');
-                            console.log(res.body)
-                        done()
+                            console.log('--- When not updated ---\n',res.body)
+
+                            // 5. Update product 03
+                            var _id = res.body.products[2]._id
+                            // console.log('id: ', _id)
+                            var product_updated = {
+                                name: "Product 03 - Updated",
+                                desc: "Updated description",
+                                price: "999999", // number
+                                discount: "0",
+                            }
+                            chai.request(server)
+                            .post('/products/update-product')
+                            .set('token', token)
+                            .set('Content-Type','multipart/form-data')
+                            .type('form')
+                            .field("id", _id) // must
+                            .field("name", product_updated.name)
+                            .field("desc", product_updated.desc)
+                            .field("price", product_updated.price)
+                            .field("discount", product_updated.discount)
+                            .attach('files', fs.readFileSync(`${__dirname}/test.jpg`), 'test.jpg')
+                            .end((err,res) => {
+                                expect(res.status).to.be.equal(200);   
+                                expect(res.body).to.be.a('object');
+                                console.log(res.body)
+                                // check by get all products to see updated
+                                chai.request(server)
+                                .get('/products/get-product')
+                                .set('token', token)
+                                .set('Content-Type','multipart/form-data')
+                                .end((err,res) => {
+                                    expect(res.status).to.be.equal(200);   
+                                    expect(res.body).to.be.a('object');
+                                    console.log('--- When updated ---\n',res.body)
+                                    done()
+                                })
+                            })
                         })
                     })
                     
