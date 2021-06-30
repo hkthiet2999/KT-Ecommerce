@@ -65,10 +65,7 @@ app.use("/", (req, res, next) => {
             console.log('decoded')
             next();
           } else {
-            return res.status(401).json({
-              message: 'Người dùng chưa được xác thực!',
-              status: false
-            });
+            return res.status(401).json({message: 'Người dùng chưa được xác thực!',status: false});
           }
         })
       }

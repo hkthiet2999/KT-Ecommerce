@@ -227,13 +227,13 @@ Router.post("/delete-product", (req, res) => {
       });
     } else {
       res.status(400).json({
-        errorMessage: 'Bạn phải nhập đủ thông tin',
+        errorMessage: 'Sản phẩm không tồn tại!',
         status: false
       });
     }
   } catch (e) {
     res.status(400).json({
-      errorMessage: 'Sai gì rồi fix bug thôi :)',
+      errorMessage: 'Lỗi hệ thống!',
       status: false
     });
   }
