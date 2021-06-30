@@ -183,7 +183,7 @@ Danh sách sản phẩm sau khi xóa sản phẩm Product 02
 
 - [_Coverage reporter_](https://smoothkt4951.github.io/KT-Ecommerce/)
 
-- [_Demo_]()
+- [_Demo_](https://www.youtube.com/watch?v=7tFvti20owc)
 
 
 
