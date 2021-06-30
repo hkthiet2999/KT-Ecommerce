@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">94.92% </span>
+                <span class="strong">94.83% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>56/59</span>
+                <span class='fraction'>55/58</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">94.83% </span>
+                <span class="strong">94.74% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>55/58</span>
+                <span class='fraction'>54/57</span>
             </div>
         
             
@@ -165,17 +165,7 @@
 <a name='L106'></a><a href='#L106'>106</a>
 <a name='L107'></a><a href='#L107'>107</a>
 <a name='L108'></a><a href='#L108'>108</a>
-<a name='L109'></a><a href='#L109'>109</a>
-<a name='L110'></a><a href='#L110'>110</a>
-<a name='L111'></a><a href='#L111'>111</a>
-<a name='L112'></a><a href='#L112'>112</a>
-<a name='L113'></a><a href='#L113'>113</a>
-<a name='L114'></a><a href='#L114'>114</a>
-<a name='L115'></a><a href='#L115'>115</a>
-<a name='L116'></a><a href='#L116'>116</a>
-<a name='L117'></a><a href='#L117'>117</a>
-<a name='L118'></a><a href='#L118'>118</a>
-<a name='L119'></a><a href='#L119'>119</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L109'></a><a href='#L109'>109</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -209,12 +199,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -228,9 +212,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">60x</span>
-<span class="cline-any cline-yes">60x</span>
-<span class="cline-any cline-yes">29x</span>
+<span class="cline-any cline-yes">61x</span>
+<span class="cline-any cline-yes">61x</span>
+<span class="cline-any cline-yes">30x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">31x</span>
 <span class="cline-any cline-yes">31x</span>
@@ -243,9 +227,6 @@
 <span class="cline-any cline-yes">30x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -259,7 +240,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -326,15 +306,9 @@ app.use(session({ cookie: { maxAge: 600000 }}));
 app.use(flash());
 //
 const ProductRouter = require('./routers/ProductRouter')
-const OrderRouter = require('./routers/OrderRouter')
 const AccountRouter = require('./routers/AccountRouter')
 //
-// app.use(express.static(path.resolve(__dirname, "./reactjs/build")))
-// //
-// app.get("*", (req, res) =&gt; {
-//   res.sendFile(path.resolve(__dirname, "./reactjs/public", "index.html"));
-// });
-//
+&nbsp;
 app.set('view engine', 'ejs')
 //
 app.use(express.urlencoded({extended: false}))
@@ -360,10 +334,7 @@ app.use("/", (req, res, next) =&gt; {
             console.log('decoded')
             next();
           } else {
-            return res.status(401).json({
-              message: 'Người dùng chưa được xác thực!',
-              status: false
-            });
+            return res.status(401).json({message: 'Người dùng chưa được xác thực!',status: false});
           }
         })
       }
@@ -377,7 +348,6 @@ app.use("/", (req, res, next) =&gt; {
 &nbsp;
 app.use('/accounts', AccountRouter)
 app.use('/products', ProductRouter)
-// app.use('/orders', OrderRouter)
 &nbsp;
 // DB
 const port = process.env.PORT
@@ -418,7 +388,7 @@ module.exports = app</pre></td></tr></table></pre>
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Wed Jun 30 2021 10:43:33 GMT+0700 (Indochina Time)
+                at Wed Jun 30 2021 10:59:18 GMT+0700 (Indochina Time)
             </div>
         </div>
         <script src="../prettify.js"></script>

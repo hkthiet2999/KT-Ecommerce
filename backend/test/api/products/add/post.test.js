@@ -194,4 +194,41 @@ describe('POST /products/add-product', () =>{
         })
     })
 
+    it(`Should add new product fail with ivalid file name`, (done) =>{
+        // 2. Login
+        chai.request(server)
+        .post('/accounts/login')
+        .send({email: "tester@gmail.com",password: "tester123456",})
+        .end((err,res) => {            
+            expect(res.status).to.be.equal(200);
+            expect(res.body).to.be.a('object');
+            res.body.should.have.property('token')
+            var token = res.body.token
+            // var token = 'some_authorization_token'
+            // console.log('token:', token)
+            var product = {
+                name: "Name of Product",
+                desc: "No description",
+                price: "1235", // number
+                discount: "12",
+            }
+            // 3. Add product
+            chai.request(server)
+            .post('/products/add-product')
+            .set('token', token)
+            .set('Content-Type','multipart/form-data')
+            .type('form')
+            .field("name", product.name)
+            .field("desc", product.desc)
+            .field("price", product.price)
+            .field("discount", product.discount)
+            .attach('files', fs.readFileSync(`${__dirname}/invalidfilename.txt`), 'invalidfilename.txt')
+            .end((err,res) => {
+                expect(res.status).to.be.equal(400);   
+                expect(res.body).to.be.a('object');
+                console.log(res.body)
+            done()
+            })
+        })
+    })
 })

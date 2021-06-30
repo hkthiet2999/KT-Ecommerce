@@ -51,11 +51,28 @@ describe('POST /accounts/login', () =>{
         })
     })
 
-    it('Should login failed with incorect email', (done)=>{
+    it('Should login failed with invalid email', (done)=>{
         // check by validator middleware
         var account_invalid = {
             email: "tester",
             password: "tester123456",
+        }
+        chai.request(server)
+        .post('/accounts/login')
+        .send(account_invalid)
+        .end((err,res) => {
+            expect(res.status).to.be.equal(400);   
+            expect(res.body).to.be.a('object');
+            console.log(res.body)
+        done()
+        })
+    })
+
+    it('Should login failed with incorect email', (done)=>{
+        // check by validator middleware
+        var account_invalid = {
+            email: "tester_fake@gmail.com",
+            password: "tester",
         }
         chai.request(server)
         .post('/accounts/login')
@@ -85,7 +102,7 @@ describe('POST /accounts/login', () =>{
         })
     })
 
-    it('Should login failed with empty input', (done)=>{
+    it('Should login failed with invalid password', (done)=>{
         // check by validator middleware
         var account_invalid = {
             email: "tester@gmail.com",

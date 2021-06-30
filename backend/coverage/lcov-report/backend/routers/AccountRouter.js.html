@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">87.3% </span>
+                <span class="strong">90.32% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>55/63</span>
+                <span class='fraction'>56/62</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">75% </span>
+                <span class="strong">79.17% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>18/24</span>
+                <span class='fraction'>19/24</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">87.3% </span>
+                <span class="strong">90.32% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>55/63</span>
+                <span class='fraction'>56/62</span>
             </div>
         
             
@@ -224,7 +224,8 @@
 <a name='L165'></a><a href='#L165'>165</a>
 <a name='L166'></a><a href='#L166'>166</a>
 <a name='L167'></a><a href='#L167'>167</a>
-<a name='L168'></a><a href='#L168'>168</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L168'></a><a href='#L168'>168</a>
+<a name='L169'></a><a href='#L169'>169</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -246,15 +247,15 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -273,14 +274,15 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -421,7 +423,7 @@ Router.post("/login", loginValidator, (req, res) =&gt; {
                 // console.log('--- 1. Validation Login ---')
                 user.find({ email: req.body.email }, (err, data) =&gt; {
                     // console.log('--- 2. Find email in DB---')
-                    <span class="missing-if-branch" title="else path not taken" >E</span>if (data.length &gt; 0) {
+                    if (data.length &gt; 0) {
                         // console.log('--- 3. Check password ---')
                         // console.log('original password:',data[0].password)
                         // console.log(bcrypt.compareSync(data[0].password, req.body.password))
@@ -434,24 +436,25 @@ Router.post("/login", loginValidator, (req, res) =&gt; {
                         } else {
                             // console.log('Dô đây lỗi 1')
                             res.status(400).json({
-                                errorMessage: 'Tài khoản hoặc mật khẩu không chính xác!',
+                                errorMessage: 'Mật khẩu không chính xác!',
                                 status: false
                             });
                         }
     
                     } else {
-<span class="cstat-no" title="statement not covered" >                        res.status(400).json({</span>
-                        errorMessage: 'Tài khoản hoặc mật khẩu không chính xác!',
+                        res.status(400).json({
+                        errorMessage: 'Tài khoản email không tồn tại!',
                         status: false
                         });
                     }
                 })
-            } else {
-<span class="cstat-no" title="statement not covered" >                res.status(400).json({</span>
-                errorMessage: 'Bạn phải nhập đủ thông tin!',
-                status: false
-                });
-            }
+            } 
+            //else {
+            //     res.status(400).json({
+            //     errorMessage: 'Bạn phải nhập đủ thông tin!',
+            //     status: false
+            //     });
+            // }
         }
         else{
             let Messages = result.mapped()
@@ -565,7 +568,7 @@ module.exports = Router
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Wed Jun 30 2021 10:43:33 GMT+0700 (Indochina Time)
+                at Wed Jun 30 2021 10:59:18 GMT+0700 (Indochina Time)
             </div>
         </div>
         <script src="../../prettify.js"></script>

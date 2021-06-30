@@ -31,15 +31,9 @@ app.use(session({ cookie: { maxAge: 600000 }}));
 app.use(flash());
 //
 const ProductRouter = require('./routers/ProductRouter')
-const OrderRouter = require('./routers/OrderRouter')
 const AccountRouter = require('./routers/AccountRouter')
 //
-// app.use(express.static(path.resolve(__dirname, "./reactjs/build")))
-// //
-// app.get("*", (req, res) => {
-//   res.sendFile(path.resolve(__dirname, "./reactjs/public", "index.html"));
-// });
-//
+
 app.set('view engine', 'ejs')
 //
 app.use(express.urlencoded({extended: false}))
@@ -79,7 +73,6 @@ app.use("/", (req, res, next) => {
 
 app.use('/accounts', AccountRouter)
 app.use('/products', ProductRouter)
-// app.use('/orders', OrderRouter)
 
 // DB
 const port = process.env.PORT

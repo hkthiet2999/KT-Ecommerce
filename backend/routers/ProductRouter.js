@@ -1,9 +1,6 @@
 const express = require('express')
 const Router = express.Router()
 const {validationResult} = require('express-validator')
-
-
-const rateLimit = require("express-rate-limit")
 const multer = require('multer')
 const addProductValidator = require('./validator/addProductValidator')
 const { contextsKey } = require('express-validator/src/base')
@@ -40,7 +37,7 @@ const upload = multer({
   fileFilter: function (req, file, callback) {
     const ext = path.extname(file.originalname)
     if (ext !== '.png' && ext !== '.jpg' && ext !== '.jpeg') {
-      return callback(/*res.end('Chỉ cho phép tải tập tin ảnh hehe')*/ null, false)
+      return callback(/*res.end('Chỉ cho phép tải tập tin ảnh như png, jpg và jpeg')*/ null, false)
     }
     callback(null, true)
   }
@@ -80,13 +77,13 @@ Router.post("/add-product", upload.any(), (req, res) => {
   
       } else {
         res.status(400).json({
-          errorMessage: 'Bạn phải nhập đủ thông tin',
+          errorMessage: 'Bạn phải nhập đủ thông tin!',
           status: false
         });
       }
     } catch (e) {
       res.status(400).json({
-        errorMessage: 'Lỗi hệ thống',
+        errorMessage: 'Lỗi hệ thống!',
         status: false
       });
     }

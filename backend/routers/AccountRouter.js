@@ -12,12 +12,7 @@ const user = require("../models/AccountModel.js");
 const registerValidator = require('./validator/registerValidator')
 const loginValidator = require('./validator/loginValidator')
 const { validationResult } = require('express-validator')
-// Router.get('/login', (req, res) => {
-//     res.json({
-//         code: 0,
-//         message: 'Đăng nhập bị lỗi gì rồi'
-//     })
-// })
+
 /* login api */
 Router.post("/login", loginValidator, (req, res) => {
     console.log(req.body)
@@ -41,24 +36,25 @@ Router.post("/login", loginValidator, (req, res) => {
                         } else {
                             // console.log('Dô đây lỗi 1')
                             res.status(400).json({
-                                errorMessage: 'Tài khoản hoặc mật khẩu không chính xác!',
+                                errorMessage: 'Mật khẩu không chính xác!',
                                 status: false
                             });
                         }
     
                     } else {
                         res.status(400).json({
-                        errorMessage: 'Tài khoản hoặc mật khẩu không chính xác!',
+                        errorMessage: 'Tài khoản email không tồn tại!',
                         status: false
                         });
                     }
                 })
-            } else {
-                res.status(400).json({
-                errorMessage: 'Bạn phải nhập đủ thông tin!',
-                status: false
-                });
-            }
+            } 
+            //else {
+            //     res.status(400).json({
+            //     errorMessage: 'Bạn phải nhập đủ thông tin!',
+            //     status: false
+            //     });
+            // }
         }
         else{
             let Messages = result.mapped()
