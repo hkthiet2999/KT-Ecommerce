@@ -1,4 +1,4 @@
-// HMAC SHA-256
+// sign with HMAC SHA-256
 const jwt = require('jsonwebtoken')
 const {JWT_SECRET} = process.env
 function checkUserAndGenerateToken(data, req, res) {
@@ -17,4 +17,4 @@ function checkUserAndGenerateToken(data, req, res) {
         }
     });
 }
-module.exports = {checkUserAndGenerateToken: checkUserAndGenerateToken}
+module.exports = {authHMAC: checkUserAndGenerateToken}

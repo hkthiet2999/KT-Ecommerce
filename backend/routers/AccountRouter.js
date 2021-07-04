@@ -3,8 +3,6 @@ const Router  = express.Router()
 const Account = require('../models/AccountModel')
 const bcrypt = require('bcrypt')
 const salt = bcrypt.genSaltSync(10);
-// const jwt = require('jsonwebtoken')
-const fs = require('fs')
 //
 const product = require("../models/ProductModel.js");
 const user = require("../models/AccountModel.js");
@@ -12,7 +10,9 @@ const user = require("../models/AccountModel.js");
 const registerValidator = require('./validator/registerValidator')
 const loginValidator = require('./validator/loginValidator')
 const { validationResult } = require('express-validator')
-const {checkUserAndGenerateToken} = require('../auth/checkUser-genToken')
+const {authHMAC} = require('../auth/checkUser-genToken-HMAC.js')
+const {authRSA} = require('../auth/checkUser-genToken-RSA.js')
+
 
 /* login api */
 Router.post("/login", loginValidator, (req, res) => {
@@ -32,8 +32,8 @@ Router.post("/login", loginValidator, (req, res) => {
                         var hashed = bcrypt.hashSync(req.body.password, salt)
                         // console.log('hased password:', hashed)
                         if (bcrypt.compareSync(data[0].password, hashed)) {
-                            
-                            checkUserAndGenerateToken(data[0], req, res);
+                            // authHMAC(data[0], req, res); // sign with HMAC SHA-256
+                            authRSA(data[0], req, res); // sign with RSA SHA-256
                         } else {
                             // console.log('Dô đây lỗi 1')
                             res.status(400).json({
@@ -144,21 +144,4 @@ Router.get("/login", (req, res) => {
     });
   });
 
-// const {JWT_SECRET} = process.env
-// function checkUserAndGenerateToken(data, req, res) {
-//     jwt.sign({ user: data.email, id: data._id }, JWT_SECRET, { expiresIn: '1d' }, (err, token) => {
-//         if (err) {
-//             res.status(400).json({
-//                 status: false,
-//                 errorMessage: err,
-//         });
-//         } else {
-//             res.status(200).json({
-//                 status: true,
-//                 token: token,
-//                 title: 'Đăng nhập thành công!! Chào mừng bạn đến với KT.vn'
-//             });
-//         }
-//     });
-// }
 module.exports = Router

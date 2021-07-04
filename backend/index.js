@@ -5,6 +5,7 @@ const app = express()
 const mongoose = require('mongoose')
 const cors = require('cors')
 const jwt = require('jsonwebtoken');
+const fs = require('fs')
 //
 const bcrypt = require('bcrypt')
 const path = require("path")
@@ -49,19 +50,47 @@ app.use("/", (req, res, next) => {
       if (req.path == "/accounts/login" || req.path == "/accounts/register" || req.path == "/api-docs" || req.path == "/") {
         next();
       } else {
-        console.log('verify')
+        // console.log('verify')
         console.log('token:', req.headers.token)
-        /* decode jwt token if authorized*/
-        jwt.verify(req.headers.token, JWT_SECRET, function (err, decoded) {
-          // console.log('Do day 111111')
-          if (decoded && decoded.user) {
+
+        /* ------------------------------------------------------------------------------------------ */
+        /* decode jwt token if sign with HMAC SHA-256*/
+        // 
+        // jwt.verify(req.headers.token, JWT_SECRET, function (err, decoded) {
+        //   if (decoded && decoded.user) {
+        //     req.user = decoded;
+        //     console.log('decoded')
+        //     next();
+        //   } else {
+        //     return res.status(401).json({message: 'Người dùng chưa được xác thực!',status: false});
+        //   }
+        // })
+        //
+        /* ------------------------------------------------------------------------------------------ */
+
+        /* ------------------------------------------------------------------------------------------ */
+        /* decode jwt token if sign with RSA SHA-256*/
+        var publicKey = fs.readFileSync('./auth/keys/public.pem', 'utf-8')
+
+        // console.log(publicKey)
+        jwt.verify(req.headers.token, publicKey, {
+          complete: true,
+        }, (err, decoded) => {
+          // console.log(decoded)
+          // console.log(decoded.payload.user)
+          // console.log(req.user)
+          if (decoded && decoded.payload.user) {
             req.user = decoded;
-            console.log('decoded')
+            // console.log('decoded')
+            // console.log(req.user)
             next();
           } else {
             return res.status(401).json({message: 'Người dùng chưa được xác thực!',status: false});
           }
         })
+
+        /* ------------------------------------------------------------------------------------------ */
+
       }
     } catch (e) {
       res.status(400).json({
