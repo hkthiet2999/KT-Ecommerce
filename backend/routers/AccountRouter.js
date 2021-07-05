@@ -22,18 +22,21 @@ Router.post("/login", loginValidator, (req, res) => {
         if(result.errors.length === 0){
             if (req.body && req.body.email && req.body.password ) {
                 // console.log('--- 1. Validation Login ---')
-                user.find({ email: req.body.email }, (err, data) => {
+                user.find({ email: req.body.email }, async (err, data) => {
                     // console.log('--- 2. Find email in DB---')
                     if (data.length > 0) {
                         // console.log('--- 3. Check password ---')
-                        // console.log('original password:',data[0].password)
+                        console.log('password DB:',data[0].password)
+                        console.log('password User: ', req.body.password)
                         // console.log(bcrypt.compareSync(data[0].password, req.body.password))
                         // console.log(bcrypt.compare(data[0].password, req.body.password))
-                        var hashed = bcrypt.hashSync(req.body.password, salt)
+                        // var hashed = bcrypt.hashSync(req.body.password, salt)
                         // console.log('hased password:', hashed)
-                        if (bcrypt.compareSync(data[0].password, hashed)) {
+                        if (bcrypt.compareSync(req.body.password, data[0].password)) {
+                            // console.log('check pass true')
+                            // console.log('data: ', data[0])
                             // authHMAC(data[0], req, res); // sign with HMAC SHA-256
-                            authRSA(data[0], req, res); // sign with RSA SHA-256
+                            await authRSA(data[0], req, res); // sign with RSA SHA-256
                         } else {
                             // console.log('Dô đây lỗi 1')
                             res.status(400).json({
@@ -87,10 +90,11 @@ Router.post("/register", registerValidator, (req, res) => {
                     // console.log('--- 2. Find email in DB ---')
                     if (data.length == 0) {
                         // console.log('--- 3. Create new user ---')
+                        const hased = bcrypt.hashSync(req.body.password, salt)
                         let User = new user({
                             fullname: req.body.fullname,
                             email: req.body.email,
-                            password: req.body.password
+                            password: hased
                         });
                         User.save((err, data) => {
                             if (err) {

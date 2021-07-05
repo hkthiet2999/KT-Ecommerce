@@ -7,11 +7,9 @@ const fs = require('fs')
 
 async function checkUserAndGenerateToken(data, req, res) {
     await generateKeyPair;
-    var privateKey = fs.readFileSync('./auth/keys/private.pem', 'utf-8')
+    const privateKey = fs.readFileSync('./auth/keys/private.pem', 'utf-8')
     // console.log(privateKey)
-    var jwt = require("jsonwebtoken");
-
-    var signOptions = {
+    const signOptions = {
       issuer: "hkthiet99",
       subject: "hkthiet99@gmail.com",
       audience: "https://github.com/smoothkt4951",
@@ -20,14 +18,14 @@ async function checkUserAndGenerateToken(data, req, res) {
     };
 
     // jwt.sign(payload, privateKey, signOptions)
-    jwt.sign({ user: data.email, id: data._id }, { key: privateKey, passphrase: 'top secrect' }, signOptions, (err, token) => {
+    await jwt.sign({ user: data.email, id: data._id }, privateKey, signOptions, async (err, token) => {
         if (err) {
-            res.status(400).json({
+            await res.status(400).json({
                 status: false,
                 errorMessage: err,
         });
         } else {
-            res.status(200).json({
+            await res.status(200).json({
                 status: true,
                 token: token,
                 title: 'Đăng nhập thành công!! Chào mừng bạn đến với KT.vn'

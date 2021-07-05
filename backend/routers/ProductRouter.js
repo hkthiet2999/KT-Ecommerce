@@ -45,15 +45,16 @@ const upload = multer({
 /* Api to add Product */
 Router.post("/add-product", upload.any(), (req, res) => {
     // console.log('Add product console')
-    console.log('files:', req.files)
-    console.log('body:', req.body)
+    // console.log('files:', req.files)
+    // console.log('body:', req.body)
     // console.log('body components:', req.body.name, '|', req.body.desc, '|', req.body.price, '|', req.body.discount)
 
 
     try {
       if (req.files && req.body && req.body.name && req.body.desc && req.body.price &&
         req.body.discount) {
-  
+        // console.log(req.body);
+        // console.log(req.user.id)
         let new_product = new product();
         new_product.name = req.body.name;
         new_product.desc = req.body.desc;
@@ -89,11 +90,11 @@ Router.post("/add-product", upload.any(), (req, res) => {
     }
   });
 /*Api to get and search product with pagination and search by name*/
-Router.get("/get-product", (req, res) => {
+Router.get("/get-product", async (req, res) => {
   try {
-    const query = {};
+    const query = await {};
     query["$and"] = [];
-    query["$and"].push({
+    await query["$and"].push({
       is_delete: false,
       user_id: req.user.id
     });

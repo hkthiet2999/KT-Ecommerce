@@ -13,6 +13,7 @@ describe('POST /accounts/login', () =>{
     const Account = require('../../../../models/AccountModel')
 
     beforeEach((done) => { 
+        
         Account.deleteMany({}, function(err) {
             if (err) {
                 console.log(err);
@@ -23,13 +24,21 @@ describe('POST /accounts/login', () =>{
 
     beforeEach((done)=>{
         
-        var newAccount = new Account({
+        // 1. Register 
+        var account = {
             fullname: "tester",
             email: "tester@gmail.com",
-            password: "tester123456"
-        });
-        newAccount.save();
-        done();
+            password: "tester123456",
+            confirm_password: "tester123456"
+        }
+        chai.request(server)
+        .post('/accounts/register')
+        .send(account)
+        .end((err,res) => {
+            expect(res.status).to.be.equal(200);   
+            expect(res.body).to.be.a('object');
+            done()
+        })
     })
 
     it(`Should login successful then generate token`, (done) =>{
