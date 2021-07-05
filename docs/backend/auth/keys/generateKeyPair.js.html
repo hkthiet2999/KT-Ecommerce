@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for backend/routers/validator/registerValidator.js</title>
+    <title>Code coverage report for backend/auth/keys/generateKeyPair.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../../prettify.css" />
     <link rel="stylesheet" href="../../../base.css" />
@@ -19,20 +19,20 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../../index.html">All files</a> / <a href="index.html">backend/routers/validator</a> registerValidator.js</h1>
+        <h1><a href="../../../index.html">All files</a> / <a href="index.html">backend/auth/keys</a> generateKeyPair.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">87.5% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>5/5</span>
+                <span class='fraction'>7/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>2/2</span>
+                <span class='fraction'>1/2</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>5/5</span>
+                <span class='fraction'>7/7</span>
             </div>
         
             
@@ -83,14 +83,8 @@
 <a name='L24'></a><a href='#L24'>24</a>
 <a name='L25'></a><a href='#L25'>25</a>
 <a name='L26'></a><a href='#L26'>26</a>
-<a name='L27'></a><a href='#L27'>27</a>
-<a name='L28'></a><a href='#L28'>28</a>
-<a name='L29'></a><a href='#L29'>29</a>
-<a name='L30'></a><a href='#L30'>30</a>
-<a name='L31'></a><a href='#L31'>31</a>
-<a name='L32'></a><a href='#L32'>32</a>
-<a name='L33'></a><a href='#L33'>33</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L27'></a><a href='#L27'>27</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -106,54 +100,42 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">24x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">24x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const {check} = require('express-validator')
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span></td><td class="text"><pre class="prettyprint lang-js">const { generateKeyPair } = require('crypto');
+const fs = require('fs')
+generateKeyPair(
+  "rsa",
+  {
+    modulusLength: 2048,
+    publicKeyEncoding: {
+      type: "pkcs1",
+      format: "pem",
+    },
+    privateKeyEncoding: {
+      type: "pkcs1",
+      format: "pem",
+    },
+  },
+  (err, publicKey, privateKey) =&gt; {
+    // Handle errors and use the generated key pair.
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (err) <span class="cstat-no" title="statement not covered" >console.log("Error!", err);</span>
+    fs.writeFileSync("./auth/keys/private.pem", privateKey)
+    fs.writeFileSync("./auth/keys/public.pem", publicKey)
+    // res.json({ publicKey, privateKey })
+    // console.log('aaa: ',privateKey)
+    // return {publicKey, privateKey}
+  }
+);
 &nbsp;
-module.exports = [
-    check('email')
-    .exists().withMessage('Vui lòng cung cấp địa chỉ email')
-    .notEmpty().withMessage('Địa chỉ email không được để trống')
-    .isEmail().withMessage('Địa chỉ email không hợp lệ'),
-&nbsp;
-    check('password')
-    .exists().withMessage('Vui lòng nhập mật khẩu')
-    .notEmpty().withMessage('Mật khẩu không được để trống')
-    .isLength({min: 6}).withMessage('Mật khẩu phải có tối thiểu 6 ký tự'),
-&nbsp;
-    check('fullname')
-    .exists().withMessage('Vui lòng nhập tên người dùng')
-    .notEmpty().withMessage('Tên người dùng không được để trống')
-    .isLength({min: 6}).withMessage('Tên người dùng phải có ít nhất 6 ký tự'),
-&nbsp;
-    check('confirm_password')
-    .exists().withMessage('Vui lòng xác nhận lại mật khẩu')
-    .notEmpty().withMessage('Mật khẩu xác nhận không được để trống')
-    .isLength({min: 6}).withMessage('Mật khẩu phải có tối thiểu 6 ký tự')
-    .custom( async(confirm_password, {req}) =&gt; {
-        const password = req.body.password
-  
-        // If password and confirm password not same
-        // don't allow to sign up and throw error
-        if(password !== confirm_password){
-            throw new Error('Mật khẩu xác nhận không khớp!')
-        }
-    }),
-&nbsp;
-]</pre></td></tr></table></pre>
+module.exports = {generateKeyPair: generateKeyPair};</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
