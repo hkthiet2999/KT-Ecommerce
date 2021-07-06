@@ -10,16 +10,6 @@ const fs = require('fs')
 const product = require("../models/ProductModel.js");
 const user = require("../models/AccountModel.js");
 
-// const allProductLimiter = rateLimit({
-//     windowMs: 10 * 1000, //(tinh bang mili giay)
-//     max: 5, // start blocking after 5 requests
-//     message: "Khong gui qua 5 request trong 10s khi doc danh sach san pham"
-// })
-// const detailProductLimiter = rateLimit({
-//     windowMs: 10 * 1000, //10s
-//     max: 2, // start blocking after 2 requests
-//     message: "Khong gui qua 2 request trong 10s khi doc chi tiet 1 san pham"
-// })
 const dir = '../frontend/uploads';
 const upload = multer({
   storage: multer.diskStorage({

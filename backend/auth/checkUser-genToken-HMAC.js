@@ -1,6 +1,6 @@
 // sign with HMAC SHA-256
 const jwt = require('jsonwebtoken')
-const JWT_SECRET = process.env
+const JWT_SECRET = process.env.JWT_SECRET
 function checkUserAndGenerateToken(data, req, res) {
     jwt.sign({ user: data.email, id: data._id }, JWT_SECRET, { expiresIn: '1d' }, (err, token) => {
         if (err) {

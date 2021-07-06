@@ -3,9 +3,62 @@ import swal from 'sweetalert';
 import { Button, TextField, Link, Grid, Card } from '@material-ui/core';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import LockIcon from '@material-ui/icons/Lock';
+import { makeStyles } from "@material-ui/core";
+import { GoogleLogin } from 'react-google-login';
+import FacebookLogin from 'react-facebook-login';
+
 const axios = require('axios');
-const bcrypt = require('bcryptjs');
-var salt = bcrypt.genSaltSync(10);
+
+const DividerWithText = ({ children }) => {
+  const classes = useStyles();
+  return (
+   <div className={classes.container}>
+     <div className={classes.border} />
+     <span className={classes.content}>{children}</span>
+     <div className={classes.border} />
+   </div>
+  );
+};
+
+const useStyles = makeStyles(theme => ({
+  /* ---------- hr ---------------- */
+  container: {
+    display: "flex",
+    alignItems: "center",
+    paddingRight: theme.spacing(10),
+    paddingLeft: theme.spacing(10),
+  },
+  border: {
+    borderBottom: "2px solid lightgray",
+    width: "100%"
+  },
+  content: {
+    paddingTop: theme.spacing(0.5),
+    paddingBottom: theme.spacing(0.5),
+    paddingRight: theme.spacing(2),
+    paddingLeft: theme.spacing(2),
+    fontWeight: 500,
+    fontSize: 18,
+    color: "lightgray"
+  },
+}));
+
+// Social
+const responseGoogle = async (response) => {
+  try {
+    console.log(response)
+  } catch (err) {
+
+  }
+}
+
+const responseFacebook = async (response) => {
+  try {
+    console.log(response)
+  } catch (err) {
+
+  }
+}
 
 export default class Login extends React.Component {
   constructor(props) {
@@ -17,7 +70,7 @@ export default class Login extends React.Component {
   }
 
   onChange = (e) => this.setState({ [e.target.name]: e.target.value });
-
+   
   login = () => {
 
     // const pwd = bcrypt.hashSync(this.state.password, salt);
@@ -48,11 +101,9 @@ export default class Login extends React.Component {
 
   render() {
     return (
-      <Grid container justify = "center">
-      <Card variant="outlined" style={{ backgroundColor: 'ActiveBorder' ,marginTop: '50px', justifyContent:'center', width: '40%' }}>
-        <div style={{ marginTop: '50px', marginBottom: '50px' }}>
-        
-      
+      <Grid container justify="center">
+      <Card variant="outlined" style={{ backgroundColor: '#F1F1F1' ,marginTop: '50px', justifyContent:'center', width: '40%' }}>
+      <div style={{ marginTop: '50px', marginBottom: '50px' }}>
         <div>
           <h2>Đăng nhập</h2>
         </div>
@@ -94,11 +145,30 @@ export default class Login extends React.Component {
             disabled={this.state.email == '' && this.state.password == ''}
             onClick={this.login}
           >
-            Login
+            Đăng nhập
           </Button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <Link href="/accounts/register">
-            Register
+            Đăng ký
           </Link>
+          <br /><br />
+          <DividerWithText>Hoặc</DividerWithText>
+          <br />
+          <div className="social">
+            <GoogleLogin
+              clientId="Your google client id"
+              buttonText="Đăng nhập với Google"
+              onSuccess={responseGoogle}
+              cookiePolicy={'single_host_origin'}
+            />
+            <br /><br />
+            <FacebookLogin
+              appId="Your facebook app id"
+              autoLoad={false}
+              textButton="Đăng nhập với Facebook"
+              callback={responseFacebook} 
+            />
+          </div>
+
         </div>
       </div>
 

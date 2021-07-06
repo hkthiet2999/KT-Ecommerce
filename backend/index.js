@@ -12,7 +12,7 @@ const path = require("path")
 // //
 const product = require("./models/ProductModel.js");
 const user = require("./models/AccountModel.js");
-const {JWT_SECRET} = process.env
+const JWT_SECRET = process.env.JWT_SECRET
 // swagger
 const swaggerUi = require('swagger-ui-express')
 const swaggerDocument = require('./api-docs/swagger.js');
@@ -65,12 +65,12 @@ app.use("/", (req, res, next) => {
       //     return res.status(401).json({message: 'Người dùng chưa được xác thực!',status: false});
       //   }
       // })
-      //
+
       /* ------------------------------------------------------------------------------------------ */
 
       /* ------------------------------------------------------------------------------------------ */
       /* decode jwt token if sign with RSA SHA-256*/
-      console.log('token:', req.headers.token)
+      
       const publicKey = fs.readFileSync('./auth/keys/public.pem', 'utf-8')
       toBeVerified = {
         complete: true,

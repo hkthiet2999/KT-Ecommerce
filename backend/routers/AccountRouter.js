@@ -35,7 +35,7 @@ Router.post("/login", loginValidator, (req, res) => {
                         if (bcrypt.compareSync(req.body.password, data[0].password)) {
                             // console.log('check pass true')
                             // console.log('data: ', data[0])
-                            // authHMAC(data[0], req, res); // sign with HMAC SHA-256
+                            // await authHMAC(data[0], req, res); // sign with HMAC SHA-256
                             await authRSA(data[0], req, res); // sign with RSA SHA-256
                         } else {
                             // console.log('Dô đây lỗi 1')
@@ -146,6 +146,20 @@ Router.get("/login", (req, res) => {
       status: true,
       title: 'Đăng nhập thành công'
     });
-  });
+});
+// Social
+Router.post("/google-login",(req, res)=>{
+    res.status(200).json({
+        status: true,
+        title: 'Đăng nhập bằng Google'
+    });
+})
+
+Router.post("/facebook-login",(req, res)=>{
+    res.status(200).json({
+        status: true,
+        title: 'Đăng nhập bằng Facebook'
+    });
+})
 
 module.exports = Router
