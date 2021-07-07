@@ -144,7 +144,7 @@ Router.post("/register", registerValidator, (req, res) => {
 Router.get("/login", (req, res) => {
     res.status(200).json({
       status: true,
-      title: 'Đăng nhập thành công'
+      title: 'API for test'
     });
 });
 // Social

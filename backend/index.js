@@ -47,9 +47,11 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 // root
 app.use("/", (req, res, next) => {
   try {
-    if (req.path == "/accounts/login" || req.path == "/accounts/register" || req.path == "/api-docs" || req.path == "/") {
+    if (req.path == "/accounts/login" || req.path == "/accounts/register" || req.path == "/api-docs" || 
+    req.path == "/" || req.path == "/accounts/google-login" || req.path == "/accounts/facebook-login") {
       next();
-    } else {
+    } else if( req.path == "/products/add-product" ||  req.path == "/products/get-product" ||  
+    req.path == "/products/update-product" ||  req.path == "/products/delete-product") {
       // console.log('verify')
       console.log('token:', req.headers.token)
 
@@ -70,7 +72,7 @@ app.use("/", (req, res, next) => {
 
       /* ------------------------------------------------------------------------------------------ */
       /* decode jwt token if sign with RSA SHA-256*/
-      
+
       const publicKey = fs.readFileSync('./auth/keys/public.pem', 'utf-8')
       toBeVerified = {
         complete: true,
@@ -91,6 +93,8 @@ app.use("/", (req, res, next) => {
       })
 
       /* ------------------------------------------------------------------------------------------ */
+    } else {
+      return res.status(400).json({message: 'Liên kết chưa được hỗ trợ!',status: false});
     }
   } catch (e) {
     res.status(400).json({
