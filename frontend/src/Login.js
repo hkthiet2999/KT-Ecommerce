@@ -44,13 +44,34 @@ const useStyles = makeStyles(theme => ({
 }));
 
 // Social
-const responseGoogle = async (response) => {
-  try {
-    console.log(response)
-  } catch (err) {
 
-  }
-}
+// const responseGoogle = async (res) => {
+//   console.log(res)
+//   const awaitRes = await axios.post('http://localhost:8080/accounts/google-login',{
+//     email: res.ct.Mt,
+//     fullname: res.ct.Ue,
+//     user_id: res.googleId,
+//     token: res.tokenId
+//   }).then((res) => {
+//     localStorage.setItem('token', res.data.token);
+//     localStorage.setItem('user_id', res.data.id);
+//     // localStorage.setItem('user_name', res.data.);
+//     swal({
+//       text: res.data.title,
+//       icon: "success",
+//       type: "success"
+//     });
+//     history.push('/home');
+//   }).catch((err) => {
+//     if (err.response && err.response.data && err.response.data.errorMessage) {
+//       swal({
+//         text: err.response.data.errorMessage,
+//         icon: "error",
+//         type: "error"
+//       });
+//     }
+//   });
+// }
 
 const responseFacebook = async (response) => {
   try {
@@ -70,7 +91,35 @@ export default class Login extends React.Component {
   }
 
   onChange = (e) => this.setState({ [e.target.name]: e.target.value });
-   
+
+  responseGoogle = async (res) => {
+    console.log(res)
+    const awaitRes = await axios.post('http://localhost:8080/accounts/google-login',{
+      email: res.ct.Mt,
+      fullname: res.ct.Ue,
+      user_id: res.googleId,
+      token: res.tokenId
+    }).then((res) => {
+      localStorage.setItem('token', res.data.token);
+      localStorage.setItem('user_id', res.data.id);
+      // localStorage.setItem('user_name', res.data.);
+      swal({
+        text: res.data.title,
+        icon: "success",
+        type: "success"
+      });
+      this.props.history.push('/home');
+    }).catch((err) => {
+      if (err.response && err.response.data && err.response.data.errorMessage) {
+        swal({
+          text: err.response.data.errorMessage,
+          icon: "error",
+          type: "error"
+        });
+      }
+    });
+  }
+
   login = () => {
 
     // const pwd = bcrypt.hashSync(this.state.password, salt);
@@ -155,9 +204,9 @@ export default class Login extends React.Component {
           <br />
           <div className="social">
             <GoogleLogin
-              clientId="Your google client id"
+              clientId="498160978863-vsfnulg0j0g2v4lolbtkjth0l8dk38mh.apps.googleusercontent.com"
               buttonText="Đăng nhập với Google"
-              onSuccess={responseGoogle}
+              onSuccess={this.responseGoogle}
               cookiePolicy={'single_host_origin'}
             />
             <br /><br />
