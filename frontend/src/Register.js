@@ -44,13 +44,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 // Social
-const responseGoogle = async (response) => {
-  try {
-    console.log(response)
-  } catch (err) {
-
-  }
-}
 
 const responseFacebook = async (response) => {
   try {
@@ -77,7 +70,44 @@ export default class Register extends React.Component {
 
   
   onChange = (e) => this.setState({ [e.target.name]: e.target.value });
-
+  // Login with Social Network
+  // Google
+  responseGoogle = async (res) => {
+    console.log(res)
+    const awaitRes = await axios.post('http://localhost:8080/accounts/google-login',{
+      email: res.ct.Mt,
+      fullname: res.ct.Ue,
+      user_id: res.googleId,
+      token: res.tokenId
+    }).then((res) => {
+      localStorage.setItem('token', res.data.token);
+      localStorage.setItem('user_id', res.data.id);
+      // localStorage.setItem('user_name', res.data.);
+      swal({
+        text: res.data.title,
+        icon: "success",
+        type: "success"
+      });
+      this.props.history.push('/home');
+    }).catch((err) => {
+      if (err.res && err.res.data && err.res.data.errorMessage) {
+        swal({
+          text: err.res.data.errorMessage,
+          icon: "error",
+          type: "error"
+        });
+      }
+    });
+  }
+  // Facebook
+  responseFacebook = async (response) => {
+    try {
+      console.log(response)
+    } catch (err) {
+  
+    }
+  }
+  // normal
   register = () => {
 
     axios.post('http://localhost:8080/accounts/register', {
@@ -193,9 +223,9 @@ export default class Register extends React.Component {
                 <br />
                 <div className="social">
                   <GoogleLogin
-                    clientId="Your google client id"
+                    clientId="498160978863-vsfnulg0j0g2v4lolbtkjth0l8dk38mh.apps.googleusercontent.com"
                     buttonText="Đăng nhập với Google"
-                    onSuccess={responseGoogle}
+                    onSuccess={this.responseGoogle}
                     cookiePolicy={'single_host_origin'}
                   />
                   <br /><br />
@@ -203,7 +233,7 @@ export default class Register extends React.Component {
                     appId="Your facebook app id"
                     autoLoad={false}
                     textButton="Đăng nhập với Facebook"
-                    callback={responseFacebook} 
+                    callback={this.responseFacebook} 
                   />
                 </div>
               </div>        

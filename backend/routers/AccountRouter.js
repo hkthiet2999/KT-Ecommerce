@@ -162,8 +162,8 @@ Router.post("/google-login", async (req, res) => {
                     email: req.body.email,
                     password: hased
                 });
-                console.log('Pass hased:', hased)
-                console.log('User:', User)
+                // console.log('Pass hased:', hased)
+                // console.log('User:', User)
                 User.save((err, data) => {
                     if (err) {
                         res.status(400).json({

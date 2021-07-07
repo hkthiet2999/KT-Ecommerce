@@ -110,14 +110,22 @@ export default class Login extends React.Component {
       });
       this.props.history.push('/home');
     }).catch((err) => {
-      if (err.response && err.response.data && err.response.data.errorMessage) {
+      if (err.res && err.res.data && err.res.data.errorMessage) {
         swal({
-          text: err.response.data.errorMessage,
+          text: err.res.data.errorMessage,
           icon: "error",
           type: "error"
         });
       }
     });
+  }
+
+  responseFacebook = async (res) => {
+    try {
+      console.log(res)
+    } catch (err) {
+      
+    }
   }
 
   login = () => {
@@ -214,7 +222,7 @@ export default class Login extends React.Component {
               appId="Your facebook app id"
               autoLoad={false}
               textButton="Đăng nhập với Facebook"
-              callback={responseFacebook} 
+              callback={this.responseFacebook} 
             />
           </div>
 
