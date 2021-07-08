@@ -12,7 +12,11 @@ const loginValidator = require('./validator/loginValidator')
 const { validationResult } = require('express-validator')
 const {authHMAC} = require('../auth/checkUser-genToken-HMAC.js')
 const {authRSA} = require('../auth/checkUser-genToken-RSA.js')
-
+const {verifyGoogle} = require('../auth/verifyGoogle')
+//
+// const {google} = require('googleapis');
+// const {OAuth2} = google.auth
+// const client = new OAuth2(process.env.CLIENT_SECRECT)
 
 /* login api */
 Router.post("/login", loginValidator, (req, res) => {
@@ -151,46 +155,41 @@ Router.get("/login", (req, res) => {
 Router.post("/google-login", async (req, res) => {
     console.log('login with Google:',req.body)
     try{
-        const generatePassword = req.body.email + process.env.GOOGLE_SECRET
+        const tokenId = req.body.token
+        const verifyPayload = await verifyGoogle(tokenId)
+        const {email_verified, email, fullname} = verifyPayload
+        // check verify
+        if(!email_verified) return res.status(400).json({
+            errorMessage: 'Người dùng chưa đươhc xác thực!',
+            status: false})
+        //
+        const generatePassword = email + process.env.GOOGLE_SECRET
         const hased = bcrypt.hashSync(generatePassword, salt)
-        // check firtLogin?
-        user.find({ email: req.body.email }, async (err, data) => {
-            // console.log('--- 2. Find email in DB ---')
-            if (data.length == 0) { // firtLogin = true
-                let User = new user({
-                    fullname: req.body.fullname,
-                    email: req.body.email,
-                    password: hased
-                });
-                // console.log('Pass hased:', hased)
-                // console.log('User:', User)
-                User.save((err, data) => {
-                    if (err) {
-                        res.status(400).json({
-                            errorMessage: err,
-                            status: false
-                        });
-                    } else {
-                        user.find({ email: req.body.email }, async (err, data) => {
-                            // console.log('--- 2. Find email in DB---')
-                            if (data.length > 0) {
-                                // await authHMAC(data[0], req, res); // sign with HMAC SHA-256
-                                await authRSA(data[0], req, res); // sign with RSA SHA-256
-                            } else {
-                                res.status(400).json({
-                                errorMessage: 'Tài khoản email không tồn tại!',
-                                status: false
-                                });
-                            }
-                        })
+        //
+        const User = await user.findOne({email})
+        console.log(User)
+        // check firstLogin
+        if(User){ // true
+            // check password
+            const isMatch = await bcrypt.compare(generatePassword, User.password)
+            if(!isMatch) return res.status(400).json({
+                errorMessage: 'Mật khẩu không chính xác!',
+                status: false
+            })
+            // gen token
+            await authRSA(User, req, res)
+        }else{ //false
+            const newUser = new user({
+                fullname: fullname,
+                email: email,
+                password: hased
+            })
 
-                    }
-                });
-            } else { // firtLogin = false
-                // await authHMAC(data[0], req, res);
-                await authRSA(data[0], req, res); // sign with RSA SHA-256
-            }
-        });
+
+            await newUser.save()
+            // gen token
+            await authRSA(newUser, req, res)
+        }
     
     } catch(e){
         res.status(400).json({

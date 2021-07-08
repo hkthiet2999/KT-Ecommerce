@@ -6,6 +6,7 @@ const fs = require('fs')
 
 
 async function checkUserAndGenerateToken(data, req, res) {
+    // console.log('data in RSA:', data)
     await generateKeyPair;
     const privateKey = fs.readFileSync('./auth/keys/private.pem', 'utf-8')
     // console.log(privateKey)
