@@ -5,4 +5,4 @@ trash.txt
 .env.product
 .env.development
 frontend/uploads/
-
+backend/auth/keys/*.pem
