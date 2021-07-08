@@ -200,11 +200,56 @@ Router.post("/google-login", async (req, res) => {
     }
 });
 
-Router.post("/facebook-login",(req, res)=>{
-    res.status(200).json({
-        status: true,
-        title: 'Đăng nhập bằng Facebook'
-    });
+Router.post("/facebook-login", async (req, res)=>{
+    console.log('login with Facebook:', req.body)
+    try{
+        const generatePassword = req.body.email + process.env.FACEBOOK_SECRET
+        const hased = bcrypt.hashSync(generatePassword, salt)
+        // check firtLogin?
+        user.find({ email: req.body.email }, async (err, data) => {
+            // console.log('--- 2. Find email in DB ---')
+            if (data.length == 0) { // firtLogin = true
+                let User = new user({
+                    fullname: req.body.fullname,
+                    email: req.body.email,
+                    password: hased
+                });
+                // console.log('Pass hased:', hased)
+                // console.log('User:', User)
+                User.save((err, data) => {
+                    if (err) {
+                        res.status(400).json({
+                            errorMessage: err,
+                            status: false
+                        });
+                    } else {
+                        user.find({ email: req.body.email }, async (err, data) => {
+                            // console.log('--- 2. Find email in DB---')
+                            if (data.length > 0) {
+                                // await authHMAC(data[0], req, res); // sign with HMAC SHA-256
+                                await authRSA(data[0], req, res); // sign with RSA SHA-256
+                            } else {
+                                res.status(400).json({
+                                errorMessage: 'Tài khoản email không tồn tại!',
+                                status: false
+                                });
+                            }
+                        })
+
+                    }
+                });
+            } else { // firtLogin = false
+                // await authHMAC(data[0], req, res);
+                await authRSA(data[0], req, res); // sign with RSA SHA-256
+            }
+        });
+    
+    } catch(e){
+        res.status(400).json({
+            errorMessage: 'Lỗi hệ thống!',
+            status: false
+        });
+    }
 })
 
 module.exports = Router

@@ -100,12 +100,32 @@ export default class Register extends React.Component {
     });
   }
   // Facebook
-  responseFacebook = async (response) => {
-    try {
-      console.log(response)
-    } catch (err) {
-  
-    }
+  responseFacebook = async (res) => {
+    console.log(res)
+    const awaitRes = await axios.post('http://localhost:8080/accounts/facebook-login',{
+      email: res.email ? res.email : res.id,
+      fullname: res.name,
+      user_id: res.userID,
+      token: res.accessToken
+    }).then((res) => {
+      localStorage.setItem('token', res.data.token);
+      localStorage.setItem('user_id', res.data.id);
+      // localStorage.setItem('user_name', res.data.);
+      swal({
+        text: res.data.title,
+        icon: "success",
+        type: "success"
+      });
+      this.props.history.push('/home');
+    }).catch((err) => {
+      if (err.res && err.res.data && err.res.data.errorMessage) {
+        swal({
+          text: err.res.data.errorMessage,
+          icon: "error",
+          type: "error"
+        });
+      }
+    });
   }
   // normal
   register = () => {
@@ -230,7 +250,7 @@ export default class Register extends React.Component {
                   />
                   <br /><br />
                   <FacebookLogin
-                    appId="Your facebook app id"
+                    appId="420167962427260"
                     autoLoad={false}
                     textButton="Đăng nhập với Facebook"
                     callback={this.responseFacebook} 
