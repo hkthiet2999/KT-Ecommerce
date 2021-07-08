@@ -13,10 +13,8 @@ const { validationResult } = require('express-validator')
 const {authHMAC} = require('../auth/checkUser-genToken-HMAC.js')
 const {authRSA} = require('../auth/checkUser-genToken-RSA.js')
 const {verifyGoogle} = require('../auth/verifyGoogle')
+const {verifyFacebook} = require('../auth/verifyFacebook')
 //
-// const {google} = require('googleapis');
-// const {OAuth2} = google.auth
-// const client = new OAuth2(process.env.CLIENT_SECRECT)
 
 /* login api */
 Router.post("/login", loginValidator, (req, res) => {
@@ -160,32 +158,34 @@ Router.post("/google-login", async (req, res) => {
         const {email_verified, email, fullname} = verifyPayload
         // check verify
         if(!email_verified) return res.status(400).json({
-            errorMessage: 'Người dùng chưa đươhc xác thực!',
+            errorMessage: 'Người dùng chưa được xác thực!',
             status: false})
         //
         const generatePassword = email + process.env.GOOGLE_SECRET
         const hased = bcrypt.hashSync(generatePassword, salt)
         //
         const User = await user.findOne({email})
-        console.log(User)
+        console.log('User: ', User)
         // check firstLogin
-        if(User){ // true
+        if(User){ // false
             // check password
-            const isMatch = await bcrypt.compare(generatePassword, User.password)
-            if(!isMatch) return res.status(400).json({
-                errorMessage: 'Mật khẩu không chính xác!',
-                status: false
-            })
-            // gen token
-            await authRSA(User, req, res)
-        }else{ //false
+            if (bcrypt.compareSync(generatePassword,User.password)) {
+                // gen token
+                await authRSA(User, req, res)
+            } else {
+                res.status(400).json({
+                    errorMessage: 'Bạn đã dùng email này để đăng ký tại KT-Ecommerce!',
+                    status: false
+                });
+            }
+            //
+
+        }else{ // true
             const newUser = new user({
                 fullname: fullname,
                 email: email,
                 password: hased
             })
-
-
             await newUser.save()
             // gen token
             await authRSA(newUser, req, res)
@@ -202,46 +202,42 @@ Router.post("/google-login", async (req, res) => {
 Router.post("/facebook-login", async (req, res)=>{
     console.log('login with Facebook:', req.body)
     try{
-        const generatePassword = req.body.email + process.env.FACEBOOK_SECRET
-        const hased = bcrypt.hashSync(generatePassword, salt)
-        // check firtLogin?
-        user.find({ email: req.body.email }, async (err, data) => {
-            // console.log('--- 2. Find email in DB ---')
-            if (data.length == 0) { // firtLogin = true
-                let User = new user({
-                    fullname: req.body.fullname,
-                    email: req.body.email,
-                    password: hased
-                });
-                // console.log('Pass hased:', hased)
-                // console.log('User:', User)
-                User.save((err, data) => {
-                    if (err) {
-                        res.status(400).json({
-                            errorMessage: err,
-                            status: false
-                        });
-                    } else {
-                        user.find({ email: req.body.email }, async (err, data) => {
-                            // console.log('--- 2. Find email in DB---')
-                            if (data.length > 0) {
-                                // await authHMAC(data[0], req, res); // sign with HMAC SHA-256
-                                await authRSA(data[0], req, res); // sign with RSA SHA-256
-                            } else {
-                                res.status(400).json({
-                                errorMessage: 'Tài khoản email không tồn tại!',
-                                status: false
-                                });
-                            }
-                        })
+        const accessToken = req.body.token
+        const userId = req.body.user_id
+        const data = await verifyFacebook(accessToken, userId)
+        //
 
-                    }
+        const {email, name, picture} = data
+        // console.log(email, name, picture)
+        //
+        const generatePassword = email + process.env.FACEBOOK_SECRET
+        const hased = bcrypt.hashSync(generatePassword, salt)
+        //
+        const User = await user.findOne({email})
+        console.log(User)
+        // check firstLogin
+        if(User){ // false
+            // check password
+            if (bcrypt.compareSync(generatePassword,User.password)) {
+                // gen token
+                await authRSA(User, req, res)
+            } else {
+                res.status(400).json({
+                    errorMessage: 'Bạn đã dùng email này để đăng ký tại KT-Ecommerce!',
+                    status: false
                 });
-            } else { // firtLogin = false
-                // await authHMAC(data[0], req, res);
-                await authRSA(data[0], req, res); // sign with RSA SHA-256
             }
-        });
+            //
+        }else{ // true
+            const newUser = new user({
+                fullname: name,
+                email: email,
+                password: hased
+            })
+            await newUser.save()
+            // gen token
+            await authRSA(newUser, req, res)
+        }
     
     } catch(e){
         res.status(400).json({

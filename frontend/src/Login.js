@@ -92,6 +92,7 @@ export default class Login extends React.Component {
 
   onChange = (e) => this.setState({ [e.target.name]: e.target.value });
 
+  // Google
   responseGoogle = async (res) => {
     console.log(res)
     const awaitRes = await axios.post('http://localhost:8080/accounts/google-login',{
@@ -110,16 +111,16 @@ export default class Login extends React.Component {
       });
       this.props.history.push('/home');
     }).catch((err) => {
-      if (err.res && err.res.data && err.res.data.errorMessage) {
+      if (err.response && err.response.data && err.response.data.errorMessage) {
         swal({
-          text: err.res.data.errorMessage,
+          text: err.response.data.errorMessage,
           icon: "error",
           type: "error"
         });
       }
     });
   }
-
+  // Facebook
   responseFacebook = async (res) => {
     console.log(res)
     const awaitRes = await axios.post('http://localhost:8080/accounts/facebook-login',{
@@ -138,9 +139,10 @@ export default class Login extends React.Component {
       });
       this.props.history.push('/home');
     }).catch((err) => {
-      if (err.res && err.res.data && err.res.data.errorMessage) {
+      //
+      if (err.response && err.response.data && err.response.data.errorMessage) {
         swal({
-          text: err.res.data.errorMessage,
+          text: err.response.data.errorMessage,
           icon: "error",
           type: "error"
         });
@@ -242,6 +244,7 @@ export default class Login extends React.Component {
               appId="420167962427260"
               autoLoad={false}
               textButton="Đăng nhập với Facebook"
+              fields="name,email,picture"
               callback={this.responseFacebook} 
             />
           </div>

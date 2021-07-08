@@ -90,9 +90,9 @@ export default class Register extends React.Component {
       });
       this.props.history.push('/home');
     }).catch((err) => {
-      if (err.res && err.res.data && err.res.data.errorMessage) {
+      if (err.response && err.response.data && err.response.data.errorMessage) {
         swal({
-          text: err.res.data.errorMessage,
+          text: err.response.data.errorMessage,
           icon: "error",
           type: "error"
         });
@@ -118,9 +118,10 @@ export default class Register extends React.Component {
       });
       this.props.history.push('/home');
     }).catch((err) => {
-      if (err.res && err.res.data && err.res.data.errorMessage) {
+      //
+      if (err.response && err.response.data && err.response.data.errorMessage) {
         swal({
-          text: err.res.data.errorMessage,
+          text: err.response.data.errorMessage,
           icon: "error",
           type: "error"
         });
