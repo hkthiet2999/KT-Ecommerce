@@ -5,10 +5,16 @@ body {
   background-size: cover;
   background-repeat: 'no-repeat';
 }
-
+.inputfield {
+  margin-bottom: 10px;
+}
+.input_text {
+  width: max-content;
+}
 .button_style {
   margin-left: 10px !important;
   margin-right: 10px;
+  width: max-content;
 }
 
 .centerTable {
@@ -20,10 +26,31 @@ h2 {
 }
 
 .social button{
+  width: 100%;
   font-size: 14px;
   font-weight: 200;
-  letter-spacing: 1.3px;
   box-shadow: 0 4px 8px #777;
   text-transform: capitalize;
+}
 
+
+.btnFacebook { 
+  width: 165px;
+  height:50px;  
+  border-radius: 4px;
+  background: #3b5998;
+  color:white;
+  border:0px transparent;  
+  text-align: center;
+  margin:5px;
+  display: inline-block;
+}
+.btnGoogle { 
+  margin:5px;
+  width: 165px;
+  height: 50px;
+  border-radius: 4px;
+  color:white;
+  border:0px transparent;
+  text-align: center;
 }

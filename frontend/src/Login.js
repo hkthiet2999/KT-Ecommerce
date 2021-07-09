@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import swal from 'sweetalert';
-import { Button, TextField, Link, Grid, Card } from '@material-ui/core';
+import { Button, TextField, Link, Grid, Card, Box } from '@material-ui/core';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import LockIcon from '@material-ui/icons/Lock';
 import { makeStyles } from "@material-ui/core";
@@ -42,44 +42,6 @@ const useStyles = makeStyles(theme => ({
     color: "lightgray"
   },
 }));
-
-// Social
-
-// const responseGoogle = async (res) => {
-//   console.log(res)
-//   const awaitRes = await axios.post('http://localhost:8080/accounts/google-login',{
-//     email: res.ct.Mt,
-//     fullname: res.ct.Ue,
-//     user_id: res.googleId,
-//     token: res.tokenId
-//   }).then((res) => {
-//     localStorage.setItem('token', res.data.token);
-//     localStorage.setItem('user_id', res.data.id);
-//     // localStorage.setItem('user_name', res.data.);
-//     swal({
-//       text: res.data.title,
-//       icon: "success",
-//       type: "success"
-//     });
-//     history.push('/home');
-//   }).catch((err) => {
-//     if (err.response && err.response.data && err.response.data.errorMessage) {
-//       swal({
-//         text: err.response.data.errorMessage,
-//         icon: "error",
-//         type: "error"
-//       });
-//     }
-//   });
-// }
-
-const responseFacebook = async (response) => {
-  try {
-    console.log(response)
-  } catch (err) {
-
-  }
-}
 
 export default class Login extends React.Component {
   constructor(props) {
@@ -182,40 +144,51 @@ export default class Login extends React.Component {
     return (
       <Grid container justify="center">
       <Card variant="outlined" style={{ backgroundColor: '#F1F1F1' ,marginTop: '50px', justifyContent:'center', width: '40%' }}>
-      <div style={{ marginTop: '50px', marginBottom: '50px' }}>
+      <div style={{ marginTop: '30px', marginBottom: '30px' }}>
         <div>
           <h2>Đăng nhập</h2>
         </div>
-
         <div>
-          <AccountCircle />
-          <br />
-          <TextField
-            id="input-with-icon-grid"
-            label="Email" 
-            type="text"
-            autoComplete="off"
-            name="email"
-            value={this.state.username}
-            onChange={this.onChange}
-  
-            required
-          />
+          <div className='inputfield'>
+            <Grid container justify="center" spacing={1} alignItems="flex-end">
+              <Grid item>
+                <AccountCircle />
+              </Grid>
+              <Grid item>
+              <TextField
+                id="input-with-icon-grid"
+                label="Email" 
+                type="text"
+                autoComplete="off"
+                name="email"
+                value={this.state.username}
+                onChange={this.onChange}
+                required
+              />
+              </Grid>
+            </Grid>
+          </div>
+          <div className='inputfield'>
+            <Grid container justify="center" spacing={1} alignItems="flex-end">
+              <Grid item>
+              <LockIcon></LockIcon>
+              </Grid>
+              <Grid item>
+              <TextField
+                className="input_text"
+                id="input-with-icon-grid"
+                label="Mật khẩu"
+                type="password"
+                autoComplete="off"
+                name="password"
+                value={this.state.password}
+                onChange={this.onChange}
+                required
+              />
+              </Grid>
+            </Grid>
+          </div>
           <br /><br />
-          <LockIcon></LockIcon>
-          <br />
-          <TextField
-            id="input-with-icon-grid"
-            label="Mật khẩu"
-            type="password"
-            autoComplete="off"
-            name="password"
-            value={this.state.password}
-            onChange={this.onChange}
-            required
-          />
-          <br /><br />
-          <br />
           <Button
             className="button_style"
             variant="contained"
@@ -226,34 +199,58 @@ export default class Login extends React.Component {
           >
             Đăng nhập
           </Button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <Link href="/accounts/register">
-            Đăng ký
+          <Link href="/accounts/forgot-password">
+            Quên mật khẩu
           </Link>
           <br /><br />
           <DividerWithText>Hoặc</DividerWithText>
           <br />
-          <div className="social">
-            <GoogleLogin
-              clientId="498160978863-vsfnulg0j0g2v4lolbtkjth0l8dk38mh.apps.googleusercontent.com"
-              buttonText="Đăng nhập với Google"
-              onSuccess={this.responseGoogle}
-              cookiePolicy={'single_host_origin'}
-            />
-            <br /><br />
-            <FacebookLogin
-              appId="420167962427260"
-              autoLoad={false}
-              textButton="Đăng nhập với Facebook"
-              fields="name,email,picture"
-              callback={this.responseFacebook} 
-            />
+          <div className='inputfield'>
+              <Grid container justify="center" spacing={1} alignItems="flex-end">
+                <Grid item>
+                <div className="social">
+                  <GoogleLogin
+                    clientId="498160978863-vsfnulg0j0g2v4lolbtkjth0l8dk38mh.apps.googleusercontent.com"
+                    buttonText="Đăng nhập với Google"
+                    onSuccess={this.responseGoogle}
+                    cookiePolicy={'single_host_origin'}
+                    className="btnGoogle"
+                  />
+                </div>
+                </Grid>
+                <Grid item>
+                  <div className="social">
+                    <FacebookLogin
+                      appId="420167962427260"
+                      autoLoad={false}
+                      textButton="&nbsp;&nbsp;&nbsp;&nbsp;Đăng nhập với Facebook"
+                      fields="name,email,picture"
+                      callback={this.responseFacebook}
+                      icon="fa-facebook"
+                      cssClass="btnFacebook"
+                    />
+                  </div>
+                </Grid>
+              </Grid>
+            </div>
+          <br></br>
+          <div className='inputfield'>
+            <Grid container justify="center" spacing={1} alignItems="flex-end">
+              <Grid item>
+              <Box color="text.disabled"><i>Bạn chưa có tài khoản tại KT Ecommerce?</i></Box>
+              </Grid>
+              <Grid item>
+                <Link href="/accounts/register">
+                  Đăng ký ngay
+                </Link>
+              </Grid>
+            </Grid>
           </div>
+
         </div>
       </div>
-
-
-      </Card>
-    </Grid> 
+    </Card>
+  </Grid> 
     );
   }
 }

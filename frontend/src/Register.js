@@ -159,103 +159,146 @@ export default class Register extends React.Component {
       <div>
           <Grid container justify = "center">
           <Card variant="outlined" style={{ backgroundColor: '#F1F1F1' ,marginTop: '10px', justifyContent:'center', width: '40%' }}>
-            <div style={{ marginTop: '10px', marginBottom: '10px' }}>
+            <div style={{ marginTop: '30px', marginBottom: '30px' }}>
               
               <div>
                 <h2>Đăng ký tài khoản</h2>
               </div>
 
-              <div>  
-                  <AccountCircle />
-                  <br />
-                  <TextField 
-                  id="input-with-icon-grid" 
-                  label="Họ và tên" 
-                  type="text"
-                  autoComplete="off"
-                  name="fullname"
-                  value={this.state.fullname}
-                  onChange={this.onChange}
-                  required
-                  />
-
-                <br/><br/>
-
-                    <AccountCircle />
-                    <br />
+              <div>
+                <div className='inputfield'>
+                  <Grid container justify="center" spacing={1} alignItems="flex-end">
+                    <Grid item>
+                      <AccountCircle />
+                    </Grid>
+                    <Grid item>
                     <TextField 
-                    id="input-with-icon-grid" 
-                    label="Email" 
-                    type="text"
-                    autoComplete="off"
-                    name="email"
-                    value={this.state.email}
-                    onChange={this.onChange}
-                    required
+                      id="input-with-icon-grid" 
+                      label="Họ và tên" 
+                      type="text"
+                      autoComplete="off"
+                      name="fullname"
+                      value={this.state.fullname}
+                      onChange={this.onChange}
+                      required
                     />
+                    </Grid>
+                  </Grid>
+                </div>
 
-                <br /><br />
-                <LockIcon></LockIcon>
-                <br />
-                <TextField
-                  id="input-with-icon-grid"
-                  label="Mật khẩu"
-                  type="password"
-                  autoComplete="off"
-                  name="password"
-                  value={this.state.password}
-                  onChange={this.onChange}
-                  // placeholder="Password"
-                  required
-                />
-                <br /><br />
-                <LockIcon></LockIcon>
-                <br />
-                <TextField
-                  id="input-with-icon-grid"
-                  label="Xác nhận mật khẩu"
-                  type="password"
-                  autoComplete="off"
-                  name="confirm_password"
-                  value={this.state.confirm_password}
-                  onChange={this.onChange}
-                  // placeholder="Confirm Password"
-                  required
-                />    
-                <br /><br />
+                <div className='inputfield'>
+                  <Grid container justify="center" spacing={1} alignItems="flex-end">
+                    <Grid item>
+                      <AccountCircle />
+                    </Grid>
+                    <Grid item>
+                      <TextField 
+                        id="input-with-icon-grid" 
+                        label="Email" 
+                        type="text"
+                        autoComplete="off"
+                        name="email"
+                        value={this.state.email}
+                        onChange={this.onChange}
+                        required
+                      />
+                    </Grid>
+                  </Grid>
+                </div>
+                <div className='inputfield'>
+                  <Grid container justify="center" spacing={1} alignItems="flex-end">
+                    <Grid item>
+                      <LockIcon></LockIcon>
+                    </Grid>
+                    <Grid item>
+                      <TextField
+                        id="input-with-icon-grid"
+                        label="Mật khẩu"
+                        type="password"
+                        autoComplete="off"
+                        name="password"
+                        value={this.state.password}
+                        onChange={this.onChange}
+                        required
+                      />
+                    </Grid>
+                  </Grid>
+                </div>
+                
+                <div className='inputfield'>
+                  <Grid container justify="center" spacing={1} alignItems="flex-end">
+                    <Grid item>
+                      <LockIcon></LockIcon>
+                    </Grid>
+                    <Grid item>
+                      <TextField
+                        id="input-with-icon-grid"
+                        label="Xác nhận mật khẩu"
+                        type="password"
+                        autoComplete="off"
+                        name="confirm_password"
+                        value={this.state.confirm_password}
+                        onChange={this.onChange}
+                        required
+                      />   
+                    </Grid>
+                  </Grid>
+                </div>
                 <br />
                 <Button
                   className="button_style"
                   variant="contained"
                   color="primary"
-                  size="small"
+                  size="large"
                   disabled={this.state.email == '' && this.state.password == '' && this.state.confirm_password == '' &&  this.state.fullname == ''}
                   onClick={this.register}
                 >
-                
                   Đăng ký
                 </Button> 
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <Link href="/accounts/login">
-                  Đăng nhập
-                </Link>
                 <br /><br />
                 <DividerWithText>Hoặc</DividerWithText>
                 <br />
-                <div className="social">
-                  <GoogleLogin
-                    clientId="498160978863-vsfnulg0j0g2v4lolbtkjth0l8dk38mh.apps.googleusercontent.com"
-                    buttonText="Đăng nhập với Google"
-                    onSuccess={this.responseGoogle}
-                    cookiePolicy={'single_host_origin'}
-                  />
-                  <br /><br />
-                  <FacebookLogin
-                    appId="420167962427260"
-                    autoLoad={false}
-                    textButton="Đăng nhập với Facebook"
-                    callback={this.responseFacebook} 
-                  />
+                <div className='inputfield'>
+                  <Grid container justify="center" spacing={1} alignItems="flex-end">
+                    <Grid item>
+                    <div className="social">
+                      <GoogleLogin
+                        clientId="498160978863-vsfnulg0j0g2v4lolbtkjth0l8dk38mh.apps.googleusercontent.com"
+                        buttonText="Đăng nhập với Google"
+                        onSuccess={this.responseGoogle}
+                        cookiePolicy={'single_host_origin'}
+                        className="btnGoogle"
+                      />
+                    </div>
+                    </Grid>
+                    <Grid item>
+                      <div className="social">
+                        <FacebookLogin
+                          appId="420167962427260"
+                          autoLoad={false}
+                          textButton="&nbsp;&nbsp;&nbsp;&nbsp;Đăng nhập với Facebook"
+                          fields="name,email,picture"
+                          callback={this.responseFacebook}
+                          icon="fa-facebook"
+                          cssClass="btnFacebook"
+                        />
+                      </div>
+                    </Grid>
+                  </Grid>
+                </div>
+                <br></br>
+                <div className='inputfield'>
+                  <Grid container justify="center" spacing={1} alignItems="flex-end">
+                    <Grid item>
+                    <Box color="text.disabled"><i>Bạn đã có tài khoản tại KT Ecommerce?</i></Box>
+                    </Grid>
+                    <Grid item>
+                      <Link href="/accounts/login">
+                        Đăng nhập ngay
+                      </Link>
+                    </Grid>
+                  </Grid>
                 </div>
               </div>        
           </div>
