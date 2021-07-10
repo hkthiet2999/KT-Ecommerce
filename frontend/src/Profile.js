@@ -7,7 +7,16 @@ import {
   DialogTitle, DialogContent
 } from '@material-ui/core';
 import StorefrontTwoToneIcon from '@material-ui/icons/StorefrontTwoTone';
-
+// icons
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
+import AssessmentIcon from '@material-ui/icons/Assessment';
+import HomeIcon from '@material-ui/icons/Home';
+//
 
 function Copyright() {
     return (
@@ -23,6 +32,37 @@ function Copyright() {
     );
 }
 
+const StyledMenu = withStyles({
+  paper: {
+    border: '1px solid #d3d4d5',
+  },
+})((props) => (
+  <Menu
+    elevation={5}
+    getContentAnchorEl={null}
+    anchorOrigin={{
+      vertical: 'top',
+      horizontal: 'right',
+    }}
+    transformOrigin={{
+      vertical: 'bottom',
+      horizontal: 'right',
+    }}
+    style={{marginTop:'50px', marginRight:'10px'}}
+    {...props}
+  />
+));
+
+const StyledMenuItem = withStyles((theme) => ({
+  root: {
+    '&:focus': {
+      backgroundColor: theme.palette.primary.main,
+      '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
+        color: theme.palette.common.white,
+      },
+    },
+  },
+}))(MenuItem);
 const useStyles = theme => ({
   dialog: {
     display: 'flex',
@@ -102,12 +142,29 @@ class Profile extends Component {
         openDialog: false,
         id: '',
         name: '',
-        email:''
+        email:'',
+        anchorEl: false,
       };
     }
 
     onChange = (e) => this.setState({ [e.target.name]: e.target.value });
+    // click dropdown
+    handleClick = (event) => {
+      this.setState({ anchorEl: true })
+      
+    };
 
+    handleClose = () => {
+      this.setState({ anchorEl: false })
+    };
+    logOut = () => {
+      localStorage.setItem('token', null);
+      this.props.history.push('/');
+    }
+
+    homePage = () => {
+      this.props.history.push('/home');
+    }
 
     // show dialog
     handleResetPwd_openDialog = () =>{
@@ -142,21 +199,60 @@ class Profile extends Component {
                 
                 <StorefrontTwoToneIcon className={classes.icon}></StorefrontTwoToneIcon>
   
-                <Typography variant="h6" color="inherit" noWrap>
+                <Typography variant="h6" color="inherit" noWrap onClick={this.homePage}>
                   KT E-commerce - Kênh của người bán hàng
                 </Typography>
             </Box>
               
-              <Button
+              {/* <Button
                 style={{ height: 40 }}
                 className="button_style"
                 variant="contained"
                 size="small"
                 onClick={this.logOut}
               >
-                Đăng xuất
-              </Button>
-  
+                Trang chủ
+              </Button> */}
+            <div>
+            <Button
+              style={{ height: 40 }}
+              className="button_style"
+              variant="contained"
+              size="small"
+              // onClick={this.logOut}
+              onClick={this.handleClick}
+            >
+            Menu
+            </Button>
+            <StyledMenu
+              id="customized-menu"
+              anchorEl={this.state.anchorEl}
+              keepMounted
+              open={Boolean(this.state.anchorEl)}
+              onClose={this.handleClose}
+            >
+              <StyledMenuItem>
+                <ListItemIcon>
+                  <HomeIcon fontSize="small" />
+                </ListItemIcon>
+                <ListItemText primary="Quay về Trang chủ" onClick={this.homePage}/>
+              </StyledMenuItem>
+
+              <StyledMenuItem>
+                <ListItemIcon>
+                  <AssessmentIcon fontSize="small" />
+                </ListItemIcon>
+                <ListItemText primary="Thống kê Doanh thu" />
+              </StyledMenuItem>
+
+              <StyledMenuItem>
+                <ListItemIcon>
+                  <ExitToAppIcon fontSize="small" />
+                </ListItemIcon>
+                <ListItemText primary="Đăng xuất" onClick={this.logOut}/>
+              </StyledMenuItem>
+            </StyledMenu>
+          </div>
           </Toolbar>
         </AppBar>
         <main>
@@ -186,11 +282,12 @@ class Profile extends Component {
                   }}
                 >
                   <Avatar
-                    src={'https://source.unsplash.com/1600x900/?nature,water'}
-                    sx={{
-                      height: 400,
-                      width: 400
-                    }}
+                    src='https://source.unsplash.com/1600x900/?nature,water'
+                    // sx={{
+                    //   height: 200,
+                    //   width: 200
+                    // }}
+                    style={{ height: '200px', width: '200px', alignSelf: 'center', marginBottom: '10px',  display: 'flex' }}
                   />
                   <Typography
                     color="textPrimary"

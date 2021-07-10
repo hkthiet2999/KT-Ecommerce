@@ -5,7 +5,15 @@ import {
   CardActions, CardContent, CardMedia, CssBaseline,
   Toolbar, Typography, Container, Link, Box, FormControl, Input
 } from '@material-ui/core';
-
+//
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
+import AssessmentIcon from '@material-ui/icons/Assessment';
+//
 import StorefrontTwoToneIcon from '@material-ui/icons/StorefrontTwoTone';
 
 import { Pagination } from '@material-ui/lab';
@@ -26,6 +34,37 @@ function Copyright() {
     </Typography>
   );
 }
+const StyledMenu = withStyles({
+  paper: {
+    border: '1px solid #d3d4d5',
+  },
+})((props) => (
+  <Menu
+    elevation={5}
+    getContentAnchorEl={null}
+    anchorOrigin={{
+      vertical: 'top',
+      horizontal: 'right',
+    }}
+    transformOrigin={{
+      vertical: 'bottom',
+      horizontal: 'right',
+    }}
+    style={{marginTop:'50px', marginRight:'10px'}}
+    {...props}
+  />
+));
+
+const StyledMenuItem = withStyles((theme) => ({
+  root: {
+    '&:focus': {
+      backgroundColor: theme.palette.primary.main,
+      '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
+        color: theme.palette.common.white,
+      },
+    },
+  },
+}))(MenuItem);
 
 const useStyles = theme => ({
   dialog: {
@@ -117,10 +156,25 @@ class Home extends Component {
       search: '',
       products: [],
       pages: 0,
-      loading: false
+      loading: false,
+      anchorEl: false,
     };
   }
   // ``````funtions
+  // user profile
+  userProfile = () => {
+    this.props.history.push('/profile');
+  }
+  // click dropdown
+  handleClick = (event) => {
+    this.setState({ anchorEl: true })
+    
+  };
+
+  handleClose = () => {
+    this.setState({ anchorEl: false })
+  };
+
   // get token
   componentDidMount = () => {
     let token = localStorage.getItem('token');
@@ -332,16 +386,46 @@ class Home extends Component {
                 KT E-commerce - Kênh của người bán hàng
               </Typography>
           </Box>
-            
+          <div>
             <Button
               style={{ height: 40 }}
               className="button_style"
               variant="contained"
               size="small"
-              onClick={this.logOut}
+              // onClick={this.logOut}
+              onClick={this.handleClick}
             >
-              Đăng xuất
+            Menu
             </Button>
+            <StyledMenu
+              id="customized-menu"
+              anchorEl={this.state.anchorEl}
+              keepMounted
+              open={Boolean(this.state.anchorEl)}
+              onClose={this.handleClose}
+            >
+              <StyledMenuItem>
+                <ListItemIcon>
+                  <AssessmentIcon fontSize="small" />
+                </ListItemIcon>
+                <ListItemText primary="Thống kê Doanh thu" />
+              </StyledMenuItem>
+
+              <StyledMenuItem>
+                <ListItemIcon>
+                  <AssignmentIndIcon fontSize="small" />
+                </ListItemIcon>
+                <ListItemText primary="Hồ sơ người dùng" onClick={this.userProfile}/>
+              </StyledMenuItem>
+
+              <StyledMenuItem>
+                <ListItemIcon>
+                  <ExitToAppIcon fontSize="small" />
+                </ListItemIcon>
+                <ListItemText primary="Đăng xuất" onClick={this.logOut}/>
+              </StyledMenuItem>
+            </StyledMenu>
+          </div>
 
         </Toolbar>
       </AppBar>
@@ -425,16 +509,6 @@ class Home extends Component {
               onChange={this.onChange}
               required
             /><br /><br /><br />
-            {/* <TextField
-              id="standard-basic"
-              type="text"
-              autoComplete="off"
-              name="desc"
-              value={this.state.desc}
-              onChange={this.onChange}
-              label="Mô tả sản phẩm"
-              required */}
-
             {/* /> */}
             
 
@@ -511,64 +585,6 @@ class Home extends Component {
           aria-describedby="alert-dialog-description"
         >
           <DialogTitle id="alert-dialog-title">Cập nhật</DialogTitle>
-
-            {/* <TextField
-              id="standard-basic"
-              type="text"
-              autoComplete="off"
-              name="name"
-              value={this.state.name}
-              onChange={this.onChange}
-              label="Tên sản phẩm"
-              required
-            /><br />
-            <TextField
-              id="standard-basic"
-              type="text"
-              autoComplete="off"
-              name="desc"
-              value={this.state.desc}
-              onChange={this.onChange}
-              label="Mô tả"
-              required
-            /><br />
-            <TextField
-              id="standard-basic"
-              type="number"
-              autoComplete="off"
-              name="price"
-              value={this.state.price}
-              onChange={this.onChange}
-              label="Giá"
-              required
-            /><br />
-            <TextField
-              id="standard-basic"
-              type="number"
-              autoComplete="off"
-              name="discount"
-              value={this.state.discount}
-              onChange={this.onChange}
-              label="Khuyến mãi"
-              required
-            /><br /><br />
-            <Button
-              variant="contained"
-              component="label"
-            > Tải ảnh lên
-            <input
-                id="standard-basic"
-                type="file"
-                accept="image/*"
-                name="file"
-                value={this.state.file}
-                onChange={this.onChange}
-                id="fileInput"
-                label="Tải ảnh lên"
-                hidden
-              />
-            </Button>&nbsp;
-            {this.state.fileName} */}
             <DialogContent className={classes.dialog}>
             <TextField
               type="text"
@@ -594,16 +610,6 @@ class Home extends Component {
               onChange={this.onChange}
               required
             /><br /><br /><br />
-            {/* <TextField
-              id="standard-basic"
-              type="text"
-              autoComplete="off"
-              name="desc"
-              value={this.state.desc}
-              onChange={this.onChange}
-              label="Mô tả sản phẩm"
-              required */}
-
             {/* /> */}
             
 
