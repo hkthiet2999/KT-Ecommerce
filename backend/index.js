@@ -48,7 +48,8 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 app.use("/", (req, res, next) => {
   try {
     if (req.path == "/accounts/login" || req.path == "/accounts/register" || req.path == "/api-docs" || 
-    req.path == "/" || req.path == "/accounts/google-login" || req.path == "/accounts/facebook-login") {
+    req.path == "/" || req.path == "/accounts/google-login" || req.path == "/accounts/facebook-login" || 
+    req.path == "/accounts/forgot-password" || req.path == "/accounts/reset-password") {
       next();
     } else if( req.path == "/products/add-product" ||  req.path == "/products/get-product" ||  
     req.path == "/products/update-product" ||  req.path == "/products/delete-product") {
