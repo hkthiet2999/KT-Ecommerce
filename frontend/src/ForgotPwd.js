@@ -76,15 +76,13 @@ export default class ForgotPwd extends React.Component {
         axios.post('http://localhost:8080/accounts/forgot-password', {
           email: this.state.email,
         }).then((res) => {
-        //   localStorage.setItem('token', res.data.token);
-        //   localStorage.setItem('user_id', res.data.id);
-          // localStorage.setItem('user_name', res.data.);
-          swal({
-            text: res.data.title,
-            icon: "success",
-            type: "success"
-          });
-          this.props.history.push('/accounts/login');
+            swal({
+                text: res.data.title,
+                icon: "success",
+                type: "success"
+            });
+            this.props.history.push('/accounts/login');
+            //
         }).catch((err) => {
           if (err.response && err.response.data && err.response.data.errorMessage) {
             swal({

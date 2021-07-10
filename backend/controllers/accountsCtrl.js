@@ -4,14 +4,15 @@ const sendMail = require('./sendMail')
 const bcrypt = require('bcrypt')
 const salt = bcrypt.genSaltSync(10);
 const {CLIENT_URL} = process.env
+const axios = require('axios')
 const accountsCtrl = {
     resetPassword: async (req, res) => {
         try {
+            
             const {email, password} = req.body
             console.log(password)
             const passwordHash = await bcrypt.hash(password, salt)
-
-            await user.findOneAndUpdate({_id: req.user.email}, {
+            await user.findOneAndUpdate({email}, {
                 password: passwordHash
             })
             res.status(200).json({
@@ -38,10 +39,16 @@ const accountsCtrl = {
                 });
             }
 
-            const access_token = createAccessToken({id: User._id})
+            // const access_token = createAccessToken({id: User._id})
             const url = `${CLIENT_URL}/accounts/login`
-            const randomPassword = '123456'
-            console.log('url: ', url)
+            const randomPassword = await Math.random().toString(36).slice(-8)
+
+            const passwordHash = await bcrypt.hash(randomPassword, salt)
+            console.log('passwordHash', passwordHash)
+            await user.findOneAndUpdate({email}, {
+                password: passwordHash
+            })
+
             sendMail(email, url, randomPassword, "Quay về trang Đăng nhập")
             res.status(200).json({
                 title: 'Mật khẩu mới đã được gửi đến email của bạn!',

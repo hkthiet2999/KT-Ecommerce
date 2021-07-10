@@ -60,7 +60,8 @@ const sendEmail = (to, url, pwd, txt) => {
                 </p>
                 <h3>${pwd}</h3>
                 <a href=${url} style="background: deepskyblue; text-decoration: none; color: white; padding: 10px 20px; margin: 10px 0; display: inline-block;">${txt}</a>
-                <i>Hoặc nhấp vào đây:</i>
+                <br/>
+                <i>Hoặc nhấp vào đường link bên dưới:</i>
                 <div>${url}</div>
             </div>
         `
