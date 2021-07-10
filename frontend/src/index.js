@@ -6,6 +6,8 @@ import { BrowserRouter, Link } from 'react-router-dom';
 import Login from './Login';
 import Register from './Register';
 import Home from './Home';
+import Profile from './Profile';
+import ForgotPwd from './ForgotPwd';
 import main from './main';
 
 
@@ -18,7 +20,9 @@ ReactDOM.render(
             <Route exact path='/accounts/login' component={Login} />
             <Route exact path='/accounts/register' component={Register} />
             <Route exact path='/home' component={Home} />
-
+            <Route exact path='/profile' component={Profile} />
+            <Route exact path='/accounts/forgot-password' component={ForgotPwd} />
+            
             {/* <Route component={NotFound}/> */}
         </Switch>
     </BrowserRouter>,

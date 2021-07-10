@@ -3,7 +3,10 @@ const Router  = express.Router()
 const Account = require('../models/AccountModel')
 const bcrypt = require('bcrypt')
 const salt = bcrypt.genSaltSync(10);
-//
+// Controllers
+const accountsCtrl = require('../controllers/accountsCtrl')
+
+// Models
 const product = require("../models/ProductModel.js");
 const user = require("../models/AccountModel.js");
 //
@@ -247,4 +250,9 @@ Router.post("/facebook-login", async (req, res)=>{
     }
 })
 
+// forgor password
+Router.post("/forgot-password", accountsCtrl.forgotPassword)
+// reset password
+
+Router.post("/reset-password", accountsCtrl.resetPassword)
 module.exports = Router
