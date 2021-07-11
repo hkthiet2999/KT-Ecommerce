@@ -8,7 +8,7 @@ const axios = require('axios')
 const accountsCtrl = {
     resetPassword: async (req, res) => {
         try {
-            
+            console.log('Body in reset pwd:', req.body)
             const {email, password} = req.body
             console.log(password)
             const passwordHash = await bcrypt.hash(password, salt)
@@ -39,7 +39,6 @@ const accountsCtrl = {
                 });
             }
 
-            // const access_token = createAccessToken({id: User._id})
             const url = `${CLIENT_URL}/accounts/login`
             const randomPassword = await Math.random().toString(36).slice(-8)
 
@@ -56,12 +55,20 @@ const accountsCtrl = {
             });
 
         } catch (err) {
-            return res.status(500).json({msg: err.message})
+            return res.status(400).json({errorMessage: 'Lỗi hệ thống!', status: false})
         }
     },
+    getUserInfo: async (req, res) => {
+        try {
+            // console.log('body in user info:', req.headers)
+            const User = await user.findById(req.headers.user_id).select('-password')
+            console.log('User Info:', User)
+            res.json(User)
+        } catch (err) {
+            return res.status(400).json({errorMessage: 'Người dùng không tồn tại!!!', status: false})
+        }
+    }
 }
 
-const createAccessToken = (payload) => {
-    return jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '15m'})
-}
+
 module.exports = accountsCtrl

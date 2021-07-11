@@ -158,7 +158,8 @@ Router.post("/google-login", async (req, res) => {
     try{
         const tokenId = req.body.token
         const verifyPayload = await verifyGoogle(tokenId)
-        const {email_verified, email, fullname} = verifyPayload
+        // console.log('Payload:', verifyPayload)
+        const {email_verified, email, name, picture} = verifyPayload
         // check verify
         if(!email_verified) return res.status(400).json({
             errorMessage: 'Người dùng chưa được xác thực!',
@@ -168,7 +169,7 @@ Router.post("/google-login", async (req, res) => {
         const hased = bcrypt.hashSync(generatePassword, salt)
         //
         const User = await user.findOne({email})
-        console.log('User: ', User)
+        console.log('User login with GG: ', User)
         // check firstLogin
         if(User){ // false
             // check password
@@ -185,9 +186,10 @@ Router.post("/google-login", async (req, res) => {
 
         }else{ // true
             const newUser = new user({
-                fullname: fullname,
+                fullname: name,
                 email: email,
-                password: hased
+                password: hased,
+                avatar: picture
             })
             await newUser.save()
             // gen token
@@ -253,6 +255,8 @@ Router.post("/facebook-login", async (req, res)=>{
 // forgor password
 Router.post("/forgot-password", accountsCtrl.forgotPassword)
 // reset password
-
 Router.post("/reset-password", accountsCtrl.resetPassword)
+
+// get user info
+Router.get("/user-info", accountsCtrl.getUserInfo)
 module.exports = Router

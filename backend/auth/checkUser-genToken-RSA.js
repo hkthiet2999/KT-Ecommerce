@@ -29,6 +29,7 @@ async function checkUserAndGenerateToken(data, req, res) {
             await res.status(200).json({
                 status: true,
                 token: token,
+                id: data._id,
                 title: 'Đăng nhập thành công!! Chào mừng bạn đến với KT.vn'
             });
         }
