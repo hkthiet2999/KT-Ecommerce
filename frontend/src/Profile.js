@@ -17,7 +17,9 @@ import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
 import AssessmentIcon from '@material-ui/icons/Assessment';
 import HomeIcon from '@material-ui/icons/Home';
 //
-
+import swal from 'sweetalert';
+const axios = require('axios');
+// func
 function Copyright() {
     return (
       <Typography variant="body2" color="textSecondary" align="center">
@@ -138,15 +140,67 @@ class Profile extends Component {
     constructor(props) {
       super(props);
       this.state = {
+        loading: false,
         token: '',
+        user_id:'',
         openDialog: false,
         id: '',
-        name: '',
+        username: '',
         email:'',
+        avatar:'',
+        gender:'',
+        birthday:'',
         anchorEl: false,
+        confirm_pwdNew: '',
+        pwdNew: ''
       };
     }
-
+      // get token + user_id
+    componentDidMount = () => {
+      const token = localStorage.getItem('token');
+      const user_id = localStorage.getItem('user_id');
+      console.log('user_id trc khi axios: ',user_id)
+      if (!token) {
+        swal({
+          text: 'Người dùng chưa được xác thực hoặc hết hạn xác thực! Hãy đăng nhập lại!',
+          icon: "error",
+          type: "error"
+        });
+        this.props.history.push('/accounts/login');
+      } else if(!user_id){
+        swal({
+          text: 'Không tìm thấy thông tin người dùng! Hãy đăng nhập lại!',
+          icon: "error",
+          type: "error"
+        });
+        this.props.history.push('/accounts/login');
+      }else {
+        this.setState({ token: token, user_id: user_id }, () => {
+          this.getProfile();
+        });
+      }
+    }
+    getProfile = () =>{
+      console.log('Get user profile', this.state.user_id)
+      axios.get(`http://localhost:8080/accounts/user-info`,
+      {
+      headers: {
+        'content-type': 'multipart/form-data',
+        'token': this.state.token,
+        'user_id': this.state.user_id
+      }
+    }).then((res) => {
+      this.setState({ loading: false, email: res.data.email, username: res.data.fullname, avatar: res.data.avatar});
+    }).catch((err) => {
+      swal({
+        text: err.response.data.errorMessage,
+        icon: "error",
+        type: "error"
+      });
+      this.setState({ loading: false},()=>{});
+    });
+    }
+    //
     onChange = (e) => this.setState({ [e.target.name]: e.target.value });
     // click dropdown
     handleClick = (event) => {
@@ -170,19 +224,65 @@ class Profile extends Component {
     handleResetPwd_openDialog = () =>{
       this.setState({
         openDialog: true,
-        id: '',
-        name: '',
-        desc: '',
-        price: '',
-        discount: '',
-        fileName: ''
       })
     }
+
     handleResetPwd_closeDialog = () => {
       this.setState({ openDialog: false });
     };
+
     resetPassword = () =>{
       console.log('Ok')
+      console.log(this.state.pwdNew)
+
+      if(!this.state.pwdNew || this.state.pwdNew == ''){
+        swal({
+          text: 'Mật khẩu không được để trống!',
+          icon: "error",
+          type: "error"
+        });
+      } else if(this.state.pwdNew.length < 6 ){
+        swal({
+          text: 'Mật khẩu phải có ít nhất 6 ký tự!',
+          icon: "error",
+          type: "error"
+        });
+      }else if(this.state.pwdNew != this.state.confirm_pwdNew){
+        swal({
+          text: 'Mật khẩu xác nhận không chính xác!',
+          icon: "error",
+          type: "error"
+        });
+      }else{
+        // let user_id = localStorage.getItem('user_id')
+        // const body = new FormData();
+        // body.append('email', this.state.email);
+        // body.append('password', this.state.pwdNew);
+
+        axios.post('http://localhost:8080/accounts/reset-password', {
+          headers: {
+            'content-type': 'multipart/form-data',
+            'token': this.state.token
+          },
+          email: this.state.email,
+          password: this.state.pwdNew
+
+        }).then((res) => {
+        swal({
+          text: res.data.title,
+          icon: "success",
+          type: "success"
+        });
+        this.handleResetPwd_closeDialog();
+        }).catch((err) => {
+          swal({
+            text: err.response.data.errorMessage,
+            icon: "error",
+            type: "error"
+          });
+          this.handleResetPwd_closeDialog();
+        });
+      }
     }
 
     // ````` render
@@ -203,16 +303,6 @@ class Profile extends Component {
                   KT E-commerce - Kênh của người bán hàng
                 </Typography>
             </Box>
-              
-              {/* <Button
-                style={{ height: 40 }}
-                className="button_style"
-                variant="contained"
-                size="small"
-                onClick={this.logOut}
-              >
-                Trang chủ
-              </Button> */}
             <div>
             <Button
               style={{ height: 40 }}
@@ -272,36 +362,34 @@ class Profile extends Component {
           <Container className={classes.cardGrid} maxWidth="lg">
             <Grid container spacing={3}>
             <Grid item lg={4} md={6} xs={12}>
-              <Card {...this.props}>
-              <CardContent>
-                <Box
-                  sx={{
-                    alignItems: 'center',
-                    display: 'flex',
-                    flexDirection: 'column'
-                  }}
-                >
-                  <Avatar
-                    src='https://source.unsplash.com/1600x900/?nature,water'
-                    // sx={{
-                    //   height: 200,
-                    //   width: 200
-                    // }}
-                    style={{ height: '200px', width: '200px', alignSelf: 'center', marginBottom: '10px',  display: 'flex' }}
-                  />
+              <Card>
+              <Box display="flex" justifyContent="center" alignItems="center" p={2}>
+                <Avatar
+                    src = {this.state.avatar}
+                    style={{width: '200px', height:'200px'}}
+                />
+              </Box>
+              <CardContent style={{alignSelf: 'center'}}>
+                <Box 
+                sx={{
+                  alignSelf: 'center',
+                  display: 'flex',
+                  flexDirection: 'column'
+                }}
+                style={{alignSelf: 'center'}}>
                   <Typography
                     color="textPrimary"
                     gutterBottom
                     variant="h3"
                   >
-                    Kien Thiet
+                    {`${this.state.username}`}
                   </Typography>
                   <Typography
                     color="textSecondary"
                     variant="body1"
                   >
                     {/* {`${user.city} ${user.country}`} */}
-                    Email@gmail.com
+                    {`${this.state.email}`}
                   </Typography>
                   
                 </Box>
@@ -340,7 +428,7 @@ class Profile extends Component {
                         >
                           <Grid
                             item
-                            md={8}
+                            md={7}
                             xs={14}
                           >
                             <TextField
@@ -356,12 +444,13 @@ class Profile extends Component {
                           </Grid>
                           <Grid
                             item
-                            md={4}
+                            md={5}
                             xs={10}
                           >
                             <TextField
                               fullWidth
                               // helperText="Please specify the first name"
+                              type='number'
                               label="Số điện thoại"
                               name="numberphone"
                               onChange={this.onChange}
@@ -389,8 +478,8 @@ class Profile extends Component {
                           
                           <Grid
                             item
-                            md={6}
-                            xs={12}
+                            md={7}
+                            xs={14}
                           >
                             <TextField
                               fullWidth
@@ -407,31 +496,38 @@ class Profile extends Component {
 
                           <Grid
                             item
-                            md={6}
-                            xs={12}
+                            md={5}
+                            xs={10}
                           >
-                            <TextField
-                              fullWidth
-                              label="Ngày sinh"
-                              name="confirm_password"
-                              onChange={this.onChange}
-                              type="string"
-                              required
-                              // value={}
-                              variant="outlined"
-                            />
+                            <form noValidate>
+                              <TextField
+                                fullWidth
+                                id="date"
+                                label="Ngày sinh"
+                                type="date"
+                                defaultValue="1999-12-30"
+                                InputLabelProps={{
+                                  shrink: true,
+                                }}
+                                onChange={this.onChange}
+                                required
+                                name="birthday"
+                              />
+                            </form>
+
                           </Grid>
                         
                         </Grid>
                       </CardContent>
                       <Divider />
-                      <br/><br/>
+                      <br/>
                       <Box
                         sx={{
                           display: 'flex',
                           justifyContent: 'flex-end',
-                          p: 2
+                          p: 2,
                         }}
+                        style={{marginBottom:'20px'}}
                       >
                         <Button
                           color="primary"
@@ -459,6 +555,7 @@ class Profile extends Component {
                             <DialogTitle id="alert-dialog-title">Đổi mật khẩu</DialogTitle>
                             <DialogContent className={classes.dialog}>
                             <Card style={{ border: "none", boxShadow: "none" }}>
+                            <br></br>
                             <Grid container spacing={3}>
                               <Grid
                                 item
@@ -466,14 +563,17 @@ class Profile extends Component {
                                 xs={12}
                               >
                                 <TextField
+                                  autoComplete="off"
                                   fullWidth
                                   label="Mật khẩu mới"
-                                  name="password"
+                                  name="pwdNew"
                                   type="string"
                                   onChange={this.onChange}
                                   required
-                                  // value={}
+                                  value={this.state.pwdNew}
                                   variant="outlined"
+                                  type="text"
+                                  id="outlined-basic" 
                                 />
                               </Grid>
                               <Grid
@@ -482,14 +582,17 @@ class Profile extends Component {
                                 xs={12}
                               >
                                 <TextField
+                                  autoComplete="off"
                                   fullWidth
                                   label="Xác nhận mật khẩu mới"
-                                  name="confirm_password"
+                                  name="confirm_pwdNew"
                                   onChange={this.onChange}
                                   type="string"
                                   required
-                                  // value={}
+                                  value={this.state.confirm_pwdNew}
                                   variant="outlined"
+                                  type="text"
+                                  id="outlined-basic" 
                                 />
                               </Grid>
                             </Grid>
