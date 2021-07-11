@@ -63,6 +63,7 @@ export default class Login extends React.Component {
       user_id: res.googleId,
       token: res.tokenId
     }).then((res) => {
+      console.log('user_id in storage:',  res.data.id)
       localStorage.setItem('token', res.data.token);
       localStorage.setItem('user_id', res.data.id);
       // localStorage.setItem('user_name', res.data.);
