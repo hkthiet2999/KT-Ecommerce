@@ -9,7 +9,7 @@ import Home from './Home';
 import Profile from './Profile';
 import ForgotPwd from './ForgotPwd';
 import main from './main';
-
+import Dashboard from './template-MUI/Dashboard'
 
 import './style.css';
 
@@ -22,6 +22,8 @@ ReactDOM.render(
             <Route exact path='/home' component={Home} />
             <Route exact path='/profile' component={Profile} />
             <Route exact path='/accounts/forgot-password' component={ForgotPwd} />
+            <Route exact path='/accounts/revenue' component={Dashboard} />
+
             
             {/* <Route component={NotFound}/> */}
         </Switch>
