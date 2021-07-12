@@ -67,6 +67,26 @@ const accountsCtrl = {
         } catch (err) {
             return res.status(400).json({errorMessage: 'Người dùng không tồn tại!!!', status: false})
         }
+    },
+    updateUserInfo: async (req, res) => {
+        try {
+            console.log('Body in update user info:', req.body)
+            console.log('Headers in update user info:', req.headers)
+            // const User = await user.findById(req.headers.user_id).select('-password')
+            // console.log(typeof(req.body.numberphone))
+            const email = req.body.email
+            const userUpdate = await user.findOneAndUpdate({email}, {
+                fullname: req.body.fullname,
+                birthday: req.body.birthday,
+                address: req.body.address,
+                gender: req.body.gender,
+                numberphone: req.body.numberphone
+            })
+            console.log('Update User', userUpdate)
+            res.json(userUpdate)
+        } catch (err) {
+            return res.status(400).json({errorMessage: 'Số điện thoại không đúng', status: false})
+        }
     }
 }
 

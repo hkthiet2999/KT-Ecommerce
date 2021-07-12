@@ -12,6 +12,10 @@ const AccountShema = new Schema({
         type: String,
         default: "https://res.cloudinary.com/devatchannel/image/upload/v1602752402/avatar/avatar_cugq40.png"
     },
+    numberphone: {
+        type: Number,
+        default: null
+    },
     address: {
         type: String,
         default: null

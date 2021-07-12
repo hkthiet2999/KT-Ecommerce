@@ -259,4 +259,7 @@ Router.post("/reset-password", accountsCtrl.resetPassword)
 
 // get user info
 Router.get("/user-info", accountsCtrl.getUserInfo)
+
+// update user info 
+Router.post("/update-userinfo", accountsCtrl.updateUserInfo )
 module.exports = Router

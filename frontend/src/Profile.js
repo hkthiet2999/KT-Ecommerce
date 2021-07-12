@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import { withStyles } from "@material-ui/core/styles";
+import 'react-phone-number-input/style.css'
+import PhoneInput from 'react-phone-number-input';
+import MuiPhoneNumber from "material-ui-phone-number";
 import {
   Button, TextField,Grid, Card, AppBar,
   CardActions, CardContent, CssBaseline,
   Toolbar, Typography, Container, Link, Box, CardHeader, Divider, Avatar, Dialog, DialogActions,
-  DialogTitle, DialogContent
+  DialogTitle, DialogContent, Select, FormControl, InputLabel
 } from '@material-ui/core';
 import StorefrontTwoToneIcon from '@material-ui/icons/StorefrontTwoTone';
 // icons
@@ -13,7 +16,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
+// import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
 import AssessmentIcon from '@material-ui/icons/Assessment';
 import HomeIcon from '@material-ui/icons/Home';
 //
@@ -148,11 +151,13 @@ class Profile extends Component {
         username: '',
         email:'',
         avatar:'',
+        numberphone: '',
+        address:'',
         gender:'',
         birthday:'',
         anchorEl: false,
         confirm_pwdNew: '',
-        pwdNew: ''
+        pwdNew: '',
       };
     }
       // get token + user_id
@@ -190,7 +195,8 @@ class Profile extends Component {
         'user_id': this.state.user_id
       }
     }).then((res) => {
-      this.setState({ loading: false, email: res.data.email, username: res.data.fullname, avatar: res.data.avatar});
+      this.setState({ loading: false, email: res.data.email, username: res.data.fullname, avatar: res.data.avatar,
+      numberphone: res.data.numberphone, address: res.data.address, gender: res.data.gender, birthday: res.data.birthday});
     }).catch((err) => {
       swal({
         text: err.response.data.errorMessage,
@@ -201,7 +207,10 @@ class Profile extends Component {
     });
     }
     //
-    onChange = (e) => this.setState({ [e.target.name]: e.target.value });
+    onChange = (e) => {
+      // this.setState({ [e.target.name]: e.target.value });
+      this.setState({ [e.target.name]: e.target.value }, () => { });
+    }
     // click dropdown
     handleClick = (event) => {
       this.setState({ anchorEl: true })
@@ -232,8 +241,8 @@ class Profile extends Component {
     };
 
     resetPassword = () =>{
-      console.log('Ok')
-      console.log(this.state.pwdNew)
+      // console.log('Ok')
+      // console.log(this.state.pwdNew)
 
       if(!this.state.pwdNew || this.state.pwdNew == ''){
         swal({
@@ -262,7 +271,7 @@ class Profile extends Component {
         axios.post('http://localhost:8080/accounts/reset-password', {
           headers: {
             'content-type': 'multipart/form-data',
-            'token': this.state.token
+            'token': this.state.token,
           },
           email: this.state.email,
           password: this.state.pwdNew
@@ -284,7 +293,46 @@ class Profile extends Component {
         });
       }
     }
+    updateUserInfo = () => {
+      // without validate
+      axios.post('http://localhost:8080/accounts/update-userinfo', 
+      {
+        fullname: this.state.username,
+        avatar: this.state.avatar,
+        birthday: this.state.birthday,
+        address: this.state.address,
+        gender: this.state.gender,
+        numberphone: this.state.numberphone,
+        email: this.state.email
+      },{
+        headers: {
+          'content-type': 'application/json',
+          'token': this.state.token,
+          'user_id': this.state.user_id
+        }
+      }).then((res) => {
+        swal({
+          text: 'Cập nhật Hồ sơ của bạn thành công!',
+          icon: "success",
+          type: "success"
+        });
+        console.log('response: ', res)
+        this.getProfile();
+      }).catch((err) => {
+        swal({
+          text: err.response.data.errorMessage || 'Lỗi hệ thống',
+          icon: "error",
+          type: "error"
+        });
+      });
 
+
+      // swal({
+      //   text: 'Tính năng này chưa được hỗ trợ!',
+      //   icon: "error",
+      //   type: "error"
+      // });
+    }
     // ````` render
     render() {
       const { classes } = this.props;
@@ -434,12 +482,16 @@ class Profile extends Component {
                             <TextField
                               fullWidth
                               // helperText="Please specify the first name"
+                              type='text'
                               label="Họ và tên"
-                              name="fullname"
+                              name="username"
                               onChange={this.onChange}
                               required
-                              // value={this.fake}
                               variant="outlined"
+                              id="outlined-required"
+                              defaultValue= {this.state.username}
+                              value={this.state.username}
+                          
                             />
                           </Grid>
                           <Grid
@@ -450,13 +502,18 @@ class Profile extends Component {
                             <TextField
                               fullWidth
                               // helperText="Please specify the first name"
-                              type='number'
+                              type='text'
                               label="Số điện thoại"
                               name="numberphone"
                               onChange={this.onChange}
-                              required
+
+                              id="outlined-required"
+                              defaultValue= {this.state.numberphone}
+                              value={this.state.numberphone}
                               variant="outlined"
                             />
+
+
                           </Grid>
                           <Grid
                             item
@@ -467,10 +524,13 @@ class Profile extends Component {
                               fullWidth
                               // helperText="Please specify the first name"
                               label="Địa chỉ"
+                              type='text'
                               name="address"
                               onChange={this.onChange}
-                              required
-                              // value={this.fake}
+                              // value={this.state.address}
+                              id="outlined-required"
+                              defaultValue= {this.state.address}
+                              value={this.state.address}
                               variant="outlined"
                             />
                           </Grid>
@@ -481,16 +541,34 @@ class Profile extends Component {
                             md={7}
                             xs={14}
                           >
-                            <TextField
+                          <FormControl fullWidth variant="outlined">
+                            <InputLabel id="demo-simple-select-outlined-label"> Giới tính</InputLabel>
+                            <Select
+                              labelId="demo-simple-select-outlined-label"
+                              id="demo-simple-select-outlined"
+                              defaultValue= {this.state.gender}
+                              value={this.state.gender}
+                              onChange={this.onChange}
+                              label="Giới tính - Chưa hỗ trợ"
+                            >
+                              <MenuItem value={10}>Nam</MenuItem>
+                              <MenuItem value={20}>Nữ</MenuItem>
+                              <MenuItem value={30}>Khác</MenuItem>
+                            </Select>
+                            </FormControl>
+
+                            {/* <TextField
                               fullWidth
                               label="Giới tính"
-                              name="password"
+                              name="gender"
                               type="string"
                               onChange={this.onChange}
                               required
-                              // value={}
+                              value={this.state.gender}
+                              id="outlined-required"
+                              defaultValue= {this.state.gender}
                               variant="outlined"
-                            />
+                            /> */}
                           </Grid>
 
 
@@ -503,15 +581,19 @@ class Profile extends Component {
                               <TextField
                                 fullWidth
                                 id="date"
-                                label="Ngày sinh"
+                                label="Ngày sinh - Chưa hỗ trợ"
                                 type="date"
                                 defaultValue="1999-12-30"
                                 InputLabelProps={{
                                   shrink: true,
                                 }}
                                 onChange={this.onChange}
-                                required
+                                
                                 name="birthday"
+                                // value={this.state.birthday}
+                                id="outlined-required"
+                                defaultValue= {this.state.birthday}
+                                value={this.state.birthday}
                               />
                             </form>
 
@@ -532,6 +614,7 @@ class Profile extends Component {
                         <Button
                           color="primary"
                           variant="contained"
+                          onClick={(e) => this.updateUserInfo()}
                         >
                           Cập nhật thông tin
                         </Button>

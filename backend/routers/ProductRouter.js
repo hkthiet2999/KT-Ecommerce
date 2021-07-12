@@ -34,10 +34,10 @@ const upload = multer({
 });
 /* Api to add Product */
 Router.post("/add-product", upload.any(), (req, res) => {
-    // console.log('Add product console')
-    // console.log('files:', req.files)
-    // console.log('body:', req.body)
-    // console.log('body components:', req.body.name, '|', req.body.desc, '|', req.body.price, '|', req.body.discount)
+    console.log('Add product console req:', req)
+    console.log('files:', req.files)
+    console.log('body:', req.body)
+    console.log('body components:', req.body.name, '|', req.body.desc, '|', req.body.price, '|', req.body.discount)
 
 
     try {
