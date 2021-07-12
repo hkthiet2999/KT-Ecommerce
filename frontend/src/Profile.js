@@ -216,7 +216,9 @@ class Profile extends Component {
       this.setState({ anchorEl: true })
       
     };
-
+    revenue = () =>{
+      this.props.history.push('/revenue');
+    }
     handleClose = () => {
       this.setState({ anchorEl: false })
     };
@@ -380,7 +382,7 @@ class Profile extends Component {
                 <ListItemIcon>
                   <AssessmentIcon fontSize="small" />
                 </ListItemIcon>
-                <ListItemText primary="Thống kê Doanh thu" />
+                <ListItemText primary="Thống kê Doanh thu" onClick={this.revenue}/>
               </StyledMenuItem>
 
               <StyledMenuItem>

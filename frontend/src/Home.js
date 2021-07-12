@@ -161,6 +161,9 @@ class Home extends Component {
     };
   }
   // ``````funtions
+  revenue = () =>{
+    this.props.history.push('/revenue');
+  }
   // user profile
   userProfile = () => {
     this.props.history.push('/profile');
@@ -408,7 +411,7 @@ class Home extends Component {
                 <ListItemIcon>
                   <AssessmentIcon fontSize="small" />
                 </ListItemIcon>
-                <ListItemText primary="Thống kê Doanh thu" />
+                <ListItemText primary="Thống kê Doanh thu" onClick={this.revenue}/>
               </StyledMenuItem>
 
               <StyledMenuItem>

@@ -22,7 +22,7 @@ ReactDOM.render(
             <Route exact path='/home' component={Home} />
             <Route exact path='/profile' component={Profile} />
             <Route exact path='/accounts/forgot-password' component={ForgotPwd} />
-            <Route exact path='/accounts/revenue' component={Dashboard} />
+            <Route exact path='/revenue' component={Dashboard} />
 
             
             {/* <Route component={NotFound}/> */}

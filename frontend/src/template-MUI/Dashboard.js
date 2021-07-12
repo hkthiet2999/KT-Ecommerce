@@ -10,6 +10,7 @@ import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
+import Button from '@material-ui/core/Button';
 import Badge from '@material-ui/core/Badge';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
@@ -22,7 +23,11 @@ import { mainListItems, secondaryListItems } from './listItems';
 import Chart from './Chart';
 import Deposits from './Deposits';
 import Orders from './Orders';
+import { useHistory } from "react-router-dom";
 
+// function App() {
+//   let history = useHistory();
+// }
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -127,6 +132,11 @@ export default function Dashboard() {
     setOpen(false);
   };
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+  const history = useHistory();
+  const backHome = () =>{
+    // this.props.history.push('/home');
+    history.push('/home')
+  }
 
   return (
     <div className={classes.root}>
@@ -145,6 +155,16 @@ export default function Dashboard() {
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
             Tính năng này chưa được hỗ trợ!! Đây là giao diện thử nghiệm
           </Typography>
+          <Button
+            style={{ height: 40 }}
+            className="button_style"
+            variant="contained"
+            size="small"
+            // onClick={this.logOut}
+            onClick={backHome}
+          >
+            Quay về Trang chủ
+          </Button>
           <IconButton color="inherit">
             <Badge badgeContent={4} color="secondary">
               <NotificationsIcon />
