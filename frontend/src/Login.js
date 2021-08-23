@@ -63,12 +63,12 @@ export default class Login extends React.Component {
       // avatar: res.profileObj.imageUrl ? res.profileObj.imageUrl: '',
       user_id: res.googleId,
       token: res.tokenId
-    }).then((res) => {
+    }).then( async (res) => {
       console.log('user_id in storage:',  res.data.id)
       localStorage.setItem('token', res.data.token);
       localStorage.setItem('user_id', res.data.id);
       // localStorage.setItem('user_name', res.data.);
-      swal({
+      await swal({
         text: res.data.title,
         icon: "success",
         type: "success"
@@ -92,11 +92,11 @@ export default class Login extends React.Component {
       // fullname: res.name ? res.name : '',
       user_id: res.userID,
       token: res.accessToken
-    }).then((res) => {
+    }).then( async (res) => {
       localStorage.setItem('token', res.data.token);
       localStorage.setItem('user_id', res.data.id);
       // localStorage.setItem('user_name', res.data.);
-      swal({
+      await swal({
         text: res.data.title,
         icon: "success",
         type: "success"
@@ -121,11 +121,11 @@ export default class Login extends React.Component {
     axios.post('http://localhost:8080/accounts/login', {
       email: this.state.email,
       password: this.state.password,
-    }).then((res) => {
+    }).then(async (res) => {
       localStorage.setItem('token', res.data.token);
       localStorage.setItem('user_id', res.data.id);
       // localStorage.setItem('user_name', res.data.);
-      swal({
+      await swal({
         text: res.data.title,
         icon: "success",
         type: "success"

@@ -77,11 +77,11 @@ export default class Register extends React.Component {
     const awaitRes = await axios.post('http://localhost:8080/accounts/google-login',{
       user_id: res.googleId,
       token: res.tokenId
-    }).then((res) => {
+    }).then(async (res) => {
       localStorage.setItem('token', res.data.token);
       localStorage.setItem('user_id', res.data.id);
       // localStorage.setItem('user_name', res.data.);
-      swal({
+      await swal({
         text: res.data.title,
         icon: "success",
         type: "success"
@@ -103,11 +103,11 @@ export default class Register extends React.Component {
     const awaitRes = await axios.post('http://localhost:8080/accounts/facebook-login',{
       user_id: res.userID,
       token: res.accessToken
-    }).then((res) => {
+    }).then(async (res) => {
       localStorage.setItem('token', res.data.token);
       localStorage.setItem('user_id', res.data.id);
       // localStorage.setItem('user_name', res.data.);
-      swal({
+      await swal({
         text: res.data.title,
         icon: "success",
         type: "success"

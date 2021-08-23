@@ -28,7 +28,7 @@ function Copyright() {
       {new Date().getFullYear()}
       {' - '}
       <Link color="inherit" href="https://github.com/smoothkt4951/">
-        Bản quyền của Công Ty Cổ Phần smoothkt4951.vn
+      Bản quyền thuộc Công Ty TNHH KT.vn
       </Link>
       {'.'}
     </Typography>
@@ -762,7 +762,7 @@ class Home extends Component {
           KT E-commerce
         </Typography>
         <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
-          Something here to give the footer a purpose!
+        Tầng 10 Capital Building, số 67, Lê Lợi, Bến Nghé, Quận 1, Thành phố Hồ Chí Minh
         </Typography>
         <Copyright />
       </footer>
