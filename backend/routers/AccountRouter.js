@@ -214,6 +214,7 @@ Router.post("/facebook-login", async (req, res)=>{
 
         const {email, name, picture} = data
         // console.log(email, name, picture)
+        console.log('avatar:', picture.data.url)
         //
         const generatePassword = email + process.env.FACEBOOK_SECRET
         const hased = bcrypt.hashSync(generatePassword, salt)
@@ -237,6 +238,7 @@ Router.post("/facebook-login", async (req, res)=>{
             const newUser = new user({
                 fullname: name,
                 email: email,
+                avatar: picture.data.url,
                 password: hased
             })
             await newUser.save()

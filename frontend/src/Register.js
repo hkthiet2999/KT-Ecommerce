@@ -75,8 +75,6 @@ export default class Register extends React.Component {
   responseGoogle = async (res) => {
     console.log(res)
     const awaitRes = await axios.post('http://localhost:8080/accounts/google-login',{
-      email: res.ct.Mt,
-      fullname: res.ct.Ue,
       user_id: res.googleId,
       token: res.tokenId
     }).then((res) => {
@@ -103,8 +101,6 @@ export default class Register extends React.Component {
   responseFacebook = async (res) => {
     console.log(res)
     const awaitRes = await axios.post('http://localhost:8080/accounts/facebook-login',{
-      email: res.email ? res.email : res.id,
-      fullname: res.name,
       user_id: res.userID,
       token: res.accessToken
     }).then((res) => {

@@ -58,8 +58,9 @@ export default class Login extends React.Component {
   responseGoogle = async (res) => {
     console.log(res)
     const awaitRes = await axios.post('http://localhost:8080/accounts/google-login',{
-      email: res.ct.Mt,
-      fullname: res.ct.Ue,
+      // email: res.profileObj.email ? res.profileObj.email : '',
+      // fullname: res.profileObj.name ? res.profileObj.name: '',
+      // avatar: res.profileObj.imageUrl ? res.profileObj.imageUrl: '',
       user_id: res.googleId,
       token: res.tokenId
     }).then((res) => {
@@ -87,8 +88,8 @@ export default class Login extends React.Component {
   responseFacebook = async (res) => {
     console.log(res)
     const awaitRes = await axios.post('http://localhost:8080/accounts/facebook-login',{
-      email: res.email ? res.email : res.id,
-      fullname: res.name,
+      // email: res.email ? res.email : res.id,
+      // fullname: res.name ? res.name : '',
       user_id: res.userID,
       token: res.accessToken
     }).then((res) => {

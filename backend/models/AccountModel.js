@@ -10,7 +10,7 @@ const AccountShema = new Schema({
     password: String,
     avatar: {
         type: String,
-        default: "https://res.cloudinary.com/devatchannel/image/upload/v1602752402/avatar/avatar_cugq40.png"
+        default: "https://www.pikpng.com/pngl/b/80-805523_default-avatar-svg-png-icon-free-download-264157.png"
     },
     numberphone: {
         type: Number,
