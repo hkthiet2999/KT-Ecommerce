@@ -13,21 +13,21 @@ const AccountShema = new Schema({
         default: "https://www.pikpng.com/pngl/b/80-805523_default-avatar-svg-png-icon-free-download-264157.png"
     },
     numberphone: {
-        type: Number,
-        default: null
+        type: String,
+        default: ''
     },
     address: {
         type: String,
-        default: null
+        default: ''
     },
     birthday: {
         type: String,
-        default: null,
+        default: '',
         trim: true,
     },
     gender: {
         type: String,
-        default: null
+        default: ''
     }
 
 })

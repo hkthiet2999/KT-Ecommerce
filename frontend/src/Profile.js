@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { withStyles } from "@material-ui/core/styles";
 import 'react-phone-number-input/style.css'
 import LockIcon from '@material-ui/icons/Lock';
+// import ReactPhoneInput from 'react-phone-input-mui';
 
 // import PhoneInput from 'react-phone-number-input';
 // import MuiPhoneNumber from "material-ui-phone-number";
@@ -9,7 +10,7 @@ import {
   Button, TextField,Grid, Card, AppBar,
   CardActions, CardContent, CssBaseline,
   Toolbar, Typography, Container, Link, Box, CardHeader, Divider, Avatar, Dialog, DialogActions,
-  DialogTitle, DialogContent, Select, FormControl, InputLabel, Radio, RadioGroup, FormControlLabel, FormLabel
+  DialogTitle, DialogContent, Select, FormControl, InputLabel, Radio, RadioGroup, FormControlLabel, FormLabel, InputAdornment
 } from '@material-ui/core';
 
 import StorefrontTwoToneIcon from '@material-ui/icons/StorefrontTwoTone';
@@ -511,10 +512,12 @@ class Profile extends Component {
                               label="Số điện thoại"
                               name="numberphone"
                               onChange={this.onChange}
-
                               id="outlined-required"
-                              defaultValue= {this.state.numberphone}
-                              value={this.state.numberphone}
+                              defaultValue={`${this.state.numberphone}`}
+                              value={`${this.state.numberphone}`}
+                              InputProps={{
+                                startAdornment: <InputAdornment position="start">+84 </InputAdornment>,
+                              }}
                               variant="outlined"
                             />
 
