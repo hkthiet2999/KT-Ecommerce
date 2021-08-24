@@ -114,9 +114,10 @@ export default class Login extends React.Component {
     });
   }
 
-  login = () => {
+  login = (event) => {
 
     // const pwd = bcrypt.hashSync(this.state.password, salt);
+    event.preventDefault();
 
     axios.post('http://localhost:8080/accounts/login', {
       email: this.state.email,
@@ -151,59 +152,63 @@ export default class Login extends React.Component {
           <h2>Đăng nhập</h2>
         </div>
         <div>
-          <div className='inputfield'>
-            <Grid container justify="center" spacing={1} alignItems="flex-end">
-              <Grid item>
-                <AccountCircle />
+          <form onSubmit={this.login} noValidate autoComplete="off"> 
+            <div className='inputfield'>
+              <Grid container justify="center" spacing={1} alignItems="flex-end">
+                <Grid item>
+                  <AccountCircle />
+                </Grid>
+                <Grid item>
+                <TextField
+                  id="input-with-icon-grid"
+                  label="Email" 
+                  type="text"
+                  autoComplete="off"
+                  name="email"
+                  value={this.state.username}
+                  onChange={this.onChange}
+                  required
+                />
+                </Grid>
               </Grid>
-              <Grid item>
-              <TextField
-                id="input-with-icon-grid"
-                label="Email" 
-                type="text"
-                autoComplete="off"
-                name="email"
-                value={this.state.username}
-                onChange={this.onChange}
-                required
-              />
+            </div>
+            <div className='inputfield'>
+              <Grid container justify="center" spacing={1} alignItems="flex-end">
+                <Grid item>
+                <LockIcon></LockIcon>
+                </Grid>
+                <Grid item>
+                <TextField
+                  className="input_text"
+                  id="input-with-icon-grid"
+                  label="Mật khẩu"
+                  type="password"
+                  autoComplete="off"
+                  name="password"
+                  value={this.state.password}
+                  onChange={this.onChange}
+                  required
+                />
+                </Grid>
               </Grid>
-            </Grid>
-          </div>
-          <div className='inputfield'>
-            <Grid container justify="center" spacing={1} alignItems="flex-end">
-              <Grid item>
-              <LockIcon></LockIcon>
-              </Grid>
-              <Grid item>
-              <TextField
-                className="input_text"
-                id="input-with-icon-grid"
-                label="Mật khẩu"
-                type="password"
-                autoComplete="off"
-                name="password"
-                value={this.state.password}
-                onChange={this.onChange}
-                required
-              />
-              </Grid>
-            </Grid>
-          </div>
-          <br /><br />
-          <Button
-            className="button_style"
-            variant="contained"
-            color="primary"
-            size="small"
-            disabled={this.state.email == '' && this.state.password == ''}
-            onClick={this.login}
-          >
-            Đăng nhập
-          </Button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </div>
+            <br /><br />
+            <Button
+              type="submit"
+              className="button_style"
+              variant="contained"
+              color="primary"
+              size="small"
+              disabled={this.state.email == '' && this.state.password == ''}
+              onClick={this.login}
+            >
+              Đăng nhập
+            </Button>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <Link href="/accounts/forgot-password">
             Quên mật khẩu
           </Link>
+          </form>
           <br /><br />
           <DividerWithText>Hoặc</DividerWithText>
           <br />

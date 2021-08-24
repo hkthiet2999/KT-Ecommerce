@@ -125,8 +125,8 @@ export default class Register extends React.Component {
     });
   }
   // normal
-  register = () => {
-
+  register = (event) => {
+    event.preventDefault();
     axios.post('http://localhost:8080/accounts/register', {
       fullname: this.state.fullname,
       email: this.state.email,
@@ -162,95 +162,99 @@ export default class Register extends React.Component {
               </div>
 
               <div>
-                <div className='inputfield'>
-                  <Grid container justify="center" spacing={1} alignItems="flex-end">
-                    <Grid item>
-                      <AccountCircle />
-                    </Grid>
-                    <Grid item>
-                    <TextField 
-                      id="input-with-icon-grid" 
-                      label="Họ và tên" 
-                      type="text"
-                      autoComplete="off"
-                      name="fullname"
-                      value={this.state.fullname}
-                      onChange={this.onChange}
-                      required
-                    />
-                    </Grid>
-                  </Grid>
-                </div>
-
-                <div className='inputfield'>
-                  <Grid container justify="center" spacing={1} alignItems="flex-end">
-                    <Grid item>
-                      <AccountCircle />
-                    </Grid>
-                    <Grid item>
+                <form onSubmit={this.register} noValidate autoComplete="off">
+                  <div className='inputfield'>
+                    <Grid container justify="center" spacing={1} alignItems="flex-end">
+                      <Grid item>
+                        <AccountCircle />
+                      </Grid>
+                      <Grid item>
                       <TextField 
                         id="input-with-icon-grid" 
-                        label="Email" 
+                        label="Họ và tên" 
                         type="text"
                         autoComplete="off"
-                        name="email"
-                        value={this.state.email}
+                        name="fullname"
+                        value={this.state.fullname}
                         onChange={this.onChange}
                         required
                       />
+                      </Grid>
                     </Grid>
-                  </Grid>
-                </div>
-                <div className='inputfield'>
-                  <Grid container justify="center" spacing={1} alignItems="flex-end">
-                    <Grid item>
-                      <LockIcon></LockIcon>
+                  </div>
+
+                  <div className='inputfield'>
+                    <Grid container justify="center" spacing={1} alignItems="flex-end">
+                      <Grid item>
+                        <AccountCircle />
+                      </Grid>
+                      <Grid item>
+                        <TextField 
+                          id="input-with-icon-grid" 
+                          label="Email" 
+                          type="text"
+                          autoComplete="off"
+                          name="email"
+                          value={this.state.email}
+                          onChange={this.onChange}
+                          required
+                        />
+                      </Grid>
                     </Grid>
-                    <Grid item>
-                      <TextField
-                        id="input-with-icon-grid"
-                        label="Mật khẩu"
-                        type="password"
-                        autoComplete="off"
-                        name="password"
-                        value={this.state.password}
-                        onChange={this.onChange}
-                        required
-                      />
+                  </div>
+                  <div className='inputfield'>
+                    <Grid container justify="center" spacing={1} alignItems="flex-end">
+                      <Grid item>
+                        <LockIcon></LockIcon>
+                      </Grid>
+                      <Grid item>
+                        <TextField
+                          id="input-with-icon-grid"
+                          label="Mật khẩu"
+                          type="password"
+                          autoComplete="off"
+                          name="password"
+                          value={this.state.password}
+                          onChange={this.onChange}
+                          required
+                        />
+                      </Grid>
                     </Grid>
-                  </Grid>
-                </div>
-                
-                <div className='inputfield'>
-                  <Grid container justify="center" spacing={1} alignItems="flex-end">
-                    <Grid item>
-                      <LockIcon></LockIcon>
+                  </div>
+                  
+                  <div className='inputfield'>
+                    <Grid container justify="center" spacing={1} alignItems="flex-end">
+                      <Grid item>
+                        <LockIcon></LockIcon>
+                      </Grid>
+                      <Grid item>
+                        <TextField
+                          id="input-with-icon-grid"
+                          label="Xác nhận mật khẩu"
+                          type="password"
+                          autoComplete="off"
+                          name="confirm_password"
+                          value={this.state.confirm_password}
+                          onChange={this.onChange}
+                          required
+                        />   
+                      </Grid>
                     </Grid>
-                    <Grid item>
-                      <TextField
-                        id="input-with-icon-grid"
-                        label="Xác nhận mật khẩu"
-                        type="password"
-                        autoComplete="off"
-                        name="confirm_password"
-                        value={this.state.confirm_password}
-                        onChange={this.onChange}
-                        required
-                      />   
-                    </Grid>
-                  </Grid>
-                </div>
-                <br />
-                <Button
-                  className="button_style"
-                  variant="contained"
-                  color="primary"
-                  size="large"
-                  disabled={this.state.email == '' && this.state.password == '' && this.state.confirm_password == '' &&  this.state.fullname == ''}
-                  onClick={this.register}
-                >
-                  Đăng ký
-                </Button> 
+                  </div>
+                  <br />
+                  
+                  <Button
+                    type="submit"
+                    className="button_style"
+                    variant="contained"
+                    color="primary"
+                    size="large"
+                    disabled={this.state.email == '' && this.state.password == '' && this.state.confirm_password == '' &&  this.state.fullname == ''}
+                    onClick={this.register}
+                  >
+                    Đăng ký
+                  </Button> 
+                </form>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <br /><br />
                 <DividerWithText>Hoặc</DividerWithText>
