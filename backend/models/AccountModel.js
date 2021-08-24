@@ -21,8 +21,9 @@ const AccountShema = new Schema({
         default: null
     },
     birthday: {
-        type: Date,
-        default: null
+        type: String,
+        default: null,
+        trim: true,
     },
     gender: {
         type: String,

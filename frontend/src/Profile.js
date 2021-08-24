@@ -156,7 +156,7 @@ class Profile extends Component {
         avatar:'',
         numberphone: '',
         address:'',
-        gender:'Khác',
+        gender:'',
         birthday:'',
         anchorEl: false,
         confirm_pwdNew: '',
@@ -602,21 +602,27 @@ class Profile extends Component {
                               <TextField
                                 fullWidth
                                 id="date"
-                                label="Ngày sinh - Chưa hỗ trợ"
+                                label="Ngày sinh"
                                 type="date"
-                                defaultValue="1999-12-30"
+                                // defaultValue="1999-12-30"
+                                defaultValue = {`${this.state.birthday}`}
+                                value= {`${this.state.birthday}`}
                                 InputLabelProps={{
                                   shrink: true,
                                 }}
                                 onChange={this.onChange}
-                                
+  
                                 name="birthday"
+                                
+                                // id="outlined-required"
+                                
                                 // value={this.state.birthday}
-                                id="outlined-required"
-                                defaultValue= {this.state.birthday}
-                                value={this.state.birthday}
+
+                                
                               />
                             </form>
+
+
 
                           </Grid>
                         
