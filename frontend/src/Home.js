@@ -145,6 +145,8 @@ class Home extends Component {
       token: '',
       openProductModal: false,
       openProductEditModal: false,
+      openProductDeleteModal: false,
+      cardID: '',
       id: '',
       name: '',
       desc: '',
@@ -359,18 +361,31 @@ class Home extends Component {
         icon: "success",
         type: "success"
       });
-
+      this.handleDeleteProduct_closeDialog();
       this.setState({ page: 1 }, () => {
         this.pageChange(null, 1);
       });
     }).catch((err) => {
+
       swal({
         text: err.response.data.errorMessage,
         icon: "error",
         type: "error"
       });
+      this.handleDeleteProduct_closeDialog();
     });
   }
+
+  handleDeleteProduct_openDialog = (cardID) => {
+    this.setState({
+      openProductDeleteModal: true,
+      cardID: cardID,
+    });
+  };
+
+  handleDeleteProduct_closeDialog = () => {
+    this.setState({ openProductDeleteModal: false });
+  };
   // ````` render
   render() {
     const { classes } = this.props;
@@ -480,6 +495,7 @@ class Home extends Component {
             </div>
           </Container>
         {/* Add Product */}
+        
         <Dialog
           open={this.state.openProductModal}
           onClose={this.handleAddProduct_closeDialog}
@@ -571,7 +587,7 @@ class Home extends Component {
               Hủy
             </Button>
             <Button
-              disabled={this.state.name == '' || this.state.desc == '' || this.state.discount == '' || this.state.price == '' || this.state.file == null}
+              disabled={this.state.name == '' || this.state.desc == '' || this.state.discount == '' || this.state.price == '' || this.state.file == ''}
               onClick={(e) => this.addProduct()} color="primary" autoFocus>
               Thêm
             </Button>
@@ -681,6 +697,28 @@ class Home extends Component {
         </Dialog>
         {/* End Update Dialog */}
 
+
+        {/* Edit Product */}
+        <Dialog
+          open={this.state.openProductDeleteModal}
+          onClose={this.handleDeleteProduct_closeDialog}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">Bạn có chắc muốn xóa sản phẩm này không?</DialogTitle>
+
+          <DialogActions>
+            <Button onClick={this.handleDeleteProduct_closeDialog} color="primary">
+              Hủy
+            </Button>
+            <Button
+              onClick={(e) => this.deleteProduct(this.state.cardID)} color="primary" autoFocus>
+              Xóa
+            </Button>
+          </DialogActions>
+        </Dialog>
+        {/* End Delete Dialog */}
+
         </div>
          {/* End hero unit */}
         <Container className={classes.cardGrid} maxWidth="md">
@@ -734,7 +772,8 @@ class Home extends Component {
                       variant="outlined"
                       color="secondary"
                       size="small"
-                      onClick={(e) => this.deleteProduct(card._id)}
+                      // onClick={(e) => this.deleteProduct(card._id)}
+                      onClick={(e) => this.handleDeleteProduct_openDialog(card._id)}
                       >
                       Xóa
                     </Button>
