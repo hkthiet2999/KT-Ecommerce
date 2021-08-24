@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
 import { withStyles } from "@material-ui/core/styles";
 import 'react-phone-number-input/style.css'
-import PhoneInput from 'react-phone-number-input';
-import MuiPhoneNumber from "material-ui-phone-number";
+import LockIcon from '@material-ui/icons/Lock';
+
+// import PhoneInput from 'react-phone-number-input';
+// import MuiPhoneNumber from "material-ui-phone-number";
 import {
   Button, TextField,Grid, Card, AppBar,
   CardActions, CardContent, CssBaseline,
   Toolbar, Typography, Container, Link, Box, CardHeader, Divider, Avatar, Dialog, DialogActions,
-  DialogTitle, DialogContent, Select, FormControl, InputLabel
+  DialogTitle, DialogContent, Select, FormControl, InputLabel, Radio, RadioGroup, FormControlLabel, FormLabel
 } from '@material-ui/core';
+
 import StorefrontTwoToneIcon from '@material-ui/icons/StorefrontTwoTone';
 // icons
 import Menu from '@material-ui/core/Menu';
@@ -153,7 +156,7 @@ class Profile extends Component {
         avatar:'',
         numberphone: '',
         address:'',
-        gender:'',
+        gender:'Khác',
         birthday:'',
         anchorEl: false,
         confirm_pwdNew: '',
@@ -543,21 +546,37 @@ class Profile extends Component {
                             md={7}
                             xs={14}
                           >
+
                           <FormControl fullWidth variant="outlined">
-                            <InputLabel id="demo-simple-select-outlined-label"> Giới tính</InputLabel>
+                              <FormLabel>Giới tính</FormLabel>
+
+                                <RadioGroup
+                                row
+                                aria-label="gender" 
+                                name="gender" 
+                                defaultValue= {this.state.gender}
+                                value={this.state.gender} 
+                                onChange={this.onChange}>
+                                  <FormControlLabel value="Nam" control={<Radio />} label="Nam" />
+                                  <FormControlLabel value="Nữ" control={<Radio />} label="Nữ" />
+                                  <FormControlLabel value="Khác" control={<Radio />} label="Khác" />
+                                </RadioGroup>
+                          </FormControl>
+
+                          {/* <FormControl fullWidth variant="outlined">
+                            <InputLabel id="demo-simple-select-outlined-label">Giới tính</InputLabel>
                             <Select
                               labelId="demo-simple-select-outlined-label"
                               id="demo-simple-select-outlined"
                               defaultValue= {this.state.gender}
                               value={this.state.gender}
                               onChange={this.onChange}
-                              label="Giới tính - Chưa hỗ trợ"
                             >
                               <MenuItem value={10}>Nam</MenuItem>
                               <MenuItem value={20}>Nữ</MenuItem>
                               <MenuItem value={30}>Khác</MenuItem>
                             </Select>
-                            </FormControl>
+                            </FormControl> */}
 
                             {/* <TextField
                               fullWidth
@@ -647,38 +666,51 @@ class Profile extends Component {
                                 md={6}
                                 xs={12}
                               >
-                                <TextField
-                                  autoComplete="off"
-                                  fullWidth
-                                  label="Mật khẩu mới"
-                                  name="pwdNew"
-                                  type="string"
-                                  onChange={this.onChange}
-                                  required
-                                  value={this.state.pwdNew}
-                                  variant="outlined"
-                                  type="text"
-                                  id="outlined-basic" 
-                                />
+                                <Grid item>
+                                  <LockIcon></LockIcon>
+                                </Grid>
+                                <Grid item>
+                                  <TextField
+                                    className="input_text"
+                                    id="input-with-icon-grid"
+                                    type="password"
+                                    autoComplete="off"
+                                    fullWidth
+                                    label="Mật khẩu mới"
+                                    name="pwdNew"
+                                    onChange={this.onChange}
+                                    required
+                                    value={this.state.pwdNew}
+                                  />
+                                </Grid>
+                                
                               </Grid>
                               <Grid
                                 item
                                 md={6}
                                 xs={12}
                               >
-                                <TextField
+                                <Grid item>
+                                  <LockIcon></LockIcon>
+                                </Grid>
+                                <Grid item>
+
+
+                                  <TextField
+                                  className="input_text"
+                                  id="input-with-icon-grid"
+                                  type="password"
                                   autoComplete="off"
                                   fullWidth
                                   label="Xác nhận mật khẩu mới"
                                   name="confirm_pwdNew"
                                   onChange={this.onChange}
-                                  type="string"
                                   required
                                   value={this.state.confirm_pwdNew}
-                                  variant="outlined"
-                                  type="text"
-                                  id="outlined-basic" 
                                 />
+
+                                </Grid>
+
                               </Grid>
                             </Grid>
                             </Card>
