@@ -1,54 +1,38 @@
-## My project is demonstrates the following
-### Backend
-  - API to register and login user.
-  - API using which loged in user can add, edit and update it's product.
-  - Pagination API to give list of perticular user's added product.
-  - JWT token authentication.
-### Frontend
-  - Creating a Component in React and creat routing.
-  - Using react and material UI created form to login user and can register new user.
-  - Product add, edit, delete and pagination also you can search product by name.
-  - Making HTTP calls using Axios.
-  - Calling multipart api with image upload.
+# Usage
+- Clone this repository: `git clone https://github.com/smoothkt4951/KT-Ecommerce.git`
+- Change directory to use backend: `cd backend`
 
-### Prerequisites
-Below noted things you need to install to run this project in your system
-  - Node.js
-  - NPM
-  - MongoDB : DB Name: `SalesWebsite`
+## Description .env files
+- [.env.sample](https://github.com/smoothkt4951/KT-Ecommerce/blob/main/backend/.env.sample): Template for .env files
+  + `PORT`: Port to start server
+  + `DB_USER`: SQL Server username, should be `sa` account
+  + `DB_PWD`: SQL Server password
+  + `DB_NAME`: your Database name
+  + `JWT_SECRET`: secret key
+  + `MONGODB_URI`= MongoDB connection URI
+ - rename it `.env.development`: development environment
+ - rename it `.env.test`: test environment
+ - rename it: `.env.product`: docker container environment
+## API Documents
+- Edit file [.env.sample](https://github.com/smoothkt4951/KT-Ecommerce/blob/main/backend/.env.sample) to suitable for your port in localhost and Database Config 
+- Rename it `.env.development`
+- `npm start`
+- `http://localhost:PORT/api-docs/`
+## Test
+- Edit file [.env.sample](https://github.com/smoothkt4951/KT-Ecommerce/blob/main/backend/.env.sample) to suitable for your port in localhost and Database Config 
+- Rename it `.env.test`
+- If you want to test workflow, just run command: `npm test` or `npm run coverage`
+- IF you want to test API one by one, you have to edit file [.mocharc.json](https://github.com/smoothkt4951/KT-Ecommerce/blob/main/backend/.mocharc.json)
+    + replace: `"ignore": ["test/api/**"],` with `"ignore": ["test/workflow/**"],`
+- `npm test` or `npm run coverage`
+- 
+## Start
+- Edit file [.env.sample](https://github.com/smoothkt4951/KT-Ecommerce/blob/main/backend/.env.sample) to suitable for your port in localhost and Database Config 
+- Rename it `.env.development`
+- `npm start`
 
-### To Setup
-Clone or download this repository
-1. `cd KT-Ecommerce/backend `
-2. `npm install`
-3. Then `npm start`
-4. new terminal, `cd KT-Ecommerce/frontend` and `npm install`, then `npm start` same above
+## Docker Container
+- Edit file [.env.sample](https://github.com/smoothkt4951/KT-Ecommerce/blob/main/backend/.env.sample) to suitable for your port in localhost and Database Config 
+- Rename it `.env.product`
+- `docker-compose up`
 
-### Some Screens
-# Welcome 
-
-![](img_git/welcome.png)
-
-# Login
-
-![](img_git/login.png)
-
-# Register
-
-![](img_git/register.png)
-
-# Home
-
-![](img_git/home.png)
-
-# Add and update 
-
-![](img_git/add.png) ![](img_git/update.png)
-
-# Search
-
-![](img_git/search.png)
-
-# Success and Error
-
-![](img_git/delete.png) ![](img_git/err1.png)
