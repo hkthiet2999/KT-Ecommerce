@@ -10,7 +10,7 @@ const fs = require('fs')
 const product = require("../models/ProductModel.js");
 const user = require("../models/AccountModel.js");
 
-const dir = '../frontend/uploads';
+const dir = './client/uploads';
 const upload = multer({
   storage: multer.diskStorage({
 
@@ -18,7 +18,7 @@ const upload = multer({
       if (!fs.existsSync(dir)) {
         fs.mkdirSync(dir);
       }
-      callback(null, '../frontend/uploads');
+      callback(null, './client/uploads');
     },
     filename: function (req, file, callback) { callback(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname)); }
 
@@ -144,7 +144,7 @@ Router.post("/update-product", upload.any(), (req, res) => {
 
         // if file already exist than remove it
         if (req.files && req.files[0] && req.files[0].filename && new_product.image) {
-          const path = `../frontend/uploads/${new_product.image}`;
+          const path = `./client/uploads/${new_product.image}`;
           fs.unlinkSync(path);
         }
 
