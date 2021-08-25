@@ -163,8 +163,8 @@ class Home extends Component {
     };
   }
   // ``````funtions
-  revenue = () =>{
-    this.props.history.push('/revenue');
+  sell = () =>{
+    this.props.history.push('/list-products');
   }
   // user profile
   userProfile = () => {
@@ -187,7 +187,7 @@ class Home extends Component {
       this.props.history.push('/accounts/login');
     } else {
       this.setState({ token: token }, () => {
-        this.getProduct();
+        // this.getProduct();
       });
     }
   }
@@ -215,58 +215,7 @@ class Home extends Component {
       });
     }
   };
-  
-  // add
-  handleAddProduct_openDialog = () =>{
-    this.setState({
-      openProductModal: true,
-      id: '',
-      name: '',
-      desc: '',
-      price: '',
-      discount: '',
-      fileName: ''
-    })
-  }
-  handleAddProduct_closeDialog = () => {
-    this.setState({ openProductModal: false });
-  };
-  addProduct = () => {
-    const fileInput = document.querySelector("#fileInput");
-    const file = new FormData();
-    file.append('file', fileInput.files[0]);
-    file.append('name', this.state.name);
-    file.append('desc', this.state.desc);
-    file.append('discount', this.state.discount);
-    file.append('price', this.state.price);
 
-    axios.post('http://localhost:8080/products/add-product', file, {
-      headers: {
-        'content-type': 'multipart/form-data',
-        'token': this.state.token
-      }
-    }).then((res) => {
-
-      swal({
-        text: res.data.title,
-        icon: "success",
-        type: "success"
-      });
-
-      this.handleAddProduct_closeDialog();
-      this.setState({ name: '', desc: '', discount: '', price: '', file: null, page: 1 }, () => {
-        this.getProduct();
-      });
-    }).catch((err) => {
-      swal({
-        text: err.response.data.errorMessage,
-        icon: "error",
-        type: "error"
-      });
-      this.handleAddProduct_closeDialog();
-    });
-
-  }
   // get
   getProduct = () => {
     
@@ -292,100 +241,7 @@ class Home extends Component {
       this.setState({ loading: false, products: [], pages: 0 },()=>{});
     });
   }
-  // update
-  updateProduct = () => {
-    const fileInput = document.querySelector("#fileInput");
-    const file = new FormData();
-    file.append('id', this.state.id);
-    file.append('file', fileInput.files[0]);
-    file.append('name', this.state.name);
-    file.append('desc', this.state.desc);
-    file.append('discount', this.state.discount);
-    file.append('price', this.state.price);
-
-    axios.post('http://localhost:8080/products/update-product', file, {
-      headers: {
-        'content-type': 'multipart/form-data',
-        'token': this.state.token
-      }
-    }).then((res) => {
-
-      swal({
-        text: res.data.title,
-        icon: "success",
-        type: "success"
-      });
-
-      this.handleUpdateProduct_closeDialog();
-      this.setState({ name: '', desc: '', discount: '', price: '', file: null }, () => {
-        this.getProduct();
-      });
-    }).catch((err) => {
-      swal({
-        text: err.response.data.errorMessage,
-        icon: "error",
-        type: "error"
-      });
-      this.handleUpdateProduct_closeDialog();
-    });
-
-  }
-  handleUpdateProduct_openDialog = (data) => {
-    this.setState({
-      openProductEditModal: true,
-      id: data._id,
-      name: data.name,
-      desc: data.desc,
-      price: data.price,
-      discount: data.discount,
-      fileName: data.image
-    });
-  };
-
-  handleUpdateProduct_closeDialog = () => {
-    this.setState({ openProductEditModal: false });
-  };
-  // delete
-  deleteProduct = (id) => {
-    axios.post('http://localhost:8080/products/delete-product', {
-      id: id
-    }, {
-      headers: {
-        'Content-Type': 'application/json',
-        'token': this.state.token
-      }
-    }).then((res) => {
-
-      swal({
-        text: res.data.title,
-        icon: "success",
-        type: "success"
-      });
-      this.handleDeleteProduct_closeDialog();
-      this.setState({ page: 1 }, () => {
-        this.pageChange(null, 1);
-      });
-    }).catch((err) => {
-
-      swal({
-        text: err.response.data.errorMessage,
-        icon: "error",
-        type: "error"
-      });
-      this.handleDeleteProduct_closeDialog();
-    });
-  }
-
-  handleDeleteProduct_openDialog = (cardID) => {
-    this.setState({
-      openProductDeleteModal: true,
-      cardID: cardID,
-    });
-  };
-
-  handleDeleteProduct_closeDialog = () => {
-    this.setState({ openProductDeleteModal: false });
-  };
+  
   // ````` render
   render() {
     const { classes } = this.props;
@@ -401,7 +257,7 @@ class Home extends Component {
               <StorefrontTwoToneIcon className={classes.icon}></StorefrontTwoToneIcon>
 
               <Typography variant="h6" color="inherit" noWrap>
-                KT E-commerce - Kênh của người bán hàng
+                KT E-commerce - Kênh mua hàng chuyên nghiệp
               </Typography>
           </Box>
           <div>
@@ -422,12 +278,12 @@ class Home extends Component {
               open={Boolean(this.state.anchorEl)}
               onClose={this.handleClose}
             >
-              <StyledMenuItem>
+              {/* <StyledMenuItem>
                 <ListItemIcon>
                   <AssessmentIcon fontSize="small" />
                 </ListItemIcon>
                 <ListItemText primary="Thống kê Doanh thu" onClick={this.revenue}/>
-              </StyledMenuItem>
+              </StyledMenuItem> */}
 
               <StyledMenuItem>
                 <ListItemIcon>
@@ -451,12 +307,6 @@ class Home extends Component {
         {/* Hero unit */}
         <div className={classes.heroContent}>
           <Container maxWidth="lg">
-            <Typography component="h2" variant="h2" align="center" color="textPrimary" gutterBottom>
-              Danh sách sản phẩm
-            </Typography>
-            <Typography variant="h5" align="center" color="textSecondary" paragraph>
-              Quản lý shop của bạn một cách hiệu quả với Kênh người bán của chúng tôi
-            </Typography>
             <div className={classes.heroButtons}>
               <Grid container spacing={4} justify="center">
                 <Grid item>
@@ -486,244 +336,19 @@ class Home extends Component {
                       size="large" 
                       variant="contained" 
                       color="primary" 
-                      onClick={this.handleAddProduct_openDialog}
+                      onClick={this.sell}
                       >
-                      Thêm sản phẩm mới
+                      Kênh Bán hàng
                     </Button>
                 </Grid>
               </Grid>
             </div>
           </Container>
-        {/* Add Product */}
-        
-        <Dialog
-          open={this.state.openProductModal}
-          onClose={this.handleAddProduct_closeDialog}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-          <DialogTitle id="alert-dialog-title">Thông tin về sản phẩm mới</DialogTitle>
-          <DialogContent className={classes.dialog}>
-            <TextField
-              type="text"
-              autoComplete="off"
-              name="name"
-              value={this.state.name}
-              onChange={this.onChange}
-              label="Tên sản phẩm"
-              required
-              id="outlined-basic" 
-              variant="outlined"
-            /><br /><br /><br />
-            <TextField
-              id="outlined-multiline-static"
-              label="Mô tả sản phẩm"
-              multiline
-              rows={4}
-              variant="outlined"
-              type="text"
-              autoComplete="off"
-              name="desc"
-              value={this.state.desc}
-              onChange={this.onChange}
-              required
-            /><br /><br /><br />
-            {/* /> */}
-            
-
-            <FormControl fullWidth className={classes.margin} variant="outlined">
-              <InputLabel htmlFor="outlined-adornment-amount">Giá</InputLabel>
-              <OutlinedInput
-                  type="number"
-                  required
-                  autoComplete="off"
-                  name="price"
-
-                  id="outlined-adornment-amount"
-                  value={this.state.price}
-                  onChange={this.onChange}
-                  startAdornment={<InputAdornment position="start">VND</InputAdornment>}
-                  labelWidth={60}
-              />
-            </FormControl>
-
-            {/* /> */}
-            <br /><br /><br />
-            <TextField
-              id="standard-basic"
-              type="number"
-              autoComplete="off"
-              name="discount"
-              value={this.state.discount}
-              onChange={this.onChange}
-              label="Khuyến mãi (%)"
-              required
-            /><br /><br /><br />
-            <Button
-              variant="contained"
-              component="label"
-            > Tải lên ảnh của sản phẩm
-            <input
-                id="standard-basic"
-                type="file"
-                accept="image/*"
-                // inputProps={{
-                //   accept: "image/*"
-                // }}
-                name="file"
-                value={this.state.file}
-                onChange={this.onChange}
-                id="fileInput"
-                label="File"
-                hidden
-                required
-              />
-            </Button>&nbsp;
-            {this.state.fileName}
-          </DialogContent>
-
-          <DialogActions>
-            <Button onClick={this.handleAddProduct_closeDialog} color="primary">
-              Hủy
-            </Button>
-            <Button
-              disabled={this.state.name == '' || this.state.desc == '' || this.state.discount == '' || this.state.price == '' || this.state.file == ''}
-              onClick={(e) => this.addProduct()} color="primary" autoFocus>
-              Thêm
-            </Button>
-          </DialogActions>
-        </Dialog>
-        {/* End Add Product */}
-        
-        
-        {/* Edit Product */}
-          <Dialog
-          open={this.state.openProductEditModal}
-          onClose={this.handleUpdateProduct_closeDialog}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-          <DialogTitle id="alert-dialog-title">Cập nhật</DialogTitle>
-            <DialogContent className={classes.dialog}>
-            <TextField
-              type="text"
-              autoComplete="off"
-              name="name"
-              value={this.state.name}
-              onChange={this.onChange}
-              label="Tên sản phẩm"
-              required
-              id="outlined-basic" 
-              variant="outlined"
-            /><br /><br /><br />
-            <TextField
-              id="outlined-multiline-static"
-              label="Mô tả sản phẩm"
-              multiline
-              rows={4}
-              variant="outlined"
-              type="text"
-              autoComplete="off"
-              name="desc"
-              value={this.state.desc}
-              onChange={this.onChange}
-              required
-            /><br /><br /><br />
-            {/* /> */}
-            
-
-            <FormControl fullWidth className={classes.margin} variant="outlined">
-              <InputLabel htmlFor="outlined-adornment-amount">Giá</InputLabel>
-              <OutlinedInput
-                  type="number"
-                  required
-                  autoComplete="off"
-                  name="price"
-
-                  id="outlined-adornment-amount"
-                  value={this.state.price}
-                  onChange={this.onChange}
-                  startAdornment={<InputAdornment position="start">VND</InputAdornment>}
-                  labelWidth={60}
-              />
-            </FormControl>
-
-            {/* /> */}
-            <br /><br /><br />
-            <TextField
-              id="standard-basic"
-              type="number"
-              autoComplete="off"
-              name="discount"
-              value={this.state.discount}
-              onChange={this.onChange}
-              label="Khuyến mãi (%)"
-              required
-            /><br /><br /><br />
-            <Button
-              variant="contained"
-              component="label"
-            > Tải lên ảnh của sản phẩm
-            <input
-                id="standard-basic"
-                type="file"
-                accept="image/*"
-                // inputProps={{
-                //   accept: "image/*"
-                // }}
-                name="file"
-                value={this.state.file}
-                onChange={this.onChange}
-                id="fileInput"
-                label="File"
-                hidden
-                required
-              />
-            </Button>&nbsp;
-            {this.state.fileName}
-          </DialogContent>
-
-
-          <DialogActions>
-            <Button onClick={this.handleUpdateProduct_closeDialog} color="primary">
-              Hủy
-            </Button>
-            <Button
-              disabled={this.state.name == '' || this.state.desc == '' || this.state.discount == '' || this.state.price == ''}
-              onClick={(e) => this.updateProduct()} color="primary" autoFocus>
-              Cập nhật
-            </Button>
-          </DialogActions>
-        </Dialog>
-        {/* End Update Dialog */}
-
-
-        {/* Edit Product */}
-        <Dialog
-          open={this.state.openProductDeleteModal}
-          onClose={this.handleDeleteProduct_closeDialog}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-          <DialogTitle id="alert-dialog-title">Bạn có chắc muốn xóa sản phẩm này không?</DialogTitle>
-
-          <DialogActions>
-            <Button onClick={this.handleDeleteProduct_closeDialog} color="primary">
-              Hủy
-            </Button>
-            <Button
-              onClick={(e) => this.deleteProduct(this.state.cardID)} color="primary" autoFocus>
-              Xóa
-            </Button>
-          </DialogActions>
-        </Dialog>
-        {/* End Delete Dialog */}
-
         </div>
          {/* End hero unit */}
         <Container className={classes.cardGrid} maxWidth="md">
          
-          <Grid container spacing={4}>
+          {/* <Grid container spacing={4}>
           
             {this.state.products.map((card) => (
               <Grid item key={card} xs={12} sm={6} md={4}>
@@ -739,7 +364,6 @@ class Home extends Component {
                   <CardContent className={classes.cardContent}>
                     <Grid container spacing={1}>
                       <Box display='flex' flexGrow={1}>
-                        {/* whatever is on the left side */}
                         <Typography gutterBottom variant="h4">
                         {'₫'}
                         {card.price}
@@ -781,7 +405,7 @@ class Home extends Component {
                 </Card>
               </Grid>
             ))}
-          </Grid>
+          </Grid> */}
 
         </Container>
 

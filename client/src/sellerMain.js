@@ -78,7 +78,7 @@ export default function Album() {
         <Toolbar>
           <StorefrontTwoToneIcon className={classes.icon} />
           <Typography variant="h6" color="inherit" noWrap>
-            KT E-commerce
+            KT E-commerce - Kênh của người bán hàng
           </Typography>
         </Toolbar>
       </AppBar>
@@ -87,27 +87,21 @@ export default function Album() {
         <div className={classes.heroContent}>
           <Container maxWidth="lg">
             <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
-              Mua hàng chuyên nghiệp
+              Bán hàng chuyên nghiệp
             </Typography>
             <Typography variant="h5" align="center" color="textSecondary" paragraph>
-              Chào mừng bạn đến với sàn Thương Mại Điện Tử KT
+              Quản lý shop của bạn một cách hiệu quả với Kênh người bán của chúng tôi
             </Typography>
             <div className={classes.heroButtons}>
               <Grid container spacing={2} justify="center">
                 <Grid item>
-                  <Button variant="contained" color="primary" href="/accounts/login">
+                  <Button variant="contained" color="primary" href="/accounts/login-for-sell">
                     Đăng nhập
                   </Button>
                 </Grid>
                 <Grid item>
                   <Button variant="outlined" color="primary" href="/accounts/register">
                     Đăng ký
-                  </Button>
-                </Grid>
-
-                <Grid item>
-                  <Button variant="contained" color="primary" href="/seller" target="_blank">
-                    Kênh người bán
                   </Button>
                 </Grid>
               </Grid>

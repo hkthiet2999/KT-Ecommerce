@@ -43,7 +43,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default class Login extends React.Component {
+export default class loginSeller extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -74,7 +74,7 @@ export default class Login extends React.Component {
         type: "success"
       });
       
-      this.props.history.push('/home');
+      this.props.history.push('/list-products');
     }).catch((err) => {
       if (err.response && err.response.data && err.response.data.errorMessage) {
         swal({
@@ -102,7 +102,7 @@ export default class Login extends React.Component {
         icon: "success",
         type: "success"
       });
-      this.props.history.push('/home');
+      this.props.history.push('/list-products');
     }).catch((err) => {
       //
       if (err.response && err.response.data && err.response.data.errorMessage) {
@@ -132,7 +132,7 @@ export default class Login extends React.Component {
         icon: "success",
         type: "success"
       });
-      this.props.history.push('/home');
+      this.props.history.push('/list-products');
     }).catch((err) => {
       if (err.response && err.response.data && err.response.data.errorMessage) {
         swal({

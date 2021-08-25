@@ -9,7 +9,10 @@ import Home from './Home';
 import Profile from './Profile';
 import ForgotPwd from './ForgotPwd';
 import main from './main';
-import Dashboard from './template-MUI/Dashboard'
+import Dashboard from './template-MUI/Dashboard';
+import sellerMain from './sellerMain';
+import listProducts from './listProducts';
+import loginSeller from './loginSeller';
 
 import './style.css';
 
@@ -17,7 +20,13 @@ ReactDOM.render(
     <BrowserRouter>
         <Switch>
             <Route exact path='/' component={main} />
+            <Route exact path='/seller' component={sellerMain} />
+            <Route exact path='/list-products' component={listProducts} />
+            
             <Route exact path='/accounts/login' component={Login} />
+
+            <Route exact path='/accounts/login-for-sell' component={loginSeller} />
+
             <Route exact path='/accounts/register' component={Register} />
             <Route exact path='/home' component={Home} />
             <Route exact path='/profile' component={Profile} />
