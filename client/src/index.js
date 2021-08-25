@@ -13,6 +13,8 @@ import Dashboard from './template-MUI/Dashboard';
 import sellerMain from './sellerMain';
 import listProducts from './listProducts';
 import loginSeller from './loginSeller';
+import Details from './Details';
+
 
 import './style.css';
 
@@ -29,6 +31,8 @@ ReactDOM.render(
 
             <Route exact path='/accounts/register' component={Register} />
             <Route exact path='/home' component={Home} />
+            <Route exact path='/details' component={Details} />
+
             <Route exact path='/profile' component={Profile} />
             <Route exact path='/accounts/forgot-password' component={ForgotPwd} />
             <Route exact path='/revenue' component={Dashboard} />

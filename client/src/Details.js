@@ -3,7 +3,7 @@ import {
   Button, TextField, Dialog, DialogActions,
   DialogTitle, DialogContent, InputLabel, OutlinedInput, InputAdornment,Grid, Card, AppBar,
   CardActions, CardContent, CardMedia, CssBaseline,
-  Toolbar, Typography, Container, Link, Box, FormControl, Input
+  Toolbar, Typography, Container, Link, Box, FormControl, Input, CardHeader, Divider
 } from '@material-ui/core';
 //
 import Menu from '@material-ui/core/Menu';
@@ -13,6 +13,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
 import AssessmentIcon from '@material-ui/icons/Assessment';
+import HomeIcon from '@material-ui/icons/Home';
+
 //
 import StorefrontTwoToneIcon from '@material-ui/icons/StorefrontTwoTone';
 
@@ -136,8 +138,8 @@ const useStyles = theme => ({
   },
 });
 // const classes = useStyles();
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-class Home extends Component {
+// const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+class Details extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -168,6 +170,9 @@ class Home extends Component {
   // user profile
   userProfile = () => {
     this.props.history.push('/profile');
+  }
+  homePage = () => {
+    this.props.history.push('/home');
   }
   //
   // details product
@@ -282,12 +287,12 @@ class Home extends Component {
               open={Boolean(this.state.anchorEl)}
               onClose={this.handleClose}
             >
-              {/* <StyledMenuItem>
+                <StyledMenuItem>
                 <ListItemIcon>
-                  <AssessmentIcon fontSize="small" />
+                  <HomeIcon fontSize="small" />
                 </ListItemIcon>
-                <ListItemText primary="Thống kê Doanh thu" onClick={this.revenue}/>
-              </StyledMenuItem> */}
+                <ListItemText primary="Quay về Trang chủ" onClick={this.homePage}/>
+                </StyledMenuItem>
 
               <StyledMenuItem>
                 <ListItemIcon>
@@ -308,9 +313,89 @@ class Home extends Component {
         </Toolbar>
       </AppBar>
       <main>
+
+        <div className={classes.heroContent}>
+            <Container className={classes.cardGrid} maxWidth="lg">
+                <Grid container spacing={3}>
+                    <Grid item lg={4} md={6} xs={12}> 
+                        <Card>
+                            <CardContent style={{  
+                                backgroundImage: "url(" + "https://images.pexels.com/photos/34153/pexels-photo.jpg?auto=compress&cs=tinysrgb&h=350" + ")",
+                                backgroundPosition: 'center',
+                                backgroundSize: 'cover',
+                                backgroundRepeat: 'no-repeat',
+                                height: '400px'
+                            }}>
+                            </CardContent>
+                            <CardActions>
+                                <Button
+                                color="primary"
+                                fullWidth
+                                variant="text"
+                                >
+                                Mua ngay
+                                </Button>
+                            </CardActions>
+                        </Card>
+                    </Grid>
+
+                    <Grid  item lg={8} md={6} xs={12}> 
+                    <Card>
+                      <CardHeader
+                        subheader="Giá tiền"
+                        title="Tên sản phẩm"
+                      />
+                      <Divider />
+                      <CardContent>
+                        <Grid
+                          container
+                          spacing={3}
+                        >
+                            Vài lời mô tả sản phẩm ở đây
+
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent tempus viverra ultricies. Maecenas nec accumsan dolor. Etiam faucibus tincidunt ante, non vulputate metus ullamcorper et. Suspendisse rutrum, orci at pharetra imperdiet, leo diam tristique ipsum, vehicula congue justo enim sit amet metus. Cras lobortis, nibh non malesuada interdum, odio urna tempor felis, non rutrum nisl tortor id purus. Donec in lectus eget diam placerat interdum a vitae nunc. Maecenas quis dui in lacus auctor egestas quis laoreet purus
+                       
+                        </Grid>
+                      </CardContent>
+                      <Divider />
+                      <br/>
+                      <Box
+                        sx={{
+                          display: 'flex',
+                          justifyContent: 'flex-end',
+                          p: 2,
+                        }}
+                        style={{marginBottom:'20px'}}
+                      >
+                        <Button
+                          color="primary"
+                          variant="contained"
+                        >
+                          Mua ngay
+                        </Button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <Button 
+                          className={classes.button}
+                          size="large" 
+                          variant="contained" 
+                          color="primary" 
+                          >
+                          Thêm vào giỏ hàng
+                        </Button>
+                        </Box>
+                    </Card>
+                    </Grid>
+                    
+                </Grid> 
+            </Container>
+        </div>
+
         {/* Hero unit */}
         <div className={classes.heroContent}>
           <Container maxWidth="lg">
+            <Typography variant="h5" align="center" color="textSecondary" paragraph>
+                Các sản phẩm khác liên quan
+            </Typography>
             <div className={classes.heroButtons}>
               <Grid container spacing={4} justify="center">
                 <Grid item>
@@ -432,4 +517,4 @@ class Home extends Component {
   }
 }
 
-export default withStyles(useStyles)(Home)
+export default withStyles(useStyles)(Details)
