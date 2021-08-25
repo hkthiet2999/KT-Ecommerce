@@ -187,14 +187,14 @@ class Home extends Component {
       this.props.history.push('/accounts/login');
     } else {
       this.setState({ token: token }, () => {
-        // this.getProduct();
+        this.getAllProduct();
       });
     }
   }
   //
   pageChange = (e, page) => {
     this.setState({ page: page }, () => {
-      this.getProduct();
+      this.getAllProduct();
     });
   }
 
@@ -211,13 +211,13 @@ class Home extends Component {
     this.setState({ [e.target.name]: e.target.value }, () => { });
     if (e.target.name == 'search') {
       this.setState({ page: 1 }, () => {
-        this.getProduct();
+        this.getAllProduct();
       });
     }
   };
 
   // get
-  getProduct = () => {
+  getAllProduct = () => {
     
     this.setState({ loading: true });
 
@@ -226,7 +226,7 @@ class Home extends Component {
     if (this.state.search) {
       data = `${data}&search=${this.state.search}`;
     }
-    axios.get(`http://localhost:8080/products/get-product${data}`, {
+    axios.get(`http://localhost:8080/products/getAll-product${data}`, {
       headers: {
         'token': this.state.token
       }
@@ -348,7 +348,7 @@ class Home extends Component {
          {/* End hero unit */}
         <Container className={classes.cardGrid} maxWidth="md">
          
-          {/* <Grid container spacing={4}>
+          <Grid container spacing={4}>
           
             {this.state.products.map((card) => (
               <Grid item key={card} xs={12} sm={6} md={4}>
@@ -388,7 +388,7 @@ class Home extends Component {
                       variant="outlined"
                       color="primary"
                       size="small"
-                      onClick={(e) => this.handleUpdateProduct_openDialog(card)}
+                      // onClick={(e) => this.handleUpdateProduct_openDialog(card)}
                       >
                       Cập nhật
                     </Button>
@@ -397,7 +397,7 @@ class Home extends Component {
                       color="secondary"
                       size="small"
                       // onClick={(e) => this.deleteProduct(card._id)}
-                      onClick={(e) => this.handleDeleteProduct_openDialog(card._id)}
+                      // onClick={(e) => this.handleDeleteProduct_openDialog(card._id)}
                       >
                       Xóa
                     </Button>
@@ -405,7 +405,7 @@ class Home extends Component {
                 </Card>
               </Grid>
             ))}
-          </Grid> */}
+          </Grid>
 
         </Container>
 

@@ -224,4 +224,61 @@ Router.post("/delete-product", (req, res) => {
     });
   }
 });
+
+// get all products
+Router.get("/getAll-product", async (req, res) => {
+  try {
+    const query = await {};
+    query["$and"] = [];
+    await query["$and"].push({
+      is_delete: false,
+      // user_id: req.user.id
+    });
+    if (req.query && req.query.search) {
+      query["$and"].push({
+        name: { $regex: req.query.search }
+      });
+    }
+    const perPage = 6;
+    const page = req.query.page || 1;
+    product.find(query, { date: 1, name: 1, id: 1, desc: 1, price: 1, discount: 1, image: 1 })
+      .skip((perPage * page) - perPage).limit(perPage)
+      .then((data) => {
+        product.find(query).count()
+          .then((count) => {
+
+            if (data && data.length > 0) {
+              res.status(200).json({
+                status: true,
+                title: 'Danh sách sản phẩm',
+                products: data,
+                current_page: page,
+                total: count,
+                pages: Math.ceil(count / perPage),
+                errorMessage: '',
+              });
+            } else {
+              res.status(400).json({
+                errorMessage: 'Không tìm thấy sản phẩm nào để mua',
+                status: false
+              });
+            }
+
+          });
+
+      }).catch(err => {
+        res.status(400).json({
+          errorMessage: 'Không tìm thấy sản phẩm nào để mua',
+          status: false
+        });
+      });
+  } catch (e) {
+    res.status(400).json({
+      errorMessage: 'Lỗi hệ thống!',
+      status: false
+    });
+  }
+
+});
+
 module.exports = Router

@@ -52,7 +52,7 @@ app.use("/", (req, res, next) => {
     req.path == "/accounts/forgot-password" || req.path == "/accounts/reset-password") {
       next();
     } else if( req.path == "/products/add-product" ||  req.path == "/products/get-product" ||  
-    req.path == "/products/update-product" ||  req.path == "/products/delete-product"
+    req.path == "/products/update-product" ||  req.path == "/products/delete-product" || req.path == "/products/getAll-product"
     || req.path == "/accounts/user-info" || req.path == "/accounts/update-userinfo") {
       // console.log('verify')
       console.log('token:', req.headers.token)
