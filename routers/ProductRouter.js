@@ -9,6 +9,7 @@ const path = require('path');
 const fs = require('fs')
 const product = require("../models/ProductModel.js");
 const user = require("../models/AccountModel.js");
+const { datastore } = require('googleapis/build/src/apis/datastore')
 
 const dir = './client/uploads';
 const upload = multer({
@@ -280,5 +281,38 @@ Router.get("/getAll-product", async (req, res) => {
   }
 
 });
-
+// http://localhost:8080/products/detail-product
+Router.post("/detail-product", (req, res) => {
+  try {
+    console.log('Body and ID', req.body, req.body.id)
+    if (req.body && req.body.id) {
+      // console.log('Let go')
+      product.findById(req.body.id, (err, data) => {
+        if(data){
+          console.log('Chi tiet sp:', data)
+          res.status(200).json({
+            title: 'Truy vấn chi tiết sản phẩm thành công',
+            status: true,
+            productDetail: data,
+          });
+        }else{
+          res.status(400).json({
+            errorMessage: 'Sản phẩm không tồn tại!',
+            status: false
+          });
+        }
+      })
+    } else {
+      res.status(400).json({
+        errorMessage: 'Sản phẩm không tồn tại!',
+        status: false
+      });
+    }
+  } catch (e) {
+    res.status(400).json({
+      errorMessage: 'Lỗi hệ thống!',
+      status: false
+    });
+  }
+});
 module.exports = Router

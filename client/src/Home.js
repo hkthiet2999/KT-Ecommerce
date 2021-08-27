@@ -171,8 +171,32 @@ class Home extends Component {
   }
   //
   // details product
-  details = () => {
-    this.props.history.push('/details');
+  details = (id) => {
+    console.log('id product delete:', id)
+    axios.post('http://localhost:8080/products/detail-product', {
+      id: id
+    }, {
+      headers: {
+        'Content-Type': 'application/json',
+        'token': this.state.token
+      }
+    }).then((res) => {
+      console.log(res)
+      // productDetail
+      // console.log(res.data.productDetail)
+      localStorage.setItem('detail_id', res.data.productDetail._id);
+      this.props.history.push({
+        pathname: '/detail',
+        // search: '?query=' + res.data.productDetail._id
+      });
+    }).catch((err) => {
+      swal({
+        text: err.response.data.errorMessage,
+        icon: "error",
+        type: "error"
+      });
+    });
+    // this.props.history.push('/details');
   }
   // click dropdown
   handleClick = (event) => {
@@ -356,7 +380,7 @@ class Home extends Component {
           
             {this.state.products.map((card) => (
               <Grid item key={card} xs={12} sm={6} md={4}>
-                <Card className={classes.card} onClick={this.details}>
+                <Card className={classes.card} onClick={(e) => this.details(card._id)}>
                   <CardMedia
                     className={classes.cardMedia}
                     // image="https://source.unsplash.com/random"
@@ -392,7 +416,7 @@ class Home extends Component {
                       variant="outlined"
                       size="small"
                       color="primary"
-                      onClick={this.details}
+                      onClick={(e) => this.details(card._id)}
                       >
                       Chi tiết sản phẩm
                     </Button>

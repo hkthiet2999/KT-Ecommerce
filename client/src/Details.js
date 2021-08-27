@@ -136,6 +136,15 @@ const useStyles = theme => ({
   pos: {
     marginBottom: 12,
   },
+  detail_discount: {
+    ...theme.typography.button,
+    backgroundColor: theme.palette.error.dark,
+    padding: theme.spacing(1),
+    marginLeft: theme.spacing(10),
+    marginRight: theme.spacing(10),
+    marginBottom: theme.spacing(3),
+    border: "1px solid black",
+  },
 });
 // const classes = useStyles();
 // const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
@@ -144,10 +153,6 @@ class Details extends Component {
     super(props);
     this.state = {
       token: '',
-      openProductModal: false,
-      openProductEditModal: false,
-      openProductDeleteModal: false,
-      cardID: '',
       id: '',
       name: '',
       desc: '',
@@ -161,6 +166,13 @@ class Details extends Component {
       pages: 0,
       loading: false,
       anchorEl: false,
+      detail_id: '',
+      detail_name:'',
+      detail_desc: '',
+      detail_price: '',
+      detail_discount: '',
+      detail_image: '',
+      sold: 0,
     };
   }
   // ``````funtions
@@ -175,10 +187,32 @@ class Details extends Component {
     this.props.history.push('/home');
   }
   //
-  // details product
-  details = () => {
-    this.props.history.push('/details');
-  }
+  details = (id) => {
+    console.log('id product delete:', id)
+    axios.post('http://localhost:8080/products/detail-product', {
+    id: id
+    }, {
+    headers: {
+        'Content-Type': 'application/json',
+        'token': this.state.token
+    }
+    }).then((res) => {
+    console.log(res)
+    // productDetail
+    // console.log(res.data.productDetail)
+    localStorage.setItem('detail_id', res.data.productDetail._id);
+    this.props.history.push({
+        pathname: '/detail',
+        // search: '?query=' + res.data.productDetail._id
+    });
+    }).catch((err) => {
+    swal({
+        text: err.response.data.errorMessage,
+        icon: "error",
+        type: "error"
+    });
+    });
+}
   // click dropdown
   handleClick = (event) => {
     this.setState({ anchorEl: true })
@@ -192,13 +226,45 @@ class Details extends Component {
   // get token
   componentDidMount = () => {
     let token = localStorage.getItem('token');
+    let detail_id = localStorage.getItem('detail_id');
+
     if (!token) {
       this.props.history.push('/accounts/login');
     } else {
-      this.setState({ token: token }, () => {
+      this.setState({ 
+        token: token,
+        detail_id: detail_id,
+     }, async () => {
         this.getAllProduct();
+        await this.detail(this.state.detail_id);    
       });
     }
+  }
+  // details product
+  detail = (id) => {
+    console.log('id product delete:', id)
+    axios.post('http://localhost:8080/products/detail-product', {
+      id: id
+    }, {
+      headers: {
+        'Content-Type': 'application/json',
+        'token': this.state.token
+      }
+    }).then((res) => {
+        // productDetail
+        //   console.log(res.data.productDetail)
+        const rnd_sold = Math.floor(Math.random() * 20) // max = 20, min = 0
+        this.setState({ detail_name : res.data.productDetail.name, detail_price: res.data.productDetail.price,
+            detail_desc: res.data.productDetail.desc, detail_discount: res.data.productDetail.discount, detail_image: res.data.productDetail.image,
+            sold : this.state.sold + rnd_sold
+        })
+    }).catch((err) => {
+      swal({
+        text: err.response.data.errorMessage,
+        icon: "error",
+        type: "error"
+      });
+    });
   }
   //
   pageChange = (e, page) => {
@@ -319,7 +385,7 @@ class Details extends Component {
                 <Grid container spacing={3}>
                     <Grid item lg={4} md={6} xs={12}> 
                         <Card>
-                            <CardContent style={{  
+                            <CardContent style={{ 
                                 backgroundImage: "url(" + "https://images.pexels.com/photos/34153/pexels-photo.jpg?auto=compress&cs=tinysrgb&h=350" + ")",
                                 backgroundPosition: 'center',
                                 backgroundSize: 'cover',
@@ -333,7 +399,7 @@ class Details extends Component {
                                 fullWidth
                                 variant="text"
                                 >
-                                Mua ngay
+                                {`${this.state.detail_price}`} VND
                                 </Button>
                             </CardActions>
                         </Card>
@@ -342,19 +408,43 @@ class Details extends Component {
                     <Grid  item lg={8} md={6} xs={12}> 
                     <Card>
                       <CardHeader
-                        subheader="Giá tiền"
-                        title="Tên sản phẩm"
+                        subheader={`${this.state.detail_name}`}
+                        title="Chi tiết sản phẩm"
                       />
                       <Divider />
                       <CardContent>
+                        <Grid 
+                        container
+                        spacing={3}> 
+                            <Grid item lg={12} md={12} xs={24}>
+                                <Typography variant="h2" gutterBottom align="center" >
+                                    {`${this.state.detail_name}`}
+                                </Typography>
+                            </Grid>
+                            
+                        </Grid>
+
                         <Grid
                           container
                           spacing={3}
                         >
-                            Vài lời mô tả sản phẩm ở đây
+                            <Grid item lg={4} md={4} xs={12}>
+                                <Typography variant="h3" gutterBottom >
+                                {`${this.state.detail_price}`} VND
+                                </Typography>
+                                <br></br>
+                                <div className={classes.detail_discount}>Giảm {`${this.state.detail_discount}`}%</div>
+                            </Grid>
+                            <Grid  item lg={8} md={8} xs={12}>
 
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent tempus viverra ultricies. Maecenas nec accumsan dolor. Etiam faucibus tincidunt ante, non vulputate metus ullamcorper et. Suspendisse rutrum, orci at pharetra imperdiet, leo diam tristique ipsum, vehicula congue justo enim sit amet metus. Cras lobortis, nibh non malesuada interdum, odio urna tempor felis, non rutrum nisl tortor id purus. Donec in lectus eget diam placerat interdum a vitae nunc. Maecenas quis dui in lacus auctor egestas quis laoreet purus
-                       
+                                <Typography variant="subtitle1" gutterBottom align="left">
+                                {`${this.state.detail_desc}`}
+                                </Typography>
+                            </Grid> 
+                        </Grid>
+                        <Grid container
+                          spacing={2}>
+                            <Typography variant="h6" gutterBottom>Đã bán: {`${this.state.sold}`}</Typography>
                         </Grid>
                       </CardContent>
                       <Divider />
@@ -441,7 +531,7 @@ class Details extends Component {
           
             {this.state.products.map((card) => (
               <Grid item key={card} xs={12} sm={6} md={4}>
-                <Card className={classes.card} onClick={this.details}>
+                <Card className={classes.card} onClick={(e) => this.details(card._id)}>
                   <CardMedia
                     className={classes.cardMedia}
                     // image="https://source.unsplash.com/random"
@@ -477,7 +567,7 @@ class Details extends Component {
                       variant="outlined"
                       size="small"
                       color="primary"
-                      onClick={this.details}
+                      onClick={(e) => this.details(card._id)}
                       >
                       Chi tiết sản phẩm
                     </Button>

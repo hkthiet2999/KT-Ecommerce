@@ -31,7 +31,7 @@ ReactDOM.render(
 
             <Route exact path='/accounts/register' component={Register} />
             <Route exact path='/home' component={Home} />
-            <Route exact path='/details' component={Details} />
+            <Route exact path='/detail' component={Details} />
 
             <Route exact path='/profile' component={Profile} />
             <Route exact path='/accounts/forgot-password' component={ForgotPwd} />
