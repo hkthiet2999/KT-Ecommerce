@@ -1,8 +1,8 @@
-# Docker Run
+# Usage with Docker
 
 ## Clone this Repos
 
-then
+by command: `git clone https://github.com/smoothkt4951/KT-Ecommerce.git` then follow the steps
 
 Step 01:
 
@@ -18,6 +18,7 @@ Step 03:
 
 The Client-App should be up at and http://localhost:3000 the Server at http://localhost:8080
 
+or
 ## Using Docker Image
 
 Step 01: Docker Pull 
