@@ -10,3 +10,5 @@ Step 02:
 Step 03:
 
 `docker-compose up`
+
+The Client-App should be up at and http://localhost:3000 the Server at http://localhost:8080
