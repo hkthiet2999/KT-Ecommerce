@@ -1,15 +1,31 @@
-version: '3'
+version: "3"
 services:
-  app:
-    container_name: server
-    restart: always
-    build: .
+  kt-client-app:
+    image: kt-client-app
+    stdin_open: true
+    ports: 
+      - "3000:3000"
+    networks:
+      - kt-app
+  kt-server-app:
+    image: kt-server-app
     ports:
-      - '80:8080'
-    external_links:
+      - "8080:8080"
+    networks:
+      - kt-app
+    depends_on:
       - mongo
   mongo:
-    container_name: mongo
-    image: mongo
+    image: mongo:3.6.19-xenial
     ports:
-      - '27017:27017'
+      - "27017:27017"
+    networks:
+      - kt-app
+    volumes:
+      - mongo-data:/data/db
+networks:
+  kt-app:
+    driver: bridge
+volumes:
+  mongo-data:
+    driver: local
