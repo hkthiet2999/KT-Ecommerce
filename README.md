@@ -18,8 +18,12 @@ Step 03:
 
 The Client-App should be up at and http://localhost:3000 the Server at http://localhost:8080
 
-or
-## Using Docker Image
+_Docker Image_
+- `docker pull kienthiet/kt-server-app`
+
+- `docker pull kienthiet/kt-client-app`
+
+<!-- ## Using Docker Image
 
 Step 01: Docker Pull 
 
@@ -35,4 +39,4 @@ new terminal and run command:
 
 `docker run -d -p 8080:8080 kienthiet/kt-server-app`
 
-Wait about 5 minutes ... and The Client-App should be up at and http://localhost:3000 the Server at http://localhost:8080
+Wait about 5 minutes ... and The Client-App should be up at and http://localhost:3000 the Server at http://localhost:8080 -->
