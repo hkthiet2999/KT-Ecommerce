@@ -1,8 +1,8 @@
 node_modules/
-.env.test
+# .env.test
 trash.txt 
 .env
-.env.product
-.env.development
+# .env.product
+# .env.development
 frontend/uploads/
 auth/keys/*.pem
