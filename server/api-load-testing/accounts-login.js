@@ -15,8 +15,10 @@ export default function () {
     };
 
     const response = http.post(url, payload, params);
+
     check(response, {
         "is status 200": (r) => r.status === 200,
+        "is generated token": r.json('token') !== ''
     })
 }
 

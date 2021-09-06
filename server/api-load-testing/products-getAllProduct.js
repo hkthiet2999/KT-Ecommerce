@@ -29,10 +29,10 @@ export default () => {
   const loginRes = http.post(url, payload, params);
 
   check(loginRes, {
-    'logged in successfully': (r) => r.json('token') !== '',
+    'is logged in successfully': (r) => r.json('token') !== '',
   });
 
-  console.log(loginRes)
+  // console.log(loginRes)
 
   let authHeaders = {
     headers: {
