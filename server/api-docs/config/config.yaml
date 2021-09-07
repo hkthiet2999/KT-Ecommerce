@@ -25,7 +25,7 @@ paths:
       responses:
         200:
           description: Đã đăng nhập thành công
- 
+
   /accounts/register:
     post:
       description: Gửi thông tin người dùng đăng ký tài khoản mới
@@ -38,7 +38,7 @@ paths:
             required:
               - email
             properties:
-              fullname: 
+              fullname:
                 type: string
               email:
                 type: string
@@ -58,7 +58,7 @@ paths:
       security:
         - bearerAuth: []
       consumes:
-         - multipart/form-data
+        - multipart/form-data
       parameters:
         - name: name
           in: formData
@@ -79,23 +79,58 @@ paths:
         - name: files
           in: formData
           description: File ảnh của sản phẩm
-          type: file 
+          type: file
       responses:
         200:
-         description: Thêm thông tin sản phẩm thành công
+          description: Thêm thông tin sản phẩm thành công
         400:
-         description: Trả về thông báo lỗi tương ứng
+          description: Trả về thông báo lỗi tương ứng
 
   /products/get-product:
     get:
       security:
         - bearerAuth: []
       consumes:
-       - application/json
-      description: Trả về thông tin Danh sách sản phẩm
+        - application/json
+      description: Trả về thông tin Danh sách sản phẩm đang bán của người dùng
       responses:
         200:
-         description: Trả về thông tin danh sách sản phẩm thành công
+          description: Trả về thông tin danh sách sản phẩm thành công
+        400:
+          description: Trả về thông báo chưa có sản phẩm nào để bán
+
+  /products/detail-product:
+    post:
+      description: Trả về thông tin chi tiết của 1 sản phẩm
+      security:
+        - bearerAuth: []
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: id
+          description: ID sản phẩm
+          schema:
+            type: object
+            properties:
+              id:
+                type: string
+      responses:
+        200:
+          description: Trả về thông tin danh sách sản phẩm thành công
+        400:
+          description: Trả về thông báo chưa có sản phẩm nào để bán
+
+  /products/getAll-product:
+    get:
+      security:
+        - bearerAuth: []
+      consumes:
+        - application/json
+      description: Trả về thông tin Danh sách sản phẩm đang bán trên toàn Sàn TMDT
+      responses:
+        200:
+          description: Trả về thông tin danh sách sản phẩm thành công
         400:
           description: Trả về thông báo chưa có sản phẩm nào để bán
 
@@ -103,9 +138,9 @@ paths:
     post:
       description: Gửi thông tin sản phẩm cần cập nhật
       security:
-       - bearerAuth: []
+        - bearerAuth: []
       consumes:
-       - multipart/form-data
+        - multipart/form-data
       parameters:
         - name: id
           in: formData
@@ -130,28 +165,28 @@ paths:
         - name: files
           in: formData
           description: File ảnh của sản phẩm
-          type: file 
+          type: file
       responses:
         200:
           description: Cập nhật thông tin sản phẩm thành công
         400:
           description: Trả về thông báo lỗi tương ứng
- 
+
   /products/delete-product:
     post:
       description: Gửi thông tin sản phẩm cần xóa
       security:
-       - bearerAuth: []
+        - bearerAuth: []
       consumes:
-       - application/json
+        - application/json
       parameters:
-      - in: body
-        name: id
-        description: Người dùng gửi thông tin sản phẩm cần xóa
-        type: object
-        properties:
-          id:
-            type: string
+        - in: body
+          name: id
+          description: Người dùng gửi thông tin sản phẩm cần xóa
+          type: object
+          properties:
+            id:
+              type: string
       responses:
         200:
           description: Xóa sản phẩm thành công
