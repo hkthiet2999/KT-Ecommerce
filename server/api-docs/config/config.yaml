@@ -4,7 +4,7 @@ paths:
       description: Gửi thông tin người dùng đăng nhập
       parameters:
         - in: body
-          name: user
+          name: user-login
           description: Người dùng gửi thông tin đăng nhập
           schema:
             type: object
@@ -17,7 +17,7 @@ paths:
                 type: string
       responses:
         200:
-          description: Đăng nhập thành công sẽ chuyển đến Home Page
+          description: Đăng nhập thành công
         400:
           description: Trả về thông báo lỗi tương ứng
     get:
@@ -26,12 +26,104 @@ paths:
         200:
           description: Đã đăng nhập thành công
 
+  /accounts/google-login:
+    post:
+      description: Gửi thông tin Người dùng Đăng nhập bằng Google
+      responses:
+        200:
+          description: Đăng nhập thành công
+        400:
+          description: Trả về thông báo lỗi tương ứng
+      parameters:
+        - in: body
+          name: user-login-gg
+          description: Người dùng gửi thông tin Đăng nhập bằng Google
+          schema:
+            type: object
+            required:
+              - token
+              - user_id
+            properties:
+              user_id:
+                type: string
+              token:
+                type: string
+
+  /accounts/facebook-login:
+    post:
+      description: Gửi thông tin Người dùng Đăng nhập bằng Facebook
+      responses:
+        200:
+          description: Đăng nhập thành công
+        400:
+          description: Trả về thông báo lỗi tương ứng
+      parameters:
+        - in: body
+          name: user-login-fb
+          description: Người dùng gửi thông tin Đăng nhập bằng Facebook
+          schema:
+            type: object
+            required:
+              - token
+              - user_id
+            properties:
+              user_id:
+                type: string
+              token:
+                type: string
+
+  /accounts/forgot-password:
+    post:
+      description: Gửi thông tin Người dùng Quên mật khẩu
+      responses:
+        200:
+          description: Gửi mật khẩu mới qua email của người dùng thành công
+        400:
+          description: Trả về thông báo lỗi tương ứng
+      parameters:
+        - in: body
+          name: user-forgot-pwd
+          description: Người dùng gửi email Quên mật khẩu
+          schema:
+            type: object
+            required:
+              - email
+            properties:
+              email:
+                type: string
+
+  /accounts/reset-password:
+    post:
+      description: Gửi thông tin Người dùng Đổi mật khẩu
+      responses:
+        200:
+          description: Đổi mật khẩu của người dùng thành công
+        400:
+          description: Trả về thông báo lỗi tương ứng
+      security:
+        - bearerAuth: []
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: user-change-password
+          description: Người dùng gửi mật khẩu mới
+          schema:
+            type: object
+            required:
+              - email
+            properties:
+              email:
+                type: string
+              password:
+                type: string
+
   /accounts/register:
     post:
       description: Gửi thông tin người dùng đăng ký tài khoản mới
       parameters:
         - in: body
-          name: user
+          name: user-register
           description: Người dùng gửi thông tin đăng ký
           schema:
             type: object
@@ -67,11 +159,14 @@ paths:
       consumes:
         - multipart/form-data
       parameters:
-        - in: header
-          name: user_id
-          schema:
-            type: string
-          required: true
+        - email: email
+          in: body
+          description: Email người dùng
+          type: string
+        - password: password
+          in: body
+          description: Mật khẩu mới
+          type: string
 
   /accounts/update-userinfo:
     post:
@@ -89,7 +184,7 @@ paths:
         - application/json
       parameters:
         - in: header
-          name: user_id
+          name: user-update-info
           schema:
             type: string
           required: true
