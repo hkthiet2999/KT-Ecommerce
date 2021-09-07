@@ -52,6 +52,70 @@ paths:
         400:
           description: Trả về thông báo lỗi tương ứng
 
+  /accounts/user-info:
+    get:
+      description: Lấy thông tin của người dùng
+      responses:
+        200:
+          description: Lấy thông tin người dùng thành công
+        400:
+          description: Trả về thông báo Lấy thông tin người dùng thất bại
+        401:
+          description: Trả về thông báo Người dùng chưa được xác thực
+      security:
+        - bearerAuth: []
+      consumes:
+        - multipart/form-data
+      parameters:
+        - in: header
+          name: user_id
+          schema:
+            type: string
+          required: true
+
+  /accounts/update-userinfo:
+    post:
+      description: Gửi thông tin cần Cập nhật của người dùng
+      responses:
+        200:
+          description: Cập nhật thông tin người dùng thành công
+        400:
+          description: Trả về thông báo Cập nhật thông tin người dùng thất bại
+        401:
+          description: Trả về thông báo Người dùng chưa được xác thực
+      security:
+        - bearerAuth: []
+      consumes:
+        - application/json
+      parameters:
+        - in: header
+          name: user_id
+          schema:
+            type: string
+          required: true
+        - in: body
+          name: user
+          description: Người dùng gửi thông tin cập nhật
+          schema:
+            type: object
+            required:
+              - email
+            properties:
+              fullname:
+                type: string
+              avatar:
+                type: https://www.pikpng.com/pngl/b/80-805523_default-avatar-svg-png-icon-free-download-264157.png
+              birthday:
+                type: string
+              gender:
+                type: string
+              numberphone:
+                type: string
+              email:
+                type: string
+              address:
+                type: string
+
   /products/add-product:
     post:
       description: Gửi thông tin sản phẩm cần thêm
@@ -85,6 +149,8 @@ paths:
           description: Thêm thông tin sản phẩm thành công
         400:
           description: Trả về thông báo lỗi tương ứng
+        401:
+          description: Trả về thông báo Người dùng chưa được xác thực
 
   /products/get-product:
     get:
@@ -98,6 +164,8 @@ paths:
           description: Trả về thông tin danh sách sản phẩm thành công
         400:
           description: Trả về thông báo chưa có sản phẩm nào để bán
+        401:
+          description: Trả về thông báo Người dùng chưa được xác thực
 
   /products/detail-product:
     post:
@@ -120,6 +188,8 @@ paths:
           description: Trả về thông tin danh sách sản phẩm thành công
         400:
           description: Trả về thông báo chưa có sản phẩm nào để bán
+        401:
+          description: Trả về thông báo Người dùng chưa được xác thực
 
   /products/getAll-product:
     get:
@@ -133,6 +203,8 @@ paths:
           description: Trả về thông tin danh sách sản phẩm thành công
         400:
           description: Trả về thông báo chưa có sản phẩm nào để bán
+        401:
+          description: Trả về thông báo Người dùng chưa được xác thực
 
   /products/update-product:
     post:
@@ -171,6 +243,8 @@ paths:
           description: Cập nhật thông tin sản phẩm thành công
         400:
           description: Trả về thông báo lỗi tương ứng
+        401:
+          description: Trả về thông báo Người dùng chưa được xác thực
 
   /products/delete-product:
     post:
@@ -192,3 +266,5 @@ paths:
           description: Xóa sản phẩm thành công
         400:
           description: Trả về thông báo lỗi tương ứng
+        401:
+          description: Trả về thông báo Người dùng chưa được xác thực
