@@ -9,7 +9,8 @@
         "test/api/products/**",
         "test/api/accounts/login/**",
         "test/api/accounts/register/**",
-        "test/api/accounts/user-info/**"
+        "test/api/accounts/user-info/**",
+        "test/api/accounts/forgot-password/**"
     ],
     "package": "./package.json",
     "reporter": "spec",

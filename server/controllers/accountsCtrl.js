@@ -12,14 +12,22 @@ const accountsCtrl = {
             const { email, password } = req.body
             console.log(password)
             const passwordHash = await bcrypt.hash(password, salt)
-            await user.findOneAndUpdate({ email }, {
-                password: passwordHash
-            })
-            res.status(200).json({
-                title: 'Đổi mật khẩu thành công',
-                status: true
-            });
-
+            const User = await user.findOne({ email })
+            if (!User) {
+                return res.status(400).json({
+                    errorMessage: 'Email này không tồn tại!',
+                    status: false
+                });
+            }
+            else {
+                await user.findOneAndUpdate({ email }, {
+                    password: passwordHash
+                })
+                res.status(200).json({
+                    title: 'Đổi mật khẩu thành công',
+                    status: true
+                });
+            }
         } catch (err) {
             return res.status(400).json({
                 errorMessage: 'Lỗi hệ thống!',

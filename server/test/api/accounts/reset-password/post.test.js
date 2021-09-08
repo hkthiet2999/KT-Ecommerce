@@ -9,7 +9,7 @@ const expect = chai.expect;
 chai.use(chaiHttp)
 
 // 
-describe('GET /accounts/user-info', () => {
+describe('POST /accounts/reset-password', () => {
     const Account = require('../../../../models/AccountModel')
 
     beforeEach((done) => {
@@ -41,12 +41,13 @@ describe('GET /accounts/user-info', () => {
             })
     })
 
-    it(`Should Get the User Info fail with incorect user_id`, (done) => {
+
+    it('Should reset-password successful', (done) => {
+        // 2. Login
         var account = {
             email: "tester@gmail.com",
             password: "tester123456",
         }
-        // 2. Login
         chai.request(server)
             .post('/accounts/login')
             .send(account)
@@ -57,56 +58,26 @@ describe('GET /accounts/user-info', () => {
                 res.body.should.have.property('token')
                 console.log(res.body)
                 var token = res.body.token
-                // 3. Get User Info
+                var account = { email: "tester@gmail.com", password: "newpassword" }
+                // 3. Reset Passord
                 chai.request(server)
-                    .get('/accounts/user-info')
+                    .post('/accounts/reset-password')
                     .set('token', token)
-                    .set('user_id', 'fake-user-id')
+                    .send(account)
                     .end((err, res) => {
-                        res.should.have.status(400);
-                        // res.body.should.be.a('object');
-                        // console.log(res.body)
+                        expect(res.status).to.be.equal(200);
+                        expect(res.body).to.be.a('object');
                         done()
                     })
             })
     })
 
-    it(`Should Get the User Info successful`, (done) => {
+    it('Should reset-password fail with email does not exis', (done) => {
+        // 2. Login
         var account = {
             email: "tester@gmail.com",
             password: "tester123456",
         }
-        // 2. Login
-        chai.request(server)
-            .post('/accounts/login')
-            .send(account)
-            .end((err, res) => {
-                // Asserts                        
-                expect(res.status).to.be.equal(200);
-                expect(res.body).to.be.a('object');
-                res.body.should.have.property('token')
-                var token = res.body.token
-                var user_id = res.body.id
-                // 3. Get User Info
-                chai.request(server)
-                    .get('/accounts/user-info')
-                    .set('token', token)
-                    .set('user_id', user_id)
-                    .end((err, res) => {
-                        res.should.have.status(200);
-                        res.body.should.be.a('object');
-                        console.log(res.body)
-                        done()
-                    })
-            })
-    })
-
-    it(`Should Get the User Info fail with with unauthorized user`, (done) => {
-        var account = {
-            email: "tester@gmail.com",
-            password: "tester123456",
-        }
-        // 2. Login
         chai.request(server)
             .post('/accounts/login')
             .send(account)
@@ -116,23 +87,18 @@ describe('GET /accounts/user-info', () => {
                 expect(res.body).to.be.a('object');
                 res.body.should.have.property('token')
                 console.log(res.body)
-                var token = 'have-no-token'
-                var user_id = 'fake-user-id'
-                // 3. Get User Info
+                var token = res.body.token
+                var account = { email: "testerfake@gmail.com", password: "newpassword" }
+                // 3. Reset Passord
                 chai.request(server)
-                    .get('/accounts/user-info')
+                    .post('/accounts/reset-password')
                     .set('token', token)
-                    .set('user_id', user_id)
+                    .send(account)
                     .end((err, res) => {
-                        res.should.have.status(401);
-                        // res.body.should.be.a('object');
-                        // console.log(res.body)
+                        expect(res.status).to.be.equal(400);
+                        expect(res.body).to.be.a('object');
                         done()
                     })
             })
     })
-
-
-
-
 })

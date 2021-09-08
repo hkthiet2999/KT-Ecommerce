@@ -9,7 +9,7 @@ const expect = chai.expect;
 chai.use(chaiHttp)
 
 // 
-describe('POST /accounts/login', () => {
+describe('POST /accounts/forgot-password', () => {
     const Account = require('../../../../models/AccountModel')
 
     beforeEach((done) => {
