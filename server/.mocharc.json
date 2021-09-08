@@ -5,7 +5,11 @@
     ],
     "ignore": [
         "test/connectDatabase/**",
-        "test/workflow/**"
+        "test/workflow/**",
+        "test/api/products/**",
+        "test/api/accounts/login/**",
+        "test/api/accounts/register/**",
+        "test/api/accounts/user-info/**"
     ],
     "package": "./package.json",
     "reporter": "spec",
