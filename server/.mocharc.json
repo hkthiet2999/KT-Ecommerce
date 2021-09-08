@@ -5,8 +5,7 @@
     ],
     "ignore": [
         "test/connectDatabase/**",
-        "test/workflow/**",
-        "test/api/products/**"
+        "test/workflow/**"
     ],
     "package": "./package.json",
     "reporter": "spec",
