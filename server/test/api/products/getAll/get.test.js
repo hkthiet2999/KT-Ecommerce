@@ -12,7 +12,7 @@ chai.use(chaiHttp)
 //
 
 //
-describe('GET /products/get-product', () => {
+describe('GET /products/getAll-product', () => {
     const Product = require('../../../../models/ProductModel')
     const Account = require('../../../../models/AccountModel')
 
@@ -51,11 +51,11 @@ describe('GET /products/get-product', () => {
     })
 
     //////////////////
-    it(`Should get all products fail with unauthorized user`, (done) => {
+    it(`Should Get all products on the E-commerce platform fail with unauthorized user`, (done) => {
         // 2. without Login
         // 3. Get product
         chai.request(server)
-            .get('/products/get-product')
+            .get('/products/getAll-product')
             .set('token', 'fake_token')
             .set('Content-Type', 'multipart/form-data')
             .end((err, res) => {
@@ -78,7 +78,7 @@ describe('GET /products/get-product', () => {
                 // 3. Get products
                 // 
                 chai.request(server)
-                    .get('/products/get-product')
+                    .get('/products/getAll-product')
                     .set('token', token)
                     .set('Content-Type', 'multipart/form-data')
                     .end((err, res) => {
@@ -91,7 +91,7 @@ describe('GET /products/get-product', () => {
     })
 
 
-    it(`Should get list of product for sale sucessful`, (done) => {
+    it(`Should Get all products on the E-commerce platform sucessful`, (done) => {
         // 2. Login
         chai.request(server)
             .post('/accounts/login')
@@ -173,9 +173,8 @@ describe('GET /products/get-product', () => {
                                         // 4. Get products
                                         // 
                                         chai.request(server)
-                                            .get('/products/get-product')
+                                            .get('/products/getAll-product')
                                             .set('token', token)
-                                            .set('Content-Type', 'multipart/form-data')
                                             .end((err, res) => {
                                                 expect(res.status).to.be.equal(200);
                                                 expect(res.body).to.be.a('object');

@@ -3,16 +3,16 @@ const jwt = require('jsonwebtoken')
 const sendMail = require('./sendMail')
 const bcrypt = require('bcrypt')
 const salt = bcrypt.genSaltSync(10);
-const {CLIENT_URL} = process.env
+const { CLIENT_URL } = process.env
 const axios = require('axios')
 const accountsCtrl = {
     resetPassword: async (req, res) => {
         try {
             console.log('Body in reset pwd:', req.body)
-            const {email, password} = req.body
+            const { email, password } = req.body
             console.log(password)
             const passwordHash = await bcrypt.hash(password, salt)
-            await user.findOneAndUpdate({email}, {
+            await user.findOneAndUpdate({ email }, {
                 password: passwordHash
             })
             res.status(200).json({
@@ -29,10 +29,10 @@ const accountsCtrl = {
     },
     forgotPassword: async (req, res) => {
         try {
-            const {email} = req.body
+            const { email } = req.body
             console.log('email:', email)
-            const User = await user.findOne({email})
-            if(!User){
+            const User = await user.findOne({ email })
+            if (!User) {
                 return res.status(400).json({
                     errorMessage: 'Email này không tồn tại!',
                     status: false
@@ -44,7 +44,7 @@ const accountsCtrl = {
 
             const passwordHash = await bcrypt.hash(randomPassword, salt)
             console.log('passwordHash', passwordHash)
-            await user.findOneAndUpdate({email}, {
+            await user.findOneAndUpdate({ email }, {
                 password: passwordHash
             })
 
@@ -55,17 +55,20 @@ const accountsCtrl = {
             });
 
         } catch (err) {
-            return res.status(400).json({errorMessage: 'Lỗi hệ thống!', status: false})
+            return res.status(400).json({ errorMessage: 'Lỗi hệ thống!', status: false })
         }
     },
     getUserInfo: async (req, res) => {
         try {
             // console.log('body in user info:', req.headers)
             const User = await user.findById(req.headers.user_id).select('-password')
+            if (User === null) {
+                return res.status(400).json({ errorMessage: 'Người dùng không tồn tại!!!', status: false })
+            }
             console.log('User Info:', User)
             res.json(User)
         } catch (err) {
-            return res.status(400).json({errorMessage: 'Người dùng không tồn tại!!!', status: false})
+            return res.status(400).json({ errorMessage: 'Người dùng không tồn tại!!!', status: false })
         }
     },
     updateUserInfo: async (req, res) => {
@@ -75,7 +78,7 @@ const accountsCtrl = {
             // const User = await user.findById(req.headers.user_id).select('-password')
             // console.log(typeof(req.body.numberphone))
             const email = req.body.email
-            const userUpdate = await user.findOneAndUpdate({email}, {
+            const userUpdate = await user.findOneAndUpdate({ email }, {
                 fullname: req.body.fullname,
                 birthday: req.body.birthday,
                 address: req.body.address,
@@ -85,7 +88,7 @@ const accountsCtrl = {
             console.log('Update User', userUpdate)
             res.json(userUpdate)
         } catch (err) {
-            return res.status(400).json({errorMessage: 'Số điện thoại không đúng', status: false})
+            return res.status(400).json({ errorMessage: 'Số điện thoại không đúng', status: false })
         }
     }
 }
