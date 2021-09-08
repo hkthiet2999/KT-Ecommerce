@@ -184,3 +184,22 @@ Danh sách sản phẩm sau khi xóa sản phẩm Product 02
 - [_Coverage reporter_](https://smoothkt4951.github.io/KT-Ecommerce/)
 
 - [_Demo_](https://www.youtube.com/watch?v=7tFvti20owc)
+
+### Cập nhật các Unit test mới
+
+__(08/09/2021)__
+
+Thêm các unit test cho các API:
+
+- `/accounts/forgot-password: { post: [Object] }`
+
+- `/accounts/reset-password: { post: [Object] }`
+
+- `/accounts/user-info: { get: [Object] }`
+
+- `/accounts/update-userinfo: { post: [Object] }`
+
+- `/products/detail-product: { post: [Object] }`
+
+- `/products/getAll-product': { get: [Object] }`
+
