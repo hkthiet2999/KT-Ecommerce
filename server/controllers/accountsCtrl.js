@@ -15,7 +15,7 @@ const accountsCtrl = {
             const User = await user.findOne({ email })
             if (!User) {
                 return res.status(400).json({
-                    errorMessage: 'Email này không tồn tại!',
+                    errorMessage: 'Email không tồn tại!',
                     status: false
                 });
             }
@@ -40,6 +40,7 @@ const accountsCtrl = {
             const { email } = req.body
             console.log('email:', email)
             const User = await user.findOne({ email })
+
             if (!User) {
                 return res.status(400).json({
                     errorMessage: 'Email này không tồn tại!',
@@ -74,7 +75,7 @@ const accountsCtrl = {
                 return res.status(400).json({ errorMessage: 'Người dùng không tồn tại!!!', status: false })
             }
             console.log('User Info:', User)
-            res.json(User)
+            res.status(200).json(User)
         } catch (err) {
             return res.status(400).json({ errorMessage: 'Người dùng không tồn tại!!!', status: false })
         }
@@ -86,6 +87,13 @@ const accountsCtrl = {
             // const User = await user.findById(req.headers.user_id).select('-password')
             // console.log(typeof(req.body.numberphone))
             const email = req.body.email
+            const User = await user.findOne({ email })
+            if (!User) {
+                return res.status(400).json({
+                    errorMessage: 'Email không tồn tại!',
+                    status: false
+                });
+            }
             const userUpdate = await user.findOneAndUpdate({ email }, {
                 fullname: req.body.fullname,
                 birthday: req.body.birthday,
@@ -94,9 +102,10 @@ const accountsCtrl = {
                 numberphone: req.body.numberphone
             })
             console.log('Update User', userUpdate)
-            res.json(userUpdate)
+            res.status(200).json(userUpdate)
+
         } catch (err) {
-            return res.status(400).json({ errorMessage: 'Số điện thoại không đúng', status: false })
+            return res.status(400).json({ errorMessage: 'Lỗi hệ thống', status: false })
         }
     }
 }

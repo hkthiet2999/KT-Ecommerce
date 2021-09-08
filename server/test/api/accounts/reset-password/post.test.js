@@ -72,7 +72,7 @@ describe('POST /accounts/reset-password', () => {
             })
     })
 
-    it('Should reset-password fail with email does not exis', (done) => {
+    it('Should reset-password fail with email does not exist', (done) => {
         // 2. Login
         var account = {
             email: "tester@gmail.com",
